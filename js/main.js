@@ -1,0 +1,1 @@
+console.log('Git練習開始');
