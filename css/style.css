@@ -14,11 +14,6 @@ header {
   }
 }
 
-header {
-  padding: 32px;
-  background: pink;
-}
-
 .bg {
   position: relative;
   width: 100%;
