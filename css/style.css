@@ -117,13 +117,3 @@ header {
     opacity: 0.2;
   }
 }
-
-section {
-  padding: 32px;
-  color: orange;
-}
-
-footer {
-  padding: 32px;
-  background: silver;
-}
