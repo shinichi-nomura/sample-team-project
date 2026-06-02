@@ -9,3 +9,11 @@ Gitチーム開発練習用リポジトリ
 - Code Review
 - Merge
 - Conflict解消
+
+## 役割
+
+### 星さん
+- headerを担当してください
+
+### 桐林さん
+- footerを担当してください
