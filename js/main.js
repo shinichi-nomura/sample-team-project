@@ -36,8 +36,8 @@ for (let i = 0; i < count; i++) {
     }
     // ゴールド or シルバーをランダムに決定
 
-    const moveX = (Math.random() * 20) - 10; // -10〜10px
-    const moveY = (Math.random() * 20) - 10; // -10〜10px
+    const moveX = (Math.random() * 80) - 40; // -40〜40px
+    const moveY = (Math.random() * 80) - 40; // -40〜40px
     p.style.setProperty('--move-x', `${moveX}px`);
     p.style.setProperty('--move-y', `${moveY}px`);
     //ランダムな動きの強さ
