@@ -265,7 +265,14 @@ main p {
   }
 }
 
+.EightTips {
+  background: skyblue;
+  z-index: 1002;
+  padding:24px 0;
+}
+
 h3 {
+  margin: 0;
   text-align: center;
   font-size: 30px;
   font-weight: normal;
@@ -289,8 +296,54 @@ h3 {
   text-align: center;
 }
 
+.greeting {
+  padding: 24px 0;
+}
+
 .profile {
   border-radius: 8px;
+}
+
+.events {
+  display: flex;
+  flex-direction: row;
+  background: skyblue;
+  z-index: 1002;
+  padding:24px 0;
+}
+
+.event {
+  width: 50%;
+  text-align: center;
+}
+
+.latest {
+  width: 50%;
+  text-align: center;
+}
+
+.book {
+  padding: 24px 0;
+}
+
+.book-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.book-images {
+  width: 50%;
+}
+
+.book-content {
+  width: 50%;
+  text-align: center;
+}
+
+.purchase {
+  background: none;
+  color: white;
+  border: 1px solid white;
 }
 
 footer {
