@@ -4,12 +4,17 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: sans-serif;
   margin: 0px;
   background: #050816;
   min-height: 100vh;
   color: white;
+  padding-top: 80px;
 }
 
 header {
@@ -17,9 +22,21 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  z-index: 100;
   padding: 0 24px;
   background: black;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+header a {
+  text-decoration: none;
+}
+
+#top {
+  scroll-margin-top: 80px;
 }
 
 header h1 {
@@ -268,7 +285,7 @@ main p {
 .EightTips {
   background: skyblue;
   z-index: 1002;
-  padding:24px 0;
+  padding: 24px 0;
 }
 
 h3 {
@@ -309,7 +326,7 @@ h3 {
   flex-direction: row;
   background: skyblue;
   z-index: 1002;
-  padding:24px 0;
+  padding: 24px 0;
 }
 
 .event {
