@@ -50,6 +50,10 @@ h2 {
   list-style: none;
 }
 
+.nav-list li.active a {
+  pointer-events: none;
+}
+
 .nav-list a {
   color: inherit;
   text-decoration: none;
@@ -91,27 +95,19 @@ h2 {
   color: #006FFF;
 }
 
-.nav-7 {
+.nav-6 span {
+  margin-left: 16px;
   color: #7F55FF;
 }
 
-
-
 @media (max-width: 1339px) {
-
-  .menu-wrapper {
-    position: fixed;
-    top: 0;
-    right: 0;
-  }
-
   .hamburger-menu {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
     width: 40px;
     height: 40px;
-    background: black;
+    background: transparent;
     border: none;
     z-index: 1001;
     cursor: pointer;
@@ -127,7 +123,7 @@ h2 {
   }
 
   .hamburger-menu.active {
-    transform: translateX(-200px);
+    transform: translateX(-220px);
   }
 
   .hamburger-line {
@@ -141,8 +137,14 @@ h2 {
   }
 
   .nav-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100vh;
     margin-right: 0;
     z-index: 1000;
+    background: black;
     transform: translateX(100%);
     transition: transform 0.8s ease-in-out;
   }
@@ -155,7 +157,6 @@ h2 {
     flex-direction: column;
     gap: 0;
   }
-
 }
 
 main {
@@ -262,6 +263,34 @@ main p {
   100% {
     opacity: 0.2;
   }
+}
+
+h3 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: normal;
+}
+
+.EightTips p {
+  margin: 0;
+  color: black;
+  text-shadow: 1px 1px 0 white;
+  justify-content: center;
+}
+
+.tips {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.tip {
+  width: 25%;
+  text-align: center;
+}
+
+.profile {
+  border-radius: 8px;
 }
 
 footer {
