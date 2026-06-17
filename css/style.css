@@ -2,7 +2,6 @@
 
 * {
   box-sizing: border-box;
-  max-width: 1440px;
 }
 
 html {
@@ -31,6 +30,12 @@ header {
   left: 0;
   z-index: 1000;
 }
+
+/* .container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+} */
 
 header a {
   text-decoration: none;
