@@ -2,6 +2,7 @@
 
 * {
   box-sizing: border-box;
+  max-width: 1440px;
 }
 
 html {
@@ -117,7 +118,7 @@ h2 {
   color: #7F55FF;
 }
 
-@media (max-width: 1339px) {
+@media (max-width: 800px) {
   .hamburger-menu {
     position: fixed;
     top: 20px;
@@ -174,6 +175,14 @@ h2 {
     flex-direction: column;
     gap: 0;
   }
+}
+
+.hero {
+  width: 100%;
+}
+
+img[src="hero-image"] {
+  height: 805px;
 }
 
 main {
@@ -311,14 +320,46 @@ h3 {
 .tip {
   width: 25%;
   text-align: center;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 800px) {
+  .tip {
+    width: 50%;
+  }
 }
 
 .greeting {
   padding: 24px 0;
+  width: 96%;
+}
+
+.greeting h4 {
+  text-align: center;
+}
+
+.greet-contents {
+  text-align: center;
 }
 
 .profile {
   border-radius: 8px;
+}
+
+@media (max-width: 800px) {
+  .greeting h4,
+  .greeting p {
+    text-align: center;
+  }
+
+  .greet-image {
+    text-align: center;
+  }
+
+  .greet-contents {
+    width: 70%;
+    margin: 0 auto;
+  }
 }
 
 .events {
@@ -339,12 +380,28 @@ h3 {
   text-align: center;
 }
 
-@media (max-width: 1339px){
-  
+@media (max-width: 800px) {
+  .events {
+    flex-direction: column;
+  }
+
+  .event {
+    width: 100%;
+    padding-bottom: 24px;
+  }
+
+  .latest {
+    width: 100%;
+  }
 }
 
 .book {
   padding: 24px 0;
+  width: 96%;
+}
+
+.book h4 {
+  text-align: center;
 }
 
 .book-section {
@@ -356,15 +413,42 @@ h3 {
   width: 50%;
 }
 
-.book-content {
+.book-contents {
   width: 50%;
   text-align: center;
+}
+
+.book-content {
+  width: 80%;
 }
 
 .purchase {
   background: none;
   color: white;
   border: 1px solid white;
+}
+
+@media (max-width: 800px) {
+  .book h4 {
+    text-align: center;
+  }
+
+  .book-section {
+    flex-direction: column;
+  }
+
+  .book-images {
+    width: 100%;
+    text-align: center;
+  }
+
+  .book-contents {
+    width: 100%;
+  }
+
+  .book-content {
+    margin: 0 auto;
+  }
 }
 
 footer {
