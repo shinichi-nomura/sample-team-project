@@ -30,11 +30,97 @@
                     <li class="nav-4"><a href="#book">著書</a></li>
                     <li class="nav-5"><a href="#about">個性心理學研究所湘南支所</a></li>
                     <li class="nav-6 active"><a href="contact.html">お問い合わせ<span>お仕事依頼</span></a></li>
-                    <!-- <li class="nav-7"><a href="#work">お仕事依頼</a></li> -->
                 </ul>
             </nav>
         </div>
     </header>
+    <img src="contact-background">
+    <section class="contact-form">
+        <div class="contact">
+            <div class="contact-title">
+                <h2>お問い合わせ<br>お仕事依頼</h2>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="field">
+                        <div class="label-row">
+                            <label for="contact-lastName">苗字</label>
+                            <span class="required">必須</span>
+                        </div>
+                        <input type="text" id="lastName" name="name">
+                    </div>
+                </div>
+                <div class="form-group forms">
+                    <div class="field">
+                        <div class="label-row">
+                            <label for="contact-firstName">お名前</label>
+                            <span class="required">必須</span>
+                        </div>
+                        <input type="text" id="firstName" name="name">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="contact-lastName">みょうじ</label>
+                        <span class="required">必須</span>
+                    </div>
+                    <input type="text" id="lastName-check" name="name">
+                </div>
+                <div class="form-group forms">
+                    <div class="label-row">
+                        <label for="contact-firstName">おなまえ</label>
+                        <span class="required">必須</span>
+                    </div>
+                    <input type="text" id="firstName-check" name="name">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label-row">
+                    <label for="contact-email">メールアドレス</label>
+                    <span class="required">必須</span>
+                </div>
+                <input type="email" id="contact-email" name="email">
+            </div>
+            <div class="form-group">
+                <div class="label-row">
+                    <label for="email-check">メールアドレス(確認)</label>
+                    <span class="required">必須</span>
+                </div>
+                <input type="email" id="email-check" name="email">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="contact-tell">電話番号</label>
+                    <input type="text" id="contact-tell" name="phone">
+                </div>
+                <div class="form-group forms">
+                    <label for="contact-tell">携帯電話番号</label>
+                    <input type="text" id="contact-phone" name="phone">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address">住所</label>
+                <img src="post" alt="郵便番号">
+                <input type="text" id="contact-address">
+                <input type="text" id="address-search">
+                <label for="prefecture">都道府県</label>
+                <select id="prefecture"></select>
+                <label for="municipality">市区町村番地</label>
+                <input type="text" id="municipality">
+                <label for="building">建物・部屋名</label>
+                <input type="text" id="building">
+            </div>
+            <div class="form-group">
+                <div class="label-row">
+                    <label for="contact-details">内容</label>
+                    <span class="required">必須</span>
+                </div>
+                <textarea></textarea>
+            </div>
+        </div>
+    </section>
     <script src="../js/main.js"></script>
 </body>
 
