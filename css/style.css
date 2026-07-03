@@ -462,11 +462,12 @@ footer {
   padding: 24px 0;
   width: 96%;
   text-align: center;
+  padding-top: 80px;
 }
 
 .first-greet h2 {
   color: #F30081;
-  text-shadow:0.6px 0 white;
+  text-shadow: 0.6px 0 white;
   font-weight: 500;
   margin: 0 0 2px 0;
 }
@@ -474,7 +475,7 @@ footer {
 .name {
   display: inline-block;
   color: white;
-  text-shadow:1px 0 black;
+  text-shadow: 1px 0 black;
   background: #F30081;
   padding: 4px 8px;
   border-radius: 12px;
@@ -507,7 +508,7 @@ footer {
 
 .with-pegasus h2 {
   color: #F30081;
-  text-shadow:0.6px 0 white;
+  text-shadow: 0.6px 0 white;
   font-weight: 500;
   margin: 0 0 2px 0;
   font-size: 32px;
@@ -515,7 +516,7 @@ footer {
 
 .with-pegasus .title-3 {
   color: white;
-  text-shadow:0.6px 0 black;
+  text-shadow: 0.6px 0 black;
   font-weight: 500;
   margin: 0 0 2px 0;
   font-size: 32px;
@@ -527,4 +528,82 @@ footer {
   font-weight: 500;
   margin: 0 0 2px 0;
   font-size: 32px;
+}
+
+/*contact-page*/
+.contact-form {
+  padding-top: 80px;
+}
+
+.contact {
+  background-color: rgba(245, 240, 255, 0.35);
+  z-index: 1002;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.contact-title {
+  text-align: center;
+}
+
+.contact-form h2 {
+  display: inline-block;
+  color: black;
+  text-shadow: 0.5px 0 white;
+  background-color: rgba(245, 240, 255, 0.1);
+  margin: 8px;
+}
+
+.form-row {
+  display: flex;
+  gap: 32px;
+}
+
+.form-group {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  justify-content: center;
+  margin:24px 24px;
+}
+
+.field {
+  width: 400px;
+}
+
+.field input {
+  width: 100%;
+}
+
+.form-row .form-group {
+  flex: 1;
+  width: 50%;
+}
+
+.label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+label {
+  color: black;
+  text-shadow: 0.5px 0 white;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.required {
+  margin: 0;
+  padding: 2px 4px 3px;
+  line-height: 1;
+  color: white;
+  background: #F30081;
+  position: relative;
+  top: -4px;
+}
+
+input {
+  width: 400px;
+  height: 40px;
 }
