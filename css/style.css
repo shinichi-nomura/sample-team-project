@@ -31,12 +31,6 @@ header {
   z-index: 1000;
 }
 
-/* .container {
-  max-width: 1440px;
-  width: 100%;
-  margin: 0 auto;
-} */
-
 header a {
   text-decoration: none;
 }
@@ -352,6 +346,7 @@ h3 {
 }
 
 @media (max-width: 800px) {
+
   .greeting h4,
   .greeting p {
     text-align: center;
@@ -460,4 +455,76 @@ footer {
   background: pink;
   padding: 16px;
   color: black;
+}
+
+/*first-page*/
+.first-greet {
+  padding: 24px 0;
+  width: 96%;
+  text-align: center;
+}
+
+.first-greet h2 {
+  color: #F30081;
+  text-shadow:0.6px 0 white;
+  font-weight: 500;
+  margin: 0 0 2px 0;
+}
+
+.name {
+  display: inline-block;
+  color: white;
+  text-shadow:1px 0 black;
+  background: #F30081;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.title-1 {
+  font-size: 22px;
+}
+
+.title-2 {
+  font-size: 32px;
+}
+
+.mirror {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-mirror {
+  width: 50%;
+}
+
+.right-mirror {
+  width: 50%;
+}
+
+.with-pegasus {
+  text-align: center;
+}
+
+.with-pegasus h2 {
+  color: #F30081;
+  text-shadow:0.6px 0 white;
+  font-weight: 500;
+  margin: 0 0 2px 0;
+  font-size: 32px;
+}
+
+.with-pegasus .title-3 {
+  color: white;
+  text-shadow:0.6px 0 black;
+  font-weight: 500;
+  margin: 0 0 2px 0;
+  font-size: 32px;
+}
+
+.with-pegasus .title-4 {
+  color: #00E5FF;
+  text-shadow: 0.6px 0 black;
+  font-weight: 500;
+  margin: 0 0 2px 0;
+  font-size: 32px;
 }
