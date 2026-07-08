@@ -68,3 +68,11 @@ for (let i = 0; i < count; i++) {
     container.appendChild(p);
     //作った粒を.particlesの中に入れる
 }
+//contact-form
+const form = document.getElementById("contactForm");
+form.addEventListener("submit", function (e) {
+    if (!form.checkValidity()) {
+        e.preventDefault();
+        alert("必須項目をすべて入力してください。");
+    }
+});
