@@ -36,7 +36,7 @@
     </header>
     <img src="contact-background">
     <section class="contact-form">
-        <div class="contact">
+        <form id="contactForm" class="contact">
             <div class="contact-title">
                 <h2>お問い合わせ<br>お仕事依頼</h2>
             </div>
@@ -47,33 +47,37 @@
                             <label for="contact-lastName">苗字</label>
                             <span class="required">必須</span>
                         </div>
-                        <input type="text" id="lastName" name="name">
+                        <input type="text" id="lastName" name="name" required>
                     </div>
                 </div>
-                <div class="form-group forms">
+                <div class="form-group">
                     <div class="field">
                         <div class="label-row">
                             <label for="contact-firstName">お名前</label>
                             <span class="required">必須</span>
                         </div>
-                        <input type="text" id="firstName" name="name">
+                        <input type="text" id="firstName" name="name" required>
                     </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <div class="label-row">
-                        <label for="contact-lastName">みょうじ</label>
-                        <span class="required">必須</span>
+                    <div class="field">
+                        <div class="label-row">
+                            <label for="contact-lastName">みょうじ</label>
+                            <span class="required">必須</span>
+                        </div>
+                        <input type="text" id="lastName-check" name="name" required>
                     </div>
-                    <input type="text" id="lastName-check" name="name">
                 </div>
-                <div class="form-group forms">
-                    <div class="label-row">
-                        <label for="contact-firstName">おなまえ</label>
-                        <span class="required">必須</span>
+                <div class="form-group">
+                    <div class="field">
+                        <div class="label-row">
+                            <label for="contact-firstName">おなまえ</label>
+                            <span class="required">必須</span>
+                        </div>
+                        <input type="text" id="firstName-check" name="name" required>
                     </div>
-                    <input type="text" id="firstName-check" name="name">
                 </div>
             </div>
             <div class="form-group">
@@ -81,45 +85,53 @@
                     <label for="contact-email">メールアドレス</label>
                     <span class="required">必須</span>
                 </div>
-                <input type="email" id="contact-email" name="email">
+                <input type="email" id="contact-email" name="email" required>
             </div>
             <div class="form-group">
                 <div class="label-row">
                     <label for="email-check">メールアドレス(確認)</label>
                     <span class="required">必須</span>
                 </div>
-                <input type="email" id="email-check" name="email">
+                <input type="email" id="email-check" name="email" required>
             </div>
             <div class="form-row">
+                <div class="field">
+                    <div class="form-group">
+                        <label for="contact-tell">電話番号</label>
+                        <input type="text" id="contact-tell" name="phone">
+                    </div>
+                </div>
                 <div class="form-group">
-                    <label for="contact-tell">電話番号</label>
-                    <input type="text" id="contact-tell" name="phone">
+                    <div class="field">
+                        <label for="contact-tell">携帯電話番号</label>
+                        <input type="text" id="contact-phone" name="phone">
+                    </div>
                 </div>
-                <div class="form-group forms">
-                    <label for="contact-tell">携帯電話番号</label>
-                    <input type="text" id="contact-phone" name="phone">
-                </div>
+
             </div>
             <div class="form-group">
                 <label for="address">住所</label>
                 <img src="post" alt="郵便番号">
-                <input type="text" id="contact-address">
-                <input type="text" id="address-search">
+                <input type="text" id="contact-address" name="postalCode">
+                <input type="text" id="address-search" name="addressSearch">
                 <label for="prefecture">都道府県</label>
-                <select id="prefecture"></select>
+                <select id="prefecture" name="prefecture"></select>
                 <label for="municipality">市区町村番地</label>
-                <input type="text" id="municipality">
+                <input type="text" id="municipality" name="municipality">
                 <label for="building">建物・部屋名</label>
-                <input type="text" id="building">
+                <input type="text" id="building" name="building">
             </div>
             <div class="form-group">
                 <div class="label-row">
                     <label for="contact-details">内容</label>
                     <span class="required">必須</span>
                 </div>
-                <textarea></textarea>
+                <textarea id="contact-details" name="details" required></textarea>
             </div>
-        </div>
+            <div class="decision-button">
+                <button type="submit" class="decision">決定</button>
+            </div>
+        </form>
     </section>
     <script src="../js/main.js"></script>
 </body>
