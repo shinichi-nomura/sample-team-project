@@ -17,18 +17,32 @@ body {
   padding-top: 80px;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.wrapper {
+  max-width: 1440px;
   width: 100%;
-  padding: 0 24px;
-  background: black;
+  margin: 0 auto;
+  background: #050816;
+}
 
+header {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  background: black;
   z-index: 1000;
+}
+
+.header-inner {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 24px;
 }
 
 header a {
@@ -176,12 +190,36 @@ h2 {
   }
 }
 
-.hero {
-  width: 100%;
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
-img[src="hero-image"] {
+.hero {
+  position: relative;
+  width: 100%;
   height: 805px;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0 20px;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-logo {
+  position: absolute;
+  z-index: 2;
+}
+
+.hero h2 {
+  position: absolute;
+  z-index: 2;
 }
 
 main {
@@ -329,20 +367,50 @@ h3 {
 }
 
 .greeting {
-  padding: 24px 0;
+  width: 100%;
+}
+
+.greeting-image {
   width: 96%;
+  margin: 0 auto;
+  background-image: url("../images/goaisatu.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  min-height: 800px;
+  position: relative;
 }
 
 .greeting h4 {
   text-align: center;
+  z-index: 2;
+  position: absolute;
+  top: 20px;
+  left: 48%;
+}
+
+.greet-image {
+  position: absolute;
+  top: 40px;
+  left: 6%;
 }
 
 .greet-contents {
   text-align: center;
+  z-index: 2;
+  position: absolute;
+  top: 12%;
+  left: 36%;
+}
+
+.greet-contents p {
+  padding-bottom: 8px;
 }
 
 .profile {
   border-radius: 8px;
+  z-index: 2;
 }
 
 @media (max-width: 800px) {
