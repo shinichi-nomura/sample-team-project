@@ -21,7 +21,6 @@ body {
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
-  background: #050816;
 }
 
 header {
@@ -58,6 +57,7 @@ header h1 {
 }
 
 header img {
+  object-fit: cover;
   vertical-align: bottom;
 }
 
@@ -190,36 +190,44 @@ h2 {
   }
 }
 
-.container {
-  max-width: 1440px;
-  margin: 0 auto;
-}
-
 .hero {
   position: relative;
   width: 100%;
   height: 805px;
-  display: flex;
   overflow: hidden;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0 20px;
+  margin-bottom: 64px;
 }
 
 .hero-image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 1;
 }
 
-.hero-logo {
+.hero-frame {
   position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   z-index: 2;
 }
 
-.hero h2 {
+.logo-image {
   position: absolute;
-  z-index: 2;
+  top: 20px;
+  left: 20px;
+  z-index: 3;
+}
+
+.logo-content {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 3;
 }
 
 main {
@@ -328,89 +336,79 @@ main p {
   }
 }
 
-.eightTips {
-  background: skyblue;
-  z-index: 1002;
-  padding: 24px 0;
-}
-
-h3 {
-  margin: 0;
-  text-align: center;
-  font-size: 30px;
-  font-weight: normal;
-}
-
-.eightTips p {
-  margin: 0;
-  color: black;
-  text-shadow: 1px 1px 0 white;
-  justify-content: center;
-}
-
-.tips {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.tip {
-  width: 25%;
-  text-align: center;
-  margin-bottom: 8px;
-}
-
-@media (max-width: 800px) {
-  .tip {
-    width: 50%;
-  }
-}
-
 .greeting {
-  width: 100%;
+  position: relative;
+  width: 96%;
+  margin: 0 auto 64px auto;
 }
 
 .greeting-image {
-  width: 96%;
-  margin: 0 auto;
-  background-image: url("../images/goaisatu.png");
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  object-fit: cover;
-  min-height: 800px;
   position: relative;
+  margin: 0 auto;
+  z-index: 1;
 }
 
 .greeting h4 {
   text-align: center;
   z-index: 2;
   position: absolute;
-  top: 20px;
-  left: 48%;
+  top: 40px;
+  left: 47%;
+  font-size: 24px;
+  font-weight: normal;
 }
 
-.greet-image {
+.greet {
   position: absolute;
-  top: 40px;
-  left: 6%;
+  top: 48px;
+  left: 48px;
+  z-index: 2;
+}
+
+.profile-R {
+  position: absolute;
+  bottom: 172px;
+  right: 32px;
+  z-index: 3;
+}
+
+.profile-L {
+  position: absolute;
+  bottom: 36px;
+  right: 94px;
+  z-index: 2;
+}
+
+.greet p {
+  text-align: center;
 }
 
 .greet-contents {
   text-align: center;
   z-index: 2;
   position: absolute;
-  top: 12%;
-  left: 36%;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 50%;
 }
 
 .greet-contents p {
-  padding-bottom: 8px;
+  line-height: 2.5;
+  font-size: 16px;
+  margin-bottom: 12px;
 }
 
 .profile {
-  border-radius: 8px;
-  z-index: 2;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.profile img {
+  display: block;
 }
 
 @media (max-width: 800px) {
@@ -430,11 +428,68 @@ h3 {
   }
 }
 
+
+.eightTips {
+  background: skyblue;
+  z-index: 1002;
+  margin-bottom: 64px;
+}
+
+h3 {
+  margin: 0;
+  text-align: center;
+  font-size: 30px;
+  font-weight: normal;
+}
+
+.tips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.tip {
+  position: relative;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+  flex: 0 0 24%;
+}
+
+.tip img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.tip p {
+  text-align: center;
+  color: black;
+  text-shadow: 1px 1px 0 white;
+  font-size: 24px;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+@media (max-width: 800px) {
+  .tip {
+    width: 50%;
+  }
+}
+
 .events {
   display: flex;
   flex-direction: row;
   background: skyblue;
-  z-index: 1002;
+  z-index: 2;
   padding: 24px 0;
 }
 
