@@ -15,6 +15,9 @@ body {
   min-height: 100vh;
   color: white;
   padding-top: 80px;
+  font-family: "sicselifgothicre", sans-serif;
+  font-style: normal;
+  font-weight: 400;
 }
 
 .wrapper {
@@ -428,15 +431,55 @@ main p {
   }
 }
 
+.suiso {
+  position: relative;
+  width: 96%;
+  margin: 0 auto 64px auto;
+}
+
+.suiso-image {
+  position: relative;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.suiso-content {
+  text-align: center;
+  z-index: 2;
+  position: absolute;
+  top: 60px;
+  left: 40%;
+  /* font-size: 24px; */
+}
+
+.suiso h3 {
+  color: #bde3ff;
+  font-weight: normal;
+}
+
+.suiso1 {
+  position: absolute;
+  bottom: 100px;
+  left: 80px;
+  z-index: 2;
+}
+
+.suiso2 {
+  position: absolute;
+  bottom: 100px;
+  right: 80px;
+  z-index: 2;
+}
 
 .eightTips {
-  background: skyblue;
-  z-index: 1002;
+  /* background: skyblue;
+  z-index: 1002; */
+  padding-bottom: 64px;
   margin-bottom: 64px;
 }
 
-h3 {
-  margin: 0;
+.eightTips h3 {
+  margin: 0 0 -76px 0;
   text-align: center;
   font-size: 30px;
   font-weight: normal;
@@ -455,12 +498,12 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: -120px;
   flex: 0 0 24%;
 }
 
 .tip img {
-  width: 100%;
+  width: 140%;
   height: auto;
   display: block;
   margin: 0 auto;
