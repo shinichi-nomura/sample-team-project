@@ -11,7 +11,7 @@ html {
 body {
   font-family: sans-serif;
   margin: 0px;
-  background: #050816;
+  background: black;
   min-height: 100vh;
   color: white;
   padding-top: 80px;
@@ -539,8 +539,6 @@ main p {
 
 .eightTips {
   width: 96%;
-  /* background: skyblue;
-  z-index: 1002; */
   padding-bottom: 64px;
   margin-bottom: 64px;
 }
@@ -719,22 +717,16 @@ main p {
   }
 }
 
-/* .copyright {
-  width: 100%;
-  margin: 0 auto;
-} */
-
 footer {
-  background: pink;
-  padding: 16px;
-  color: black;
+  background: black;
+  padding: 32px 0 64px 0;
 }
 
 .copyright-image {
   position: relative;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 96%;
   object-fit: cover;
   object-position: center;
   z-index: 2;
@@ -743,20 +735,44 @@ footer {
 .copyright-content {
   position: relative;
   top: -200px;
-  left: 24%;
   color: white;
+  text-align: center;
   font-size: 24px;
   font-weight: normal;
   letter-spacing: 2px;
   z-index: 2;
 }
 
-footer a {
+.icon-image {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 96%;
+  margin-top: -185px;
+}
+
+.sns-icon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.privacy-policy {
+  width: 96%;
   text-align: center;
 }
 
+footer a {
+  display: block;
+  text-decoration: none;
+  color: white;
+}
+
 small {
-  text-align: center;
+  display: block;
+  color: white;
 }
 
 /*first-page*/
