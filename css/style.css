@@ -21,22 +21,24 @@ body {
 }
 
 .wrapper {
-  max-width: 1440px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
 }
 
 header {
+  max-width: 1200px;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background: black;
+  padding: 4px 0;
+  background: skyblue;
   z-index: 1000;
 }
 
 .header-inner {
-  max-width: 1440px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
 
@@ -196,7 +198,7 @@ h2 {
 .hero {
   position: relative;
   width: 100%;
-  height: 805px;
+  height: 750px;
   overflow: hidden;
   margin-bottom: 64px;
 }
@@ -342,33 +344,33 @@ main p {
 .greeting {
   position: relative;
   width: 96%;
+  max-width: 1200px;
   margin: 0 auto 64px auto;
 }
 
 .greeting-image {
-  position: relative;
-  margin: 0 auto;
-  z-index: 1;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .greeting h4 {
-  text-align: center;
-  z-index: 2;
   position: absolute;
-  top: 36px;
-  left: 46%;
-  font-size: 36px;
+  top: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(22px, 2.2vw, 36px);
   font-weight: normal;
 }
 
 .greet {
   position: absolute;
-  top: 48px;
-  left: 48px;
-  z-index: 2;
+  top: 5%;
+  left: 3%;
 }
 
 .greet-image {
+  width: clamp(90px, 12vw, 160px);
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
 }
 
@@ -377,7 +379,6 @@ main p {
   position: absolute;
   bottom: 196px;
   right: 32px;
-  z-index: 3;
 }
 
 .profile-L {
@@ -385,7 +386,6 @@ main p {
   position: absolute;
   bottom: 60px;
   right: 94px;
-  z-index: 2;
 }
 
 .greet p {
@@ -394,14 +394,13 @@ main p {
 
 .greet-content {
   text-align: center;
-  z-index: 2;
   position: absolute;
-  top: 24%;
+  top: 23%;
   left: 50%;
   transform: translateX(-50%);
-  width: 50%;
+  width: 52%;
   line-height: 2.5;
-  font-size: 20px;
+  font-size: clamp(14px, 1.4vw, 20px);
   font-weight: normal;
   letter-spacing: 1px;
 }
@@ -416,9 +415,12 @@ main p {
 .profile img {
   display: block;
   position: absolute;
-  bottom: 148px;
-  left: 40%;
-  z-index: 2;
+  width: 22%;
+  max-width: 295px;
+  height: auto;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 @media (max-width: 800px) {
@@ -442,12 +444,14 @@ main p {
   position: relative;
   width: 96%;
   margin: 0 auto 64px auto;
+  max-width: 1200px;
 }
 
 .suiso-image {
-  position: relative;
+  width: 100%;
+  height: auto;
+  display: block;
   margin: 0 auto;
-  z-index: 1;
 }
 
 .suiso-content {
@@ -462,30 +466,34 @@ main p {
 .suiso h3 {
   color: #A6FFF8;
   text-shadow: 1px 1px 0 #0033FF;
+  font-size: clamp(22px, 2.2vw, 36px);
   font-weight: normal;
-  font-size: 48px;
 }
 
 .suiso p {
   color: #BDF8FF;
   text-shadow: 1px 1px 0 #0033FF;
+  font-size: clamp(22px, 2.2vw, 32px);
   font-weight: normal;
-  font-size: 32px;
   margin-top: -24px;
 }
 
 .suiso1 {
+  width: 20%;
+  max-width: 277px;
+  height: auto;
+  left: 6%;
+  bottom: 17%;
   position: absolute;
-  bottom: 154px;
-  left: 80px;
-  z-index: 2;
 }
 
 .suiso2 {
+  width: 19%;
+  max-width: 265px;
+  height: auto;
+  right: 6%;
+  bottom: 17%;
   position: absolute;
-  bottom: 154px;
-  right: 80px;
-  z-index: 2;
 }
 
 .suiso-button {
@@ -494,50 +502,56 @@ main p {
   padding: 0;
   margin: 0;
   cursor: pointer;
-  appearance: none;
-  position: absolute;
-  bottom: 120px;
-  left: 43%;
-  z-index: 2;
-}
-
-.suiso-button img {
   display: block;
+  position: absolute;
+  width: 22%;
+  max-width: 295px;
+  height: auto;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .koseisinrigaku {
   position: relative;
   width: 96%;
   margin: 0 auto 64px auto;
+  max-width: 1200px;
 }
 
 .koseisinrigaku-image {
+  width: 100%;
+  height: auto;
+  display: block;
   position: relative;
   margin: 0 auto;
-  z-index: 1;
 }
 
 .koseisinrigaku h3 {
   color: white;
   text-shadow: 4px 4px 8px black;
   font-weight: normal;
-  font-size: 52px;
   position: absolute;
-  top: 36%;
-  left: 41%;
-  z-index: 2;
+  top: 38%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(22px, 2.2vw, 60px);
 }
 
 .koseisinrigaku p {
-  font-size: 24px;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   position: absolute;
-  bottom: 54px;
-  left: 22%;
-  z-index: 2;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(22px, 2.2vw, 8px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .eightTips {
+  max-width: 1200px;
   width: 96%;
   padding-bottom: 64px;
   margin-bottom: 64px;
@@ -594,6 +608,7 @@ main p {
 }
 
 .events {
+  max-width: 1200px;
   display: flex;
   flex-direction: row;
   background: skyblue;
@@ -627,28 +642,29 @@ main p {
 }
 
 .book {
+  max-width: 1200px;
   position: relative;
   width: 96%;
   margin: 0 auto 64px auto;
   padding: 24px 0;
-  width: 96%;
 }
 
 .book-background {
+  width: 100%;
+  height: auto;
+  display: block;
   position: relative;
   margin: 0 auto;
-  z-index: 1;
 }
 
 .book h4 {
   position: absolute;
-  top: 24px;
+  top: 2%;
   left: 46%;
   text-align: center;
-  font-size: 40px;
+  font-size: clamp(22px, 2.2vw, 40px);
   font-weight: normal;
   letter-spacing: 2px;
-  z-index: 3;
 }
 
 .book-section {
@@ -657,10 +673,11 @@ main p {
 }
 
 .book-images {
+  width: 50%;
+  height: auto;
   position: absolute;
   top: 18%;
   left: 8%;
-  z-index: 3;
 }
 
 .book-contents {
@@ -677,21 +694,19 @@ main p {
   position: absolute;
   top: 24%;
   right: 24%;
-  font-size: 24px;
-  z-index: 3;
+  font-size: clamp(22px, 2.2vw, 24px);
 }
 
 .purchase {
   position: absolute;
   bottom: 18%;
   right: 24%;
-  font-size: 24px;
+  font-size: clamp(22px, 2.2vw, 24px);
   letter-spacing: 2px;
   padding: 4px;
   background: none;
   color: white;
   border: 1px solid white;
-  z-index: 3;
 }
 
 @media (max-width: 800px) {
@@ -718,29 +733,32 @@ main p {
 }
 
 footer {
+  max-width: 1200px;
   background: black;
   padding: 32px 0 64px 0;
 }
 
 .copyright-image {
+  width: 100%;
+  height: auto;
+  display: block;
   position: relative;
   top: 0;
   left: 0;
-  width: 96%;
   object-fit: cover;
   object-position: center;
-  z-index: 2;
+  /* z-index: 2; */
 }
 
 .copyright-content {
   position: relative;
-  top: -200px;
+  top: -160px;
   color: white;
   text-align: center;
   font-size: 24px;
   font-weight: normal;
   letter-spacing: 2px;
-  z-index: 2;
+  /* z-index: 2; */
 }
 
 .icon-image {
@@ -749,7 +767,7 @@ footer {
   justify-content: center;
   align-items: center;
   width: 96%;
-  margin-top: -185px;
+  margin-top: -175px;
 }
 
 .sns-icon {
