@@ -14,31 +14,32 @@ body {
   background: black;
   min-height: 100vh;
   color: white;
-  padding-top: 80px;
+  /* padding-top: 80px; */
   font-family: "sicselifgothicre", sans-serif;
   font-style: normal;
   font-weight: 400;
 }
 
 .wrapper {
-  max-width: 1200px;
+  max-width: 1240px;
   width: 100%;
   margin: 0 auto;
 }
 
 header {
-  max-width: 1200px;
+  max-width: 1240px;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
   padding: 4px 0;
-  background: skyblue;
+  background: black;
   z-index: 1000;
 }
 
 .header-inner {
-  max-width: 1200px;
+  max-width: 1240px;
   width: 100%;
   margin: 0 auto;
 
@@ -51,6 +52,8 @@ header {
 
 header a {
   text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
 #top {
@@ -77,6 +80,18 @@ h2 {
 
 .nav-menu {
   margin-right: 24px;
+}
+
+.nav-list a {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .4s ease, filter .4s ease;
+}
+
+.nav-list a:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 12px currentColor);
 }
 
 .nav-list {
@@ -115,23 +130,24 @@ h2 {
   color: #FF7700;
 }
 
-.nav-3 {
+.nav-2 span {
+  margin-left: 16px;
   color: #E9E100;
 }
 
-.nav-4 {
+.nav-3 {
   color: #00FF11;
 }
 
-.nav-5 {
+.nav-4 {
   color: #00E5FF;
 }
 
-.nav-6 {
+.nav-5 {
   color: #006FFF;
 }
 
-.nav-6 span {
+.nav-5 span {
   margin-left: 16px;
   color: #7F55FF;
 }
@@ -198,9 +214,9 @@ h2 {
 .hero {
   position: relative;
   width: 100%;
-  height: 750px;
+  height: clamp(350px, 65vw, 750px);
   overflow: hidden;
-  margin-bottom: 64px;
+  margin: 98px 0 64px 0;
 }
 
 .hero-image {
@@ -209,7 +225,6 @@ h2 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 1;
 }
 
 .hero-frame {
@@ -218,21 +233,14 @@ h2 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 2;
-}
-
-.logo-image {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 3;
 }
 
 .logo-content {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-  z-index: 3;
+  bottom: 12%;
+  right: 6%;
+  width: clamp(180px, 38vw, 420px);
+  height: auto;
 }
 
 main {
@@ -344,7 +352,7 @@ main p {
 .greeting {
   position: relative;
   width: 96%;
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto 64px auto;
 }
 
@@ -366,26 +374,12 @@ main p {
 .greet {
   position: absolute;
   top: 5%;
-  left: 3%;
+  left: 5%;
 }
 
 .greet-image {
-  width: clamp(90px, 12vw, 160px);
+  width: clamp(90px, 12vw, 136px);
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
-}
-
-.profile-R {
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
-  position: absolute;
-  bottom: 196px;
-  right: 32px;
-}
-
-.profile-L {
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
-  position: absolute;
-  bottom: 60px;
-  right: 94px;
 }
 
 .greet p {
@@ -444,7 +438,7 @@ main p {
   position: relative;
   width: 96%;
   margin: 0 auto 64px auto;
-  max-width: 1200px;
+  max-width: 1240px;
 }
 
 .suiso-image {
@@ -516,7 +510,7 @@ main p {
   position: relative;
   width: 96%;
   margin: 0 auto 64px auto;
-  max-width: 1200px;
+  max-width: 1240px;
 }
 
 .koseisinrigaku-image {
@@ -551,7 +545,7 @@ main p {
 }
 
 .eightTips {
-  max-width: 1200px;
+  max-width: 1240px;
   width: 96%;
   padding-bottom: 64px;
   margin-bottom: 64px;
@@ -608,7 +602,7 @@ main p {
 }
 
 .events {
-  max-width: 1200px;
+  max-width: 1240px;
   display: flex;
   flex-direction: row;
   background: skyblue;
@@ -642,7 +636,7 @@ main p {
 }
 
 .book {
-  max-width: 1200px;
+  max-width: 1240px;
   position: relative;
   width: 96%;
   margin: 0 auto 64px auto;
@@ -674,10 +668,15 @@ main p {
 
 .book-images {
   width: 50%;
-  height: auto;
   position: absolute;
   top: 18%;
   left: 8%;
+}
+
+.book-image {
+  width: 367px;
+  height: 526px;
+  text-align: center;
 }
 
 .book-contents {
@@ -733,7 +732,7 @@ main p {
 }
 
 footer {
-  max-width: 1200px;
+  max-width: 1240px;
   background: black;
   padding: 32px 0 64px 0;
 }
@@ -747,7 +746,6 @@ footer {
   left: 0;
   object-fit: cover;
   object-position: center;
-  /* z-index: 2; */
 }
 
 .copyright-content {
@@ -758,7 +756,6 @@ footer {
   font-size: 24px;
   font-weight: normal;
   letter-spacing: 2px;
-  /* z-index: 2; */
 }
 
 .icon-image {
@@ -767,7 +764,7 @@ footer {
   justify-content: center;
   align-items: center;
   width: 96%;
-  margin-top: -175px;
+  margin: -156px 0 8px 0;
 }
 
 .sns-icon {
@@ -786,6 +783,7 @@ footer a {
   display: block;
   text-decoration: none;
   color: white;
+  margin-bottom: 2px;
 }
 
 small {
