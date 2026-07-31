@@ -6,63 +6,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>first-page</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function (d) {
+            var config = {
+                kitId: 'wgy8pla',
+                scriptTimeout: 3000,
+                async: true
+            },
+                h = d.documentElement, t = setTimeout(function () { h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive"; }, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a; h.className += " wf-loading"; tk.src = 'https://use.typekit.net/' + config.kitId + '.js'; tk.async = true; tk.onload = tk.onreadystatechange = function () { a = this.readyState; if (f || a && a != "complete" && a != "loaded") return; f = true; clearTimeout(t); try { Typekit.load(config) } catch (e) { } }; s.parentNode.insertBefore(tk, s)
+        })(document);
+    </script>
 </head>
 
 <body>
-    <header class="container">
-        <div class="header-logo">
-            <a href="../index.html">
-                <h1><img src="logo.png" alt="ロゴ画像"></h1>
-                <h2>ときめき神社♡LOVE</h2>
-            </a>
-        </div>
-        <div class="menu-wrapper">
-            <button class="hamburger-menu" aria-label="メニューを開く">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-            <nav class="nav-menu">
-                <ul class="nav-list">
-                    <li class="nav-1 active"><a href="first.html">初めての方へ</a></li>
-                    <li class="nav-2"><a href="event.html">イベント</a></li>
-                    <li class="nav-3"><a href="#latest">近況報告</a></li>
-                    <li class="nav-4"><a href="#book">著書</a></li>
-                    <li class="nav-5"><a href="#about">個性心理學研究所湘南支所</a></li>
-                    <li class="nav-6"><a href="contact.html">お問い合わせ<span>お仕事依頼</span></a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <img src="message-image">
-    <section class="first-greet">
-        <img src="profile-image" alt="プロフィール画像">
-        <p class="name">美羽</p>
-        <h2 class="title-1">★ようこそ★</h2>
-        <h2 class="title-1">ときめき神社♡ラブ 美羽の世界へ</h2>
-        <h2 class="title-2">「ときめき神社♡ラブ」</h2>
-        <h2 class="title-1">の起源</h2>
-    </section>
-    <section class="message">
-        <img src="frame">
-        <p></p>
-    </section>
-    <section class="mirror">
-        <img src="mirror-background">
-        <div class="left-mirror">
-            <img src="mirror-frame">
-        </div>
-        <div class="right-mirror">
-            <img src="mirror-frame">
-        </div>
-    </section>
-    <section class="with-pegasus">
-        <img src="pegasus-background">
-        <h2>「ときめき神社♡ラブ」</h2>
-        <h2 class="title-3">with</h2>
-        <h2 class="title-4">「ペガサスの湖」</h2>
-    </section>
-    <script src="../js/main.js"></script>
+    <div class="wrapper">
+        <div id="top"></div>
+        <header>
+            <div class="header-inner">
+                <div class="header-logo">
+                    <a href="../index.html">
+                        <h1><img src="../images/top-images/Rogo.png" alt="ロゴ画像" width="397" height="87" /></h1>
+                    </a>
+                </div>
+                <div class="menu-wrapper">
+                    <button class="hamburger-menu" aria-label="メニューを開く">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                    <nav class="nav-menu">
+                        <ul class="nav-list">
+                            <li class="nav-1">
+                                <a href="pages/first.html">初めての方へ</a>
+                            </li>
+                            <li class="nav-2">
+                                <a href="pages/event.html">イベント<span>近況報告</span></a>
+                            </li>
+                            <li class="nav-3"><a href="#book">著書</a></li>
+                            <li class="nav-4"><a href="#about">個性心理學研究所湘南支所</a></li>
+                            <li class="nav-5">
+                                <a href="pages/contact.html">お問い合わせ<span>お仕事依頼</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <section class="first-greet">
+            <img src="../images/more-images/hajimetenokata.png" class="message-background-1">
+            <img src="../images/top-images/Profile.png" alt="プロフィール画像" class="first-greet-image">
+            <p class="name">美羽</p>
+            <h3 class="title-1">★ようこそ★</h3>
+            <h3 class="title-2">ときめき神社♡ラブ 美羽の世界へ</h3>
+            <h2 class="title-3">「ときめき神社♡ラブ」</h2>
+            <h3 class="title-4">の起源</h3>
+        </section>
+        <section class="message">
+            <img src="frame">
+            <p></p>
+        </section>
+        <section class="mirror">
+            <img src="../images/more-images/hajimete.png" class="mirror-background">
+            <div class="left-mirror">
+                <img src="mirror-frame">
+            </div>
+            <div class="right-mirror">
+                <img src="mirror-frame">
+            </div>
+        </section>
+        <section class="with-pegasus">
+            <img src="pegasus-background">
+            <h2>「ときめき神社♡ラブ」</h2>
+            <h2 class="title-3">with</h2>
+            <h2 class="title-4">「ペガサスの湖」</h2>
+        </section>
+        <footer>
+      <img src="../images/top-images/Frame 85.png" class="copyright-image" />
+      <p class="copyright-content">本イラストは個性心理學研究所が作成したものではありません。</p>
+      <div class="icon-image">
+        <img src="../images/top-images/アセット 1 1.png" class="sns-icon" alt="LINEアイコン" width="77" height="77" />
+        <img src="../images/top-images/PC-SNSアイコン.png" class="sns-icon" alt="Instagramアイコン" width="77" height="77" />
+        <img src="../images/top-images/PC-SNSアイコン-1.png" class="sns-icon" alt="Xアイコン" width="77" height="77" />
+        <img src="../images/top-images/PC-SNSアイコン-2 (1).png" class="sns-icon" alt="TikTokアイコン" width="77" height="77" />
+        <img src="../images/top-images/PC-SNSアイコン-3.png" class="sns-icon" alt="Youtubeアイコン" width="77" height="77" />
+        <img src="../images/top-images/PC-SNSアイコン-4.png" class="sns-icon" alt="facebookアイコン" width="77" height="77" />
+      </div>
+      <div class="privacy-policy">
+        <a href="">プライバシーポリシー</a>
+        <small>Copyright (C) Miu All Rights Reserved.</small>
+      </div>
+    </footer>
+        <script src="../js/main.js"></script>
+    </div>
 </body>
 
 </html>
