@@ -6,42 +6,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>event & latest page</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function (d) {
+            var config = {
+                kitId: 'wgy8pla',
+                scriptTimeout: 3000,
+                async: true
+            },
+                h = d.documentElement, t = setTimeout(function () { h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive"; }, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a; h.className += " wf-loading"; tk.src = 'https://use.typekit.net/' + config.kitId + '.js'; tk.async = true; tk.onload = tk.onreadystatechange = function () { a = this.readyState; if (f || a && a != "complete" && a != "loaded") return; f = true; clearTimeout(t); try { Typekit.load(config) } catch (e) { } }; s.parentNode.insertBefore(tk, s)
+        })(document);
+    </script>
 </head>
 
 <body>
-    <header class="container">
-        <div class="header-logo">
-            <a href="../index.html">
-                <h1><img src="logo.png" alt="ロゴ画像"></h1>
-                <h2>ときめき神社♡LOVE</h2>
-            </a>
-        </div>
-        <div class="menu-wrapper">
-            <button class="hamburger-menu" aria-label="メニューを開く">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-            <nav class="nav-menu">
-                <ul class="nav-list">
-                    <li class="nav-1"><a href="first.html">初めての方へ</a></li>
-                    <li class="nav-2 active"><a href="event.html">イベント</a></li>
-                    <li class="nav-3 active"><a href="event.html">近況報告</a></li>
-                    <li class="nav-4"><a href="#book">著書</a></li>
-                    <li class="nav-5"><a href="#about">個性心理學研究所湘南支所</a></li>
-                    <li class="nav-6"><a href="contact.html">お問い合わせ<span>お仕事依頼</span></a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div class="wrapper">
+        <div id="top"></div>
+        <header>
+            <div class="header-inner">
+                <div class="header-logo">
+                    <a href="../index.html">
+                        <h1><img src="../images/top-images/Rogo.png" alt="ロゴ画像" width="397" height="87" /></h1>
+                    </a>
+                </div>
+                <div class="menu-wrapper">
+                    <button class="hamburger-menu" aria-label="メニューを開く">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                    <nav class="nav-menu">
+                        <ul class="nav-list">
+                            <li class="nav-1">
+                                <a href="pages/first.html">初めての方へ</a>
+                            </li>
+                            <li class="nav-2">
+                                <a href="pages/event.html">イベント<span>近況報告</span></a>
+                            </li>
+                            <li class="nav-3"><a href="#book">著書</a></li>
+                            <li class="nav-4"><a href="#about">個性心理學研究所湘南支所</a></li>
+                            <li class="nav-5">
+                                <a href="pages/contact.html">お問い合わせ<span>お仕事依頼</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
     <section class="event-page">
-        <div class="event">
+        <img src="../images/more-images/ibentohoukoku.png" class="event-background"/>
+        <div class="event-detail">
             <div class="event-title">
                 <h2>イベント・近況報告</h2>
+            </div>
+            <div class="event-content">
+                <p class="line-1">「義父との別れ」</p>
+                <p class="line-2">2025 年3 月 5 日死去3 月 7 日火葬</p>
+                <p class="line-1">「寒川神社参拝」</p>
+                <p class="line-2">3 月 8 日</p>
+                <p class="line-1">「ありがとうを伝えよう」</p>
+                <p class="line-2">3 月 9 日</p>
+                <p class="line-1">「震災から１５年」</p>
+                <p class="line-2">3 月 11 日</p>
+                <p class="line-1">「弥栄（いやさか）」</p>
+                <p class="line-2">3 月 23 日</p>
+                <p class="line-2">宇宙の金卵大鏡 369</p>
+                <p class="line-3">令和 9 年 9 月 9 日納品</p>
+                <p class="">3 月 20 日以降初めての動画<br>（斎名智子アワー）に繋がり植原戦士の<br>「金の卵が割れて、全身を金が流れ包むイメージ」<br>というメッセージから<br>『宇宙の金卵大鏡』製作依頼に繋がりました。<br>ルン・ルの会 植原先生が気になり、<br>検索すると日程表があり、 3/29 に新潟開催に参加しようと<br>2026 年 3 月 24 日、</p>
             </div>
         </div>
     </section>
     <script src="../js/main.js"></script>
+    </div>
 </body>
 
 </html>
