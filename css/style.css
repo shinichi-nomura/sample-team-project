@@ -14,7 +14,6 @@ body {
   background: black;
   min-height: 100vh;
   color: white;
-  /* padding-top: 80px; */
   font-family: "sicselifgothicre", sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -523,7 +522,10 @@ main p {
 
 .koseisinrigaku h3 {
   color: white;
-  text-shadow: 4px 4px 8px black;
+  text-shadow: 2px 2px 2px black, -2px -2px 2px black,
+    -2px 2px 2px black, 2px -2px 2px black,
+    2px 0px 2px black, -2px -0px 2px black,
+    0px 2px 2px black, 0px -2px 2px black;
   font-weight: normal;
   position: absolute;
   top: 38%;
@@ -542,6 +544,10 @@ main p {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-shadow: 1px 1px 1px black, -1px -1px 1px black,
+    -1px 1px 1px black, 1px -1px 1px black,
+    1px 0px 1px black, -1px -0px 1px black,
+    0px 1px 1px black, 0px -1px 1px black;
 }
 
 .eightTips {
@@ -603,21 +609,43 @@ main p {
 
 .events {
   max-width: 1240px;
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  background: skyblue;
-  z-index: 2;
+  /* background: skyblue; */
   padding: 24px 0;
+  gap: 32px;
+  margin-bottom: 64px;
 }
 
-.event {
-  width: 50%;
-  text-align: center;
-}
-
+.event,
 .latest {
-  width: 50%;
+  flex: 1;
   text-align: center;
+}
+
+.event h3,
+.latest h3 {
+  font-size: 32px;
+  font-weight: normal;
+  margin-bottom: 24px;
+}
+
+.event-contents,
+.latest-contents {
+  width: 60%;
+  background: gray;
+  border-radius: 8px;
+  padding: 24px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.event-contents p,
+.latest-contents p {
+  text-align: left;
+  margin: 0 0 24px;
+  line-height: 1.8;
+  font-size: 20px;
 }
 
 @media (max-width: 800px) {
@@ -796,7 +824,7 @@ small {
   position: relative;
   max-width: 1240px;
   width: 100%;
-  margin: 0 auto 64px;
+  margin: 0 auto 32px;
   text-align: center;
 }
 
@@ -826,7 +854,6 @@ small {
     -1px 1px 1px black, 1px -1px 1px black,
     1px 0px 1px black, -1px -0px 1px black,
     0px 1px 1px black, 0px -1px 1px black;
-  ;
   background: #F30081;
   padding: 4px 8px;
   border-radius: 24px;
@@ -875,7 +902,7 @@ small {
   position: relative;
   max-width: 1240px;
   width: 100%;
-  margin: 0 auto 64px;
+  margin: 0 auto 32px;
   display: flex;
   flex-direction: row;
 }
@@ -897,34 +924,133 @@ small {
   position: relative;
   max-width: 1240px;
   width: 100%;
-  margin: 0 auto 64px;
+  margin: 0 auto 32px;
   display: flex;
   flex-direction: row;
   text-align: center;
 }
 
-.with-pegasus h2 {
+.pegasus-background {
+  width: 100%;
+  display: block;
+}
+
+.pegasus-title-1 {
   color: #F30081;
-  text-shadow: 0.6px 0 white;
-  font-weight: 500;
+  text-shadow:
+    0.5px 0px 0.5px black,
+    -0.5px 0px 0.5px black,
+    0px 0.5px 0.5px black,
+    0px -0.5px 0.5px black,
+    1px 1px 2px black,
+    1px 1px 2px black,
+    1px 1px 2px black,
+    1px 1px 2px black;
+  font-weight: normal;
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  font-size: 65px;
   margin: 0 0 2px 0;
-  font-size: 32px;
 }
 
-.with-pegasus .title-3 {
+.pegasus-title-2 {
   color: white;
-  text-shadow: 0.6px 0 black;
-  font-weight: 500;
+  text-shadow:
+    0.5px 0px 0.5px black,
+    -0.5px 0px 0.5px black,
+    0px 0.5px 0.5px black,
+    0px -0.5px 0.5px black,
+    1px 1px 2px black,
+    1px 1px 2px black,
+    1px 1px 2px black,
+    1px 1px 2px black;
+  font-weight: normal;
+  position: absolute;
+  top: 10.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  font-size: 65px;
   margin: 0 0 2px 0;
-  font-size: 32px;
 }
 
-.with-pegasus .title-4 {
+.pegasus-title-3 {
   color: #00E5FF;
-  text-shadow: 0.6px 0 black;
-  font-weight: 500;
+  text-shadow:
+    0.5px 0px 0.5px black,
+    -0.5px 0px 0.5px black,
+    0px 0.5px 0.5px black,
+    0px -0.5px 0.5px black,
+    1px 1px 2px black,
+    1px 1px 2px black,
+    1px 1px 2px black,
+    1px 1px 2px black;
+  font-weight: normal;
+  position: absolute;
+  top: 14.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  font-size: 65px;
   margin: 0 0 2px 0;
-  font-size: 32px;
+}
+
+.pegasus-content-1 {
+  color: white;
+  text-shadow:
+    0.5px 0px 0.5px #0066FF,
+    -0.5px 0px 0.5px #0066FF,
+    0px 0.5px 0.5px #0066FF,
+    0px -0.5px 0.5px #0066FF,
+    2px 2px 2px black,
+    2px 2px 2px black,
+    2px 2px 2px black,
+    2px 2px 2px black;
+  position: absolute;
+  top: 24%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  margin: 0;
+  font-size: 28px;
+  line-height: 2;
+}
+
+.pegasus-content-2 {
+  color: white;
+  text-shadow:
+    0.5px 0px 0.5px #0066FF,
+    -0.5px 0px 0.5px #0066FF,
+    0px 0.5px 0.5px #0066FF,
+    0px -0.5px 0.5px #0066FF,
+    2px 2px 2px black,
+    2px 2px 2px black,
+    2px 2px 2px black,
+    2px 2px 2px black;
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  margin: 0 0 64px 0;
+  font-size: 28px;
+  line-height: 2;
+}
+
+.p-pink {
+  color: #F30081;
+}
+
+.p-blue {
+  color: #00E5FF;
 }
 
 /*event-page*/
@@ -962,9 +1088,9 @@ small {
 
 .event-title h2 {
   color: black;
-  font-size: 36px;
+  font-size: 48px;
   letter-spacing: 4px;
-  font-weight: normal;
+  font-weight: 500;
   text-shadow: 1px 1px 1px white, -1px -1px 1px white,
     -1px 1px 1px white, 1px -1px 1px white,
     1px 0px 1px white, -1px -0px 1px white,
@@ -974,7 +1100,7 @@ small {
 .event-content p {
   color: black;
   letter-spacing: 2px;
-  font-size: 20px;
+  font-size: 26px;
   margin: 0;
 }
 
@@ -986,55 +1112,83 @@ small {
   padding-bottom: 36px;
 }
 
+.line-3 {
+  padding-bottom: 148px;
+}
+
+.line-4 {
+  padding-bottom: 56px;
+}
+
 /*contact-page*/
 .contact-form {
-  padding-top: 80px;
-}
-
-.contact {
-  background-color: rgba(245, 240, 255, 0.35);
-  z-index: 1002;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.contact-title {
+  position: relative;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto 32px;
+  display: flex;
+  flex-direction: row;
   text-align: center;
 }
 
-.contact-form h2 {
+.contact-background {
+  width: 100%;
+  display: block;
+}
+
+.contact {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  bottom: 2%;
+  width: 80%;
+  transform: translateX(-50%);
+  background: rgba(220, 220, 220, 0.6);
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.contact-title {
   display: inline-block;
+  margin: 60px 0 20px;
+  padding: 0 36px;
+  text-align: center;
+  background: rgba(220, 220, 220, 0.6);
+}
+
+.contact-form h2 {
   color: black;
   text-shadow: 0.5px 0 white;
   background: rgba(245, 240, 255, 0.1);
   margin: 8px;
+  font-weight: normal;
+  font-size: 56px;
 }
 
 .form-row {
   display: flex;
-  gap: 32px;
+  gap: 36px;
+  margin-top: 36px;
 }
 
 .form-group {
   display: flex;
-  width: 50%;
   flex-direction: column;
   justify-content: center;
-  margin: 24px 24px;
-}
-
-.field {
-  width: 100%;
-  max-width: 400px;
-}
-
-.field input {
-  width: 100%;
+  margin-top: 36px;
 }
 
 .form-row .form-group {
   flex: 1;
-  width: 50%;
+}
+
+.field {
+  width: 100%;
+  max-width: none;
+}
+
+.field input {
+  width: 100%;
 }
 
 .label-row {
@@ -1045,26 +1199,113 @@ small {
 
 label {
   color: black;
-  text-shadow: 0.5px 0 white;
+  text-shadow: 1px 1px 1px white, -1px -1px 1px white,
+    -1px 1px 1px white, 1px -1px 1px white,
+    1px 0px 1px white, -1px -0px 1px white,
+    0px 1px 1px white, 0px -1px 1px white,
+    1px 1px 2px black,
+    1px 1px 2px black,
+    1px 1px 2px black,
+    1px 1px 2px black;
   font-weight: 500;
+  font-size: 28px;
   margin-bottom: 8px;
 }
 
 .required {
   margin: 0;
-  padding: 2px 4px 3px;
+  padding: 2px 4px 4px;
   line-height: 1;
   color: white;
   background: #F30081;
   position: relative;
   top: -4px;
+  font-weight: normal;
 }
 
 input,
-textarea,
 select {
   width: 100%;
-  height: 40px;
+  height: 54px;
+  background: rgb(220, 200, 160);
+}
+
+.mail {
+  padding-top: 80px;
+}
+
+.mail-r {
+  margin-top: 36px;
+}
+
+.full-group {
+  width: 100%;
+  margin: 36px 0;
+}
+
+.full-width input {
+  width: 100%;
+}
+
+.address-group {
+  width: 50%;
+  margin: 96px 0 36px 0;
+}
+
+.address-title {
+  display: block;
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.zip-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.zip-mark {
+  font-size: 32px;
+  color: black;
+  font-weight: bold;
+}
+
+.zip-input {
+  width: 180px;
+}
+
+.address-search {
+  padding: 16px 65px;
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  background: rgb(220, 200, 160);
+  border-radius: 16px;
+}
+
+.address-item {
+  margin-bottom: 24px;
+}
+
+.address-item label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.address-item input,
+.address-item select {
+  width: 100%;
+}
+
+.details {
+  margin-top: 64px;
+}
+
+textarea {
+  width: 100%;
+  height: 280px;
+  background: rgb(220, 200, 160);
 }
 
 .decision-button {
@@ -1074,16 +1315,17 @@ select {
 .decision {
   appearance: none;
   -webkit-appearance: none;
-
   border: none;
   outline: none;
-
   background: #F30081;
   color: white;
-  text-shadow: black 2px 0;
-
-  border-radius: 8px;
-  padding: 0px 80px;
+  font-size: 24px;
+  text-shadow: 1px 1px 1px black, -1px -1px 1px black,
+    -1px 1px 1px black, 1px -1px 1px black,
+    1px 0px 1px black, -1px -0px 1px black,
+    0px 1px 1px black, 0px -1px 1px black;
+  border-radius: 16px;
+  padding: 0px 160px;
   cursor: pointer;
-  margin: 28px;
+  margin-top: 120px;
 }
