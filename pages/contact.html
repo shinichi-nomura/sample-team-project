@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>contact-page</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function (d) {
+            var config = {
+                kitId: 'wgy8pla',
+                scriptTimeout: 3000,
+                async: true
+            },
+                h = d.documentElement, t = setTimeout(function () { h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive"; }, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a; h.className += " wf-loading"; tk.src = 'https://use.typekit.net/' + config.kitId + '.js'; tk.async = true; tk.onload = tk.onreadystatechange = function () { a = this.readyState; if (f || a && a != "complete" && a != "loaded") return; f = true; clearTimeout(t); try { Typekit.load(config) } catch (e) { } }; s.parentNode.insertBefore(tk, s)
+        })(document);
+    </script>
 </head>
 
 <body>
@@ -27,119 +37,152 @@
                     <nav class="nav-menu">
                         <ul class="nav-list">
                             <li class="nav-1">
-                                <a href="pages/first.html">初めての方へ</a>
+                                <a href="../pages/first.html">初めての方へ</a>
                             </li>
                             <li class="nav-2">
-                                <a href="pages/event.html">イベント<span>近況報告</span></a>
+                                <a href="../pages/event.html">イベント<span>近況報告</span></a>
                             </li>
-                            <li class="nav-3"><a href="#book">著書</a></li>
-                            <li class="nav-4"><a href="#about">個性心理學研究所湘南支所</a></li>
+                            <li class="nav-3"><a href="../index.html#book">著書</a></li>
+                            <li class="nav-4"><a href="../index.html#about">個性心理學研究所湘南支所</a></li>
                             <li class="nav-5">
-                                <a href="pages/contact.html">お問い合わせ<span>お仕事依頼</span></a>
+                                <a href="../pages/contact.html">お問い合わせ<span>お仕事依頼</span></a>
                             </li>
                         </ul>
                     </nav>
                 </div>
             </div>
         </header>
-        <img src="../images/Frame 138.png" width="720" height="1640">
-        <section class="contact-form" id="contactForm" class="contact">
-            <div class="contact-title">
-                <h2>お問い合わせ<br>お仕事依頼</h2>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <div class="field">
-                        <div class="label-row">
-                            <label for="contact-lastName">苗字</label>
-                            <span class="required">必須</span>
-                        </div>
-                        <input type="text" id="lastName" name="name" required>
-                    </div>
+        <section class="contact-form">
+            <img src="../images/more-images/Frame 138.png" class="contact-background">
+            <form class="contact" id="contactForm">
+                <div class="contact-title">
+                    <h2>お問い合わせ<br>お仕事依頼</h2>
                 </div>
-                <div class="form-group">
-                    <div class="field">
-                        <div class="label-row">
-                            <label for="contact-firstName">お名前</label>
-                            <span class="required">必須</span>
-                        </div>
-                        <input type="text" id="firstName" name="name" required>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <div class="field">
-                        <div class="label-row">
-                            <label for="contact-lastName">みょうじ</label>
-                            <span class="required">必須</span>
-                        </div>
-                        <input type="text" id="lastName-check" name="name" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="field">
-                        <div class="label-row">
-                            <label for="contact-firstName">おなまえ</label>
-                            <span class="required">必須</span>
-                        </div>
-                        <input type="text" id="firstName-check" name="name" required>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="label-row">
-                    <label for="contact-email">メールアドレス</label>
-                    <span class="required">必須</span>
-                </div>
-                <input type="email" id="contact-email" name="email" required>
-            </div>
-            <div class="form-group">
-                <div class="label-row">
-                    <label for="email-check">メールアドレス(確認)</label>
-                    <span class="required">必須</span>
-                </div>
-                <input type="email" id="email-check" name="email" required>
-            </div>
-            <div class="form-row">
-                <div class="field">
+                <div class="form-row">
                     <div class="form-group">
-                        <label for="contact-tell">電話番号</label>
-                        <input type="text" id="contact-tell" name="phone">
+                        <div class="field">
+                            <div class="label-row">
+                                <label for="contact-lastName">苗字</label>
+                                <span class="required">必須</span>
+                            </div>
+                            <input type="text" id="lastName" name="name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="field">
+                            <div class="label-row">
+                                <label for="contact-firstName">お名前</label>
+                                <span class="required">必須</span>
+                            </div>
+                            <input type="text" id="firstName" name="name" required>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="field">
-                        <label for="contact-tell">携帯電話番号</label>
-                        <input type="text" id="contact-phone" name="phone">
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="field">
+                            <div class="label-row">
+                                <label for="contact-lastName">みょうじ</label>
+                                <span class="required">必須</span>
+                            </div>
+                            <input type="text" id="lastName-check" name="name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="field">
+                            <div class="label-row">
+                                <label for="contact-firstName">おなまえ</label>
+                                <span class="required">必須</span>
+                            </div>
+                            <input type="text" id="firstName-check" name="name" required>
+                        </div>
                     </div>
                 </div>
+                <div class="form-group mail full-group">
+                    <div class="label-row">
+                        <label for="contact-email">メールアドレス</label>
+                        <span class="required">必須</span>
+                    </div>
+                    <input type="email" id="contact-email" name="email" required>
+                </div>
+                <div class="form-group mail-r full-group">
+                    <div class="label-row">
+                        <label for="email-check">メールアドレス(確認)</label>
+                        <span class="required">必須</span>
+                    </div>
+                    <input type="email" id="email-check" name="email" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="field">
+                            <label for="contact-tell">電話番号</label>
+                            <input type="text" id="contact-tell" name="phone">
+                        </div>
+                    </div>
 
-            </div>
-            <div class="form-group">
-                <label for="address">住所</label>
-                <img src="post" alt="郵便番号">
-                <input type="text" id="contact-address" name="postalCode">
-                <input type="text" id="address-search" name="addressSearch">
-                <label for="prefecture">都道府県</label>
-                <select id="prefecture" name="prefecture"></select>
-                <label for="municipality">市区町村番地</label>
-                <input type="text" id="municipality" name="municipality">
-                <label for="building">建物・部屋名</label>
-                <input type="text" id="building" name="building">
-            </div>
-            <div class="form-group">
-                <div class="label-row">
-                    <label for="contact-details">内容</label>
-                    <span class="required">必須</span>
+                    <div class="form-group">
+                        <div class="field">
+                            <label for="contact-phone">携帯電話番号</label>
+                            <input type="text" id="contact-phone" name="phone">
+                        </div>
+                    </div>
                 </div>
-                <textarea id="contact-details" name="details" required></textarea>
-            </div>
-            <div class="decision-button">
-                <button type="submit" class="decision">決定</button>
-            </div>
+                <div class="address-group">
+                    <label class="address-title">住所</label>
+                    <div class="zip-row">
+                        <span class="zip-mark">〒</span>
+                        <input type="text" id="contact-address" name="postalCode" class="zip-input">
+                        <button type="button" class="address-search">
+                            住所検索
+                        </button>
+                    </div>
+                    <div class="address-item">
+                        <label for="prefecture">都道府県</label>
+                        <select id="prefecture" name="prefecture">
+                            <option>選択してください</option>
+                        </select>
+                    </div>
+                    <div class="address-item">
+                        <label for="municipality">市区町村番地</label>
+                        <input type="text" id="municipality" name="municipality">
+                    </div>
+                    <div class="address-item">
+                        <label for="building">建物・部屋名</label>
+                        <input type="text" id="building" name="building">
+                    </div>
+                </div>
+                <div class="form-group details">
+                    <div class="label-row">
+                        <label for="contact-details">内容</label>
+                        <span class="required">必須</span>
+                    </div>
+                    <textarea id="contact-details" name="details" required></textarea>
+                </div>
+                <div class="decision-button">
+                    <button type="submit" class="decision">決定</button>
+                </div>
             </form>
         </section>
+        <footer>
+            <img src="../images/top-images/Frame 85.png" class="copyright-image" />
+            <p class="copyright-content">本イラストは個性心理學研究所が作成したものではありません。</p>
+            <div class="icon-image">
+                <img src="../images/top-images/アセット 1 1.png" class="sns-icon" alt="LINEアイコン" width="77" height="77" />
+                <img src="../images/top-images/PC-SNSアイコン.png" class="sns-icon" alt="Instagramアイコン" width="77"
+                    height="77" />
+                <img src="../images/top-images/PC-SNSアイコン-1.png" class="sns-icon" alt="Xアイコン" width="77" height="77" />
+                <img src="../images/top-images/PC-SNSアイコン-2 (1).png" class="sns-icon" alt="TikTokアイコン" width="77"
+                    height="77" />
+                <img src="../images/top-images/PC-SNSアイコン-3.png" class="sns-icon" alt="Youtubeアイコン" width="77"
+                    height="77" />
+                <img src="../images/top-images/PC-SNSアイコン-4.png" class="sns-icon" alt="facebookアイコン" width="77"
+                    height="77" />
+            </div>
+            <div class="privacy-policy">
+                <a href="">プライバシーポリシー</a>
+                <small>Copyright (C) Miu All Rights Reserved.</small>
+            </div>
+        </footer>
         <script src="../js/main.js"></script>
     </div>
 </body>
