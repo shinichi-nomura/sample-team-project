@@ -828,7 +828,7 @@ small {
   text-align: center;
 }
 
-.message-background-1 {
+.message-background {
   width: 100%;
   display: block;
 }
@@ -838,7 +838,7 @@ small {
   top: 4%;
   left: 50%;
   transform: translateX(-50%);
-  width: clamp(90px, 12vw, 220px);
+  width: clamp(120px, 12vw, 280px);
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
 }
 
@@ -848,54 +848,111 @@ small {
   left: 50%;
   text-align: center;
   transform: translateX(-50%);
+  font-size: 26px;
   display: inline-block;
-  color: white;
-  text-shadow: 1px 1px 1px black, -1px -1px 1px black,
-    -1px 1px 1px black, 1px -1px 1px black,
-    1px 0px 1px black, -1px -0px 1px black,
-    0px 1px 1px black, 0px -1px 1px black;
+  text-shadow:
+    0.5px 0px 0.5px black,
+    -0.5px 0px 0.5px black,
+    0px 0.5px 0.5px black,
+    0px -0.5px 0.5px black;
   background: #F30081;
-  padding: 4px 8px;
+  padding: 3px 16px;
   border-radius: 24px;
 }
 
 .first-greet h2,
 .first-greet h3 {
   color: #F30081;
-  text-shadow: 1px 0 white;
+  text-shadow:
+    1px 0px 1px white,
+    -1px 0px 1px white,
+    0px 1px 1px white,
+    0px -1px 1px white,
+    6px 6px 8px #F30081;
   font-weight: 500;
   margin: 0 0 2px 0;
   text-align: center;
   transform: translateX(-50%);
+  width: 80%;
 }
-
 
 .title-1 {
   position: absolute;
-  top: 13.5%;
-  left: 50%;
-  font-size: 38px;
-}
-
-.title-2 {
-  position: absolute;
-  top: 15.4%;
-  left: 50%;
-  font-size: 38px;
-}
-
-.title-3 {
-  position: absolute;
-  top: 17%;
+  top: 14.5%;
   left: 50%;
   font-size: 48px;
 }
 
+.title-2 {
+  position: absolute;
+  top: 17.2%;
+  left: 50%;
+  font-size: 48px;
+}
+
+.title-3 {
+  position: absolute;
+  top: 19.4%;
+  left: 50%;
+  font-size: 66px;
+}
+
 .title-4 {
   position: absolute;
-  top: 19.2%;
+  top: 23%;
   left: 50%;
-  font-size: 38px;
+  font-size: 48px;
+}
+
+.message-frame {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: block;
+  position: absolute;
+  inset: 0;
+  top: 26%;
+  left: 50%;
+  width: 90%;
+  transform: translateX(-50%);
+}
+
+.message p {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: block;
+  position: absolute;
+  left: 50%;
+  width: 88%;
+  transform: translateX(-50%);
+  color: black;
+  letter-spacing: 2px;
+  line-height: 1.8;
+  font-size: 34px;
+  text-shadow: 2px 2px 2px white,
+    -2px -2px 2px white,
+    -2px 2px 2px white,
+    2px -2px 2px white,
+    2px 0px 2px white,
+    -2px 0px 2px white,
+    0px 2px 2px white,
+    0px -2px 2px white,
+    4px 4px 6px black;
+}
+
+.message-1 {
+  top: 27.5%;
+}
+
+.message-2 {
+  top: 45.5%;
+}
+
+.message-3 {
+  top: 59%;
+}
+
+.message-4 {
+  top: 68.5%;
 }
 
 .mirror {
@@ -903,8 +960,6 @@ small {
   max-width: 1240px;
   width: 100%;
   margin: 0 auto 32px;
-  display: flex;
-  flex-direction: row;
 }
 
 .mirror-background {
@@ -912,13 +967,50 @@ small {
   display: block;
 }
 
+.left-mirror,
+.right-mirror {
+  position: absolute;
+  top: 12%;
+  width: 35%;
+  aspect-ratio: 1 / 1.7;
+}
+
 .left-mirror {
-  width: 50%;
+  left: 13%;
 }
 
 .right-mirror {
-  width: 50%;
+  right: 13%;
 }
+
+.l-mirror-image{
+  position: absolute;
+  width: 76.8%;
+  top: 14.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.r-mirror-image {
+  position: absolute;
+  width: 76.4%;
+  top: 14.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.l-mirror-frame,
+.r-mirror-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: block;
+  z-index: 2;
+}
+
 
 .with-pegasus {
   position: relative;
