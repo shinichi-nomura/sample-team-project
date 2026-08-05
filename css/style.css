@@ -983,19 +983,11 @@ small {
   right: 13%;
 }
 
-.l-mirror-image{
-  position: absolute;
-  width: 76.8%;
-  top: 14.5%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-
+.l-mirror-image,
 .r-mirror-image {
   position: absolute;
-  width: 76.4%;
-  top: 14.5%;
+  width: 75.6%;
+  top: 18.9%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
@@ -1004,8 +996,10 @@ small {
 .l-mirror-frame,
 .r-mirror-frame {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 0;
+  transform: translateX(-50%);
+  transform: translateY(-50%);
   width: 100%;
   display: block;
   z-index: 2;
@@ -1030,66 +1024,57 @@ small {
 .pegasus-title-1 {
   color: #F30081;
   text-shadow:
-    0.5px 0px 0.5px black,
-    -0.5px 0px 0.5px black,
-    0px 0.5px 0.5px black,
-    0px -0.5px 0.5px black,
-    1px 1px 2px black,
-    1px 1px 2px black,
-    1px 1px 2px black,
-    1px 1px 2px black;
+    1px 0px 1px black,
+    -1px 0px 1px black,
+    0px 1px 1px black,
+    0px -1px 1px black,
+    6px 6px 6px black;
   font-weight: normal;
   position: absolute;
   top: 6%;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  max-width: 900px;
-  font-size: 65px;
+  max-width: 1000px;
+  font-size: 72px;
   margin: 0 0 2px 0;
 }
 
 .pegasus-title-2 {
   color: white;
   text-shadow:
-    0.5px 0px 0.5px black,
-    -0.5px 0px 0.5px black,
-    0px 0.5px 0.5px black,
-    0px -0.5px 0.5px black,
-    1px 1px 2px black,
-    1px 1px 2px black,
-    1px 1px 2px black,
-    1px 1px 2px black;
+    1px 0px 1px black,
+    -1px 0px 1px black,
+    0px 1px 1px black,
+    0px -1px 1px black,
+    6px 6px 6px black;
   font-weight: normal;
   position: absolute;
-  top: 10.5%;
+  top: 11.2%;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  max-width: 900px;
-  font-size: 65px;
+  max-width: 1000px;
+  font-size: 72px;
   margin: 0 0 2px 0;
 }
 
 .pegasus-title-3 {
   color: #00E5FF;
   text-shadow:
-    0.5px 0px 0.5px black,
-    -0.5px 0px 0.5px black,
-    0px 0.5px 0.5px black,
-    0px -0.5px 0.5px black,
-    1px 1px 2px black,
-    1px 1px 2px black,
-    1px 1px 2px black,
-    1px 1px 2px black;
+    1px 0px 1px black,
+    -1px 0px 1px black,
+    0px 1px 1px black,
+    0px -1px 1px black,
+    6px 6px 6px black;
   font-weight: normal;
   position: absolute;
-  top: 14.5%;
+  top: 16.4%;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  max-width: 900px;
-  font-size: 65px;
+  max-width: 1000px;
+  font-size: 72px;
   margin: 0 0 2px 0;
 }
 
@@ -1100,18 +1085,15 @@ small {
     -0.5px 0px 0.5px #0066FF,
     0px 0.5px 0.5px #0066FF,
     0px -0.5px 0.5px #0066FF,
-    2px 2px 2px black,
-    2px 2px 2px black,
-    2px 2px 2px black,
-    2px 2px 2px black;
+    6px 6px 6px black;
   position: absolute;
-  top: 24%;
+  top: 26.2%;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0;
-  font-size: 28px;
+  font-size: 32px;
   line-height: 2;
 }
 
@@ -1127,13 +1109,13 @@ small {
     2px 2px 2px black,
     2px 2px 2px black;
   position: absolute;
-  top: 48%;
+  top: 56%;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 0 64px 0;
-  font-size: 28px;
+  font-size: 32px;
   line-height: 2;
 }
 
