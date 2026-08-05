@@ -26,7 +26,7 @@
       <div class="header-inner">
         <div class="header-logo">
           <a href="#top">
-            <h1><img src="images/top-images/Rogo.png" alt="ロゴ画像" width="397" height="87" /></h1>
+            <h1><img src="images/top-images/Rogo.png" alt="ロゴ画像" class="logo-image" /></h1>
           </a>
         </div>
         <div class="menu-wrapper">
@@ -38,15 +38,23 @@
           <nav class="nav-menu">
             <ul class="nav-list">
               <li class="nav-1">
-                <a href="pages/first.html">初めての方へ</a>
+                <a href="pages/first.html"><span>初めての方へ</span></a>
               </li>
               <li class="nav-2">
-                <a href="pages/event.html">イベント<span>近況報告</span></a>
+                <a href="pages/event.html">
+                  <span class="main-text">イベント</span><span class="span-1">近況報告</span>
+                </a>
               </li>
-              <li class="nav-3"><a href="#book">著書</a></li>
-              <li class="nav-4"><a href="#about">個性心理學研究所湘南支所</a></li>
+              <li class="nav-3">
+                <a href="#book"><span>著書</span></a>
+              </li>
+              <li class="nav-4">
+                <a href="#about"><span>個性心理學研究所湘南支所</span></a>
+              </li>
               <li class="nav-5">
-                <a href="pages/contact.html">お問い合わせ<span>お仕事依頼</span></a>
+                <a href="pages/contact.html">
+                  <span class="main-text">お問い合わせ</span><span class="span-2">お仕事依頼</span>
+                </a>
               </li>
             </ul>
           </nav>
@@ -54,10 +62,15 @@
       </div>
     </header>
     <section class="hero">
-      <img src="images/top-images/ChatGPT Image 2026年7月22日 13_32_2022.png" class="hero-image" />
-      <img src="images/top-images/Topカルーセルフレーム.png" class="hero-frame" />
-      <!-- <img src="images/top-images/Mask group.png" alt="ロゴ画像" class="logo-image" /> -->
-      <img src="images/top-images/ときめき神社♡ラブ.png" alt="ロゴ文字" class="logo-content" width="413" height="48">
+      <picture class="hero-image-picture">
+        <source media="(max-width: 800px)" srcset="images/responsive-images/sumaho_Top_image1.png">
+        <img src="images/top-images/ChatGPT Image 2026年7月22日 13_32_2022.png" class="hero-image" />
+      </picture>
+      <picture class="hero-frame-picture">
+        <source media="(max-width: 800px)" srcset="images/responsive-images/sumaho_Top_frame.png">
+        <img src="images/top-images/Topカルーセルフレーム.png" class="hero-frame" />
+      </picture>
+      <img src="images/top-images/ときめき神社♡ラブ.png" alt="ロゴ文字" class="logo-content">
     </section>
     <main>
       <div class="particles"></div>
@@ -71,8 +84,10 @@
         <p class="greet-content">
           【はじめまして。美羽（みう）と申します】<br>当サイト代表の美羽（みう）です。<br>本日は「ときめき神社ラブ」へようこそ♡<br>私は福島県南相馬市生まれ、神奈川県秦野市育ちです。<br>２０１１年の東日本大震災をきっかけに、自分自身の<br>魂の声に導かれ、<br>「美と健康を通じて持続可能な社会を創造する」<br>という理念を掲げて歩み始めました。
         </p>
-        <button class="profile">
-          <img src="images/top-images/プロフィールボタン.png" alt="プロフィールボタン" />
+        <button class="profile-button">
+          <a href="pages/first.html#profile">
+            <img src="images/top-images/プロフィールボタン.png" alt="プロフィールボタン" class="profile-bottun-image" />
+          </a>
         </button>
       </section>
       <section class="suiso">
@@ -84,7 +99,7 @@
         <img src="images/top-images/suiso1.png" alt="水素吸入器1" class="suiso1" />
         <img src="images/top-images/suisoAo.png" alt="水素吸入器2" class="suiso2" />
         <button class="suiso-button">
-          <img src="images/top-images/水素ボタン.png" alt="詳しくはこちら" width="238" height="73"/>
+          <img src="images/top-images/水素ボタン.png" alt="詳しくはこちら" width="238" height="73" />
         </button>
       </section>
       <section class="koseisinrigaku" id="about">
@@ -152,7 +167,7 @@
         <h4>著書</h4>
         <div class="book-section">
           <div class="book-images">
-            <img src="images/top-images/Tyosyo.png" alt="著書" class="book-image"/>
+            <img src="images/top-images/Tyosyo.png" alt="著書" class="book-image" />
           </div>
           <div class="book-contents">
             <div class="book-content">
@@ -166,7 +181,10 @@
     <section class="copyright">
     </section>
     <footer>
+      <picture class="footer-image-picture">
+        <source media="(max-width: 800px)" srcset="images/responsive-images/sumahoFooter_image.png">
       <img src="images/top-images/Frame 85.png" class="copyright-image" />
+      </picture>
       <p class="copyright-content">本イラストは個性心理學研究所が作成したものではありません。</p>
       <div class="icon-image">
         <img src="images/top-images/アセット 1 1.png" class="sns-icon" alt="LINEアイコン" width="77" height="77" />

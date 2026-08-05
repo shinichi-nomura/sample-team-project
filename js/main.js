@@ -4,11 +4,30 @@ console.log('Git練習開始');
 //==hamburger-menu==
 const hamburger = document.querySelector('.hamburger-menu');
 const navMenu = document.querySelector('.nav-menu');
+const navLinks = document.querySelectorAll(".nav-list a");
+const logoLink = document.querySelector(".logo-link");
+
+function closeMenu() {
+    hamburger.classList.remove("active");
+    navMenu.classList.remove("active");
+    document.body.classList.remove("menu-open");
+    hamburger.setAttribute("aria-label", "メニューを開く");
+    hamburger.setAttribute("aria-expanded", "false");
+}
 
 hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle("active");
-    navMenu.classList.toggle('active');
+    const isOpen = navMenu.classList.toggle("active")
+    hamburger.classList.toggle("active", isOpen);
+    document.body.classList.toggle("menu-open", isOpen);
+    hamburger.setAttribute("aria-label", isOpen ? "メニューを閉じる" : "メニューを開く");
+    hamburger.setAttribute("aria-expanded", String(isOpen));
 });
+
+navLinks.forEach((link) => {
+  link.addEventListener("click", closeMenu);
+});
+
+logoLink.addEventListener("click", closeMenu);
 
 
 //==background==
