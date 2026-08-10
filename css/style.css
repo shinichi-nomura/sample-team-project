@@ -529,6 +529,8 @@ main p {
 }
 
 .greet-image {
+  width: 100%;
+  height: auto;
   width: clamp(90px, 12vw, 140px);
   filter: drop-shadow(0 0 12px rgba(255, 255, 255, 1));
 }
@@ -934,18 +936,19 @@ footer {
 
 .icon-image {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
+  gap: 16px;
   width: 96%;
-  margin: -156px 0 8px 0;
+  margin: -156px auto 8px;
 }
 
 .sns-icon {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: clamp(40px, 6vw, 80px);
+  height: auto;
+  display: block;
+  flex-shrink: 0;
 }
 
 .privacy-policy {
@@ -1000,10 +1003,13 @@ small {
 
 .message-background {
   width: 100%;
+  height: auto;
   display: block;
 }
 
 .first-greet-image {
+  width: 100%;
+  height: auto;
   position: absolute;
   top: 4%;
   left: 50%;
@@ -1083,6 +1089,7 @@ small {
   top: 26%;
   left: 50%;
   width: 90%;
+  height: auto;
   transform: translateX(-50%);
 }
 
@@ -1134,6 +1141,7 @@ small {
 
 .mirror-background {
   width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -1157,6 +1165,7 @@ small {
 .r-mirror-image {
   position: absolute;
   width: 75.6%;
+  height: auto;
   top: 18.9%;
   left: 50%;
   transform: translateX(-50%);
@@ -1171,6 +1180,7 @@ small {
   transform: translateX(-50%);
   transform: translateY(-50%);
   width: 100%;
+  height: auto;
   display: block;
   z-index: 2;
 }
@@ -1188,6 +1198,7 @@ small {
 
 .pegasus-background {
   width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -1308,6 +1319,7 @@ small {
 
 .event-background {
   width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -1377,6 +1389,7 @@ small {
 
 .contact-background {
   width: 100%;
+  height: auto;
   display: block;
 }
 
