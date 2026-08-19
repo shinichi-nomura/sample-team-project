@@ -1,5 +1,4 @@
 'use strict';
-console.log('Git練習開始');
 
 //==hamburger-menu==
 const hamburger = document.querySelector('.hamburger-menu');
