@@ -880,7 +880,7 @@ main p {
 .book-item {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
+  align-items: stretch;
   gap: clamp(24px, 5vw, 70px);
 }
 
@@ -900,10 +900,8 @@ main p {
 }
 
 .book-image-2 {
-  /* 比率を維持して縮小 */
   width: min(90%, 330px);
   height: auto;
-  /* 白い光と影 */
   filter:
   drop-shadow(0 0 4px white)
   drop-shadow(0 0 9px rgba(255, 255, 255, 0.93))
@@ -916,25 +914,28 @@ main p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(24px, 4vw, 50px);
+  justify-content: space-between;
+  align-self: stretch;
+  box-sizing: border-box;
   width: 100%;
+  padding: clamp(16px, 2vw, 28px) 0 clamp(12px, 1.5vw, 20px);
   color: white;
   text-align: center;
 }
 
 .book-content p {
-  margin: clamp(-160px, -12vw, -80px) 0  clamp(160px, 12vw, 80px);
+  width: 100%;
+  margin: 0;
   font-size: clamp(18px, 2.2vw, 24px);
   line-height: 1.8;
-  
+  text-align: center;
 }
 
 .purchase {
   display: inline-block;
   box-sizing: border-box;
-  padding:
-    clamp(8px, 1vw, 12px)
-    clamp(20px, 3vw, 40px);
+  margin-top: clamp(30px, 4vw, 50px);
+  padding: clamp(8px, 1vw, 12px) clamp(20px, 3vw, 40px);
   color: white;
   background: transparent;
   border: 1px solid white;
@@ -1152,7 +1153,7 @@ small {
   width: 100%;
   height: auto;
   display: block;
-  filter: brightness(0.62) saturate(0.85);
+  /* filter: brightness(0.62) saturate(0.85); */
 }
 
 .first-greet-image {
@@ -1284,7 +1285,7 @@ small {
   width: 100%;
   height: auto;
   display: block;
-  filter: brightness(0.9) saturate(0.9);
+  /* filter: brightness(0.9) saturate(0.9); */
 }
 
 .left-mirror,
@@ -1312,7 +1313,7 @@ small {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-  filter: contrast(1.05) brightness(0.95);
+  /* filter: contrast(1.05) brightness(0.95); */
 }
 
 .l-mirror-frame,
@@ -1344,7 +1345,7 @@ small {
   width: 100%;
   height: auto;
   display: block;
-  filter: brightness(0.62) saturate(0.85);
+  /* filter: brightness(0.62) saturate(0.85); */
 }
 
 .pegasus-title-1,
@@ -1431,7 +1432,7 @@ small {
   width: 100%;
   height: auto;
   display: block;
-  filter: brightness(0.8) saturate(0.85);
+  /* filter: brightness(0.8) saturate(0.85); */
 }
 
 .event-detail {
@@ -1504,7 +1505,7 @@ small {
   width: 100%;
   height: auto;
   display: block;
-  filter: brightness(0.8) saturate(0.85);
+  /* filter: brightness(0.8) saturate(0.85); */
 }
 
 .contact {
