@@ -11,13 +11,110 @@ html {
 }
 
 body {
-  margin: 0px;
+  position: relative;
+  margin: 0;
   background: black;
-  min-height: 100vh;
+  height: auto;
+  min-height: 100%;
   color: white;
   font-family: "sicselifgothicre", sans-serif;
   font-style: normal;
   font-weight: 400;
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.particle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+
+  background: radial-gradient(circle,
+      var(--c1) 0%,
+      var(--c2) 15%,
+      var(--c3) 35%,
+      var(--c4) 60%,
+      rgba(0, 0, 0, 0) 100%);
+
+  /* 色相をランダムに変える */
+  filter: hue-rotate(calc(var(--hue) * 1deg));
+  /* transform をまとめて適用 */
+  transform: translate(0, 0) scale(1);
+
+  animation:
+    float 8s ease-in-out infinite,
+    colorShift 12s ease-in-out infinite,
+    scalePulse 10s ease-in-out infinite,
+    fadeBlink var(--fade-speed) ease-in-out infinite;
+
+}
+
+/* ふわふわ動く（JSでランダム値を入れる） */
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(var(--scale, 1));
+  }
+
+  50% {
+    transform: translate(var(--move-x), var(--move-y)) scale(var(--scale, 1));
+  }
+
+  100% {
+    transform: translate(0, 0) scale(var(--scale, 1));
+  }
+}
+
+/* 色がゆっくり変わる */
+@keyframes colorShift {
+  0% {
+    filter: hue-rotate(calc(var(--hue) * 1deg));
+  }
+
+  50% {
+    filter: hue-rotate(calc((var(--hue) + 120) * 1deg));
+  }
+
+  100% {
+    filter: hue-rotate(calc(var(--hue) * 1deg));
+  }
+}
+
+/* ゆっくり拡大縮小 */
+@keyframes scalePulse {
+  0% {
+    --scale: 1;
+  }
+
+  50% {
+    --scale: 1.2;
+  }
+
+  100% {
+    --scale: 1;
+  }
+}
+
+/* フェードイン・フェードアウト */
+@keyframes fadeBlink {
+  0% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
 }
 
 button,
@@ -47,8 +144,15 @@ header {
   transform: translateX(-50%);
   width: 100%;
   padding: clamp(2px, 0.3vw, 4px) 0;
-  background: black;
-  z-index: 1000;
+  /* background: black; */
+  background: rgba(5, 5, 12, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 10;
 }
 
 .logo-image {
@@ -110,7 +214,7 @@ header img {
   transition: transform .4s ease, filter .4s ease;
 }
 
-.nav-list a:hover {
+/* .nav-list a:hover {
   transform: scale(1.2);
   filter: drop-shadow(0 0 12px currentColor);
 }
@@ -122,9 +226,9 @@ header img {
 .nav-list a {
   color: inherit;
   text-decoration: none;
-}
+} */
 
-.hamburger-menu.active .hamburger-line:nth-child(1) {
+/* .hamburger-menu.active .hamburger-line:nth-child(1) {
   transform: translateY(9px) rotate(45deg);
 }
 
@@ -134,9 +238,19 @@ header img {
 
 .hamburger-menu.active .hamburger-line:nth-child(3) {
   transform: translateY(-9px) rotate(-45deg);
+} */
+
+nav a {
+  color: #F4F0F7;
+  transition: color 0.25s, text-shadow 0.25s;
 }
 
-.nav-1 {
+nav a:hover {
+  color: #F30081;
+  text-shadow: 0 0 14px rgba(243, 0, 129, 0.75);
+}
+
+/* .nav-1 {
   color: #FF0000;
 }
 
@@ -164,7 +278,7 @@ header img {
 .nav-5 .span-2 {
   margin-left: clamp(8px, 1.3vw, 16px);
   color: #7F55FF;
-}
+} */
 
 @media (max-width: 800px) {
   .header-logo {
@@ -329,6 +443,7 @@ header img {
   height: clamp(350px, 65vw, 768px);
   overflow: hidden;
   margin: clamp(80px, 8vw, 98px) 0 clamp(40px, 5vw, 64px);
+  z-index: 5;
 }
 
 .hero-image-picture,
@@ -407,99 +522,6 @@ main {
 main p {
   position: relative;
   z-index: 1;
-}
-
-.particles {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.particle {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-
-  background: radial-gradient(circle,
-      var(--c1) 0%,
-      var(--c2) 15%,
-      var(--c3) 35%,
-      var(--c4) 60%,
-      rgba(0, 0, 0, 0) 100%);
-
-  /* 色相をランダムに変える */
-  filter: hue-rotate(calc(var(--hue) * 1deg));
-  /* transform をまとめて適用 */
-  transform: translate(0, 0) scale(1);
-
-  animation:
-    float 8s ease-in-out infinite,
-    colorShift 12s ease-in-out infinite,
-    scalePulse 10s ease-in-out infinite,
-    fadeBlink var(--fade-speed) ease-in-out infinite;
-
-}
-
-/* ふわふわ動く（JSでランダム値を入れる） */
-@keyframes float {
-  0% {
-    transform: translate(0, 0) scale(var(--scale, 1));
-  }
-
-  50% {
-    transform: translate(var(--move-x), var(--move-y)) scale(var(--scale, 1));
-  }
-
-  100% {
-    transform: translate(0, 0) scale(var(--scale, 1));
-  }
-}
-
-/* 色がゆっくり変わる */
-@keyframes colorShift {
-  0% {
-    filter: hue-rotate(calc(var(--hue) * 1deg));
-  }
-
-  50% {
-    filter: hue-rotate(calc((var(--hue) + 120) * 1deg));
-  }
-
-  100% {
-    filter: hue-rotate(calc(var(--hue) * 1deg));
-  }
-}
-
-/* ゆっくり拡大縮小 */
-@keyframes scalePulse {
-  0% {
-    --scale: 1;
-  }
-
-  50% {
-    --scale: 1.2;
-  }
-
-  100% {
-    --scale: 1;
-  }
-}
-
-/* フェードイン・フェードアウト */
-@keyframes fadeBlink {
-  0% {
-    opacity: 0.2;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0.2;
-  }
 }
 
 /*==greeting==*/
@@ -810,101 +832,130 @@ main p {
     width: 100%;
   }
 }
-
+/*book*/
 .book {
-  max-width: 1240px;
   position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  max-width: 1240px;
   width: 96%;
+  /* aspect-ratio: 1578 / 3447; */
   margin: 0 auto clamp(40px, 5vw, 64px);
-  padding: clamp(16px, 2vw, 24px) 0;
+  padding:
+    clamp(32px, 5vw, 64px)
+    clamp(20px, 4vw, 50px)
+    clamp(40px, 6vw, 80px);
+  overflow: hidden;
 }
 
 .book-background {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
-  position: relative;
-  margin: 0 auto;
+  /* height: 100%; */
+  object-fit: cover;
+  /* object-fit: contain; */
+  filter: brightness(0.8) saturate(0.85);
 }
 
 .book h4 {
-  position: absolute;
-  top: 6%;
-  left: 46%;
-  text-align: center;
-  font-size: clamp(22px, 2.2vw, 40px);
+  margin: clamp(-20px, 2vw, -12px) 0 clamp(20px, 2vw, 36px);
+  color: white;
+  font-size: clamp(24px, 3vw, 40px);
   font-weight: normal;
   letter-spacing: clamp(1px, 0.15vw, 2px);
-  margin: 0;
+  text-align: center;
 }
 
-.book-section {
+.book-list {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: clamp(48px, 8vw, 100px);
+  margin-top: clamp(-40px, -3vw, -20px);
+}
+
+.book-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 70px);
 }
 
 .book-images {
-  width: 50%;
-  position: absolute;
-  top: 18%;
-  left: 8%;
+  display: flex;
+  justify-content: center;
+  width: 70%;
+  height: auto;
 }
 
 .book-image {
-  width: clamp(180px, 29.6vw, 367px);
+  display: block;
+  width: min(100%, 367px);
   height: auto;
-  text-align: center;
+  top: 4%;
+  filter: drop-shadow(8px 12px 12px rgba(0, 0, 0, 0.45));
 }
 
-.book-contents {
-  width: 50%;
-  text-align: center;
-  z-index: 3;
+.book-image-2 {
+  /* 比率を維持して縮小 */
+  width: min(90%, 330px);
+  height: auto;
+  /* 白い光と影 */
+  filter:
+  drop-shadow(0 0 4px white)
+  drop-shadow(0 0 9px rgba(255, 255, 255, 0.93))
+  drop-shadow(0 0 17px rgba(255, 255, 255, 0.75))
+  drop-shadow(0 0 27px rgba(255, 255, 255, 0.48))
+  drop-shadow(7px 10px 10px rgba(0, 0, 0, 0.45));
 }
 
 .book-content {
-  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(24px, 4vw, 50px);
+  width: 100%;
+  color: white;
+  text-align: center;
 }
 
 .book-content p {
-  position: absolute;
-  top: 24%;
-  right: 24%;
-  font-size: clamp(22px, 2.2vw, 24px);
+  margin: clamp(-160px, -12vw, -80px) 0  clamp(160px, 12vw, 80px);
+  font-size: clamp(18px, 2.2vw, 24px);
+  line-height: 1.8;
+  
 }
 
 .purchase {
-  position: absolute;
-  bottom: 18%;
-  right: 20%;
-  font-size: clamp(22px, 2.2vw, 24px);
-  letter-spacing: clamp(1px, 0.15vw, 2px);
-  padding: clamp(3px, 0.3vw, 4px);
-  background: none;
+  display: inline-block;
+  box-sizing: border-box;
+  padding:
+    clamp(8px, 1vw, 12px)
+    clamp(20px, 3vw, 40px);
   color: white;
+  background: transparent;
   border: 1px solid white;
+  font-size: clamp(18px, 2.2vw, 24px);
+  letter-spacing: clamp(1px, 0.15vw, 2px);
+  text-decoration: none;
+  cursor: pointer;
 }
 
-@media (max-width: 800px) {
-  .book h4 {
-    text-align: center;
+.purchase:hover {
+  color: black;
+  background: white;
+}
+
+@media (max-width: 700px) {
+  .book-item {
+    grid-template-columns: 1fr;
   }
 
-  .book-section {
-    flex-direction: column;
-  }
-
-  .book-images {
-    width: 100%;
-    text-align: center;
-  }
-
-  .book-contents {
-    width: 100%;
-  }
-
-  .book-content {
-    margin: 0 auto;
+  .book-image {
+    width: min(65%, 280px);
   }
 }
 
@@ -1101,6 +1152,7 @@ small {
   width: 100%;
   height: auto;
   display: block;
+  filter: brightness(0.62) saturate(0.85);
 }
 
 .first-greet-image {
@@ -1116,7 +1168,7 @@ small {
 
 .name {
   position: absolute;
-  top: 10%;
+  top: 11%;
   left: 50%;
   text-align: center;
   transform: translateX(-50%);
@@ -1134,6 +1186,8 @@ small {
 
 .first-greet h2,
 .first-greet h3 {
+  position: absolute;
+  left: 50%;
   color: #F30081;
   text-shadow:
     1px 0px 1px white,
@@ -1149,30 +1203,22 @@ small {
 }
 
 .title-1 {
-  position: absolute;
   top: 14.5%;
-  left: 50%;
   font-size: clamp(26px, 4vw, 48px);
 }
 
 .title-2 {
-  position: absolute;
   top: 17.2%;
-  left: 50%;
   font-size: clamp(26px, 4vw, 48px);
 }
 
 .title-3 {
-  position: absolute;
   top: 19.4%;
-  left: 50%;
   font-size: clamp(34px, 5.3vw, 66px);
 }
 
 .title-4 {
-  position: absolute;
   top: 23%;
-  left: 50%;
   font-size: clamp(26px, 4vw, 48px);
 }
 
@@ -1238,6 +1284,7 @@ small {
   width: 100%;
   height: auto;
   display: block;
+  filter: brightness(0.9) saturate(0.9);
 }
 
 .left-mirror,
@@ -1265,6 +1312,7 @@ small {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
+  filter: contrast(1.05) brightness(0.95);
 }
 
 .l-mirror-frame,
@@ -1277,6 +1325,8 @@ small {
   height: auto;
   display: block;
   z-index: 2;
+  filter:
+    drop-shadow(0 22px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 18px rgba(255, 220, 140, 0.25));
 }
 
 
@@ -1294,6 +1344,7 @@ small {
   width: 100%;
   height: auto;
   display: block;
+  filter: brightness(0.62) saturate(0.85);
 }
 
 .pegasus-title-1,
@@ -1380,6 +1431,7 @@ small {
   width: 100%;
   height: auto;
   display: block;
+  filter: brightness(0.8) saturate(0.85);
 }
 
 .event-detail {
@@ -1389,7 +1441,7 @@ small {
   bottom: 2%;
   width: clamp(70%, 75vw, 75%);
   transform: translateX(-50%);
-  background: rgba(220, 220, 220, 0.6);
+  background: rgba(240, 240, 240, 0.6);
   margin: 0 auto;
   text-align: center;
   padding: clamp(16px, 2vw, 28px) clamp(16px, 3vw, 36px);
@@ -1399,7 +1451,7 @@ small {
   display: inline-block;
   margin: clamp(32px, 5vw, 60px) 0 clamp(12px, 2vw, 20px);
   padding: 0 clamp(20px, 3vw, 36px);
-  background: rgba(220, 220, 220, 0.6);
+  background: rgba(240, 240, 240, 0.6);
 }
 
 .event-title h2 {
@@ -1452,6 +1504,7 @@ small {
   width: 100%;
   height: auto;
   display: block;
+  filter: brightness(0.8) saturate(0.85);
 }
 
 .contact {
@@ -1461,7 +1514,7 @@ small {
   bottom: 2%;
   width: 80%;
   transform: translateX(-50%);
-  background: rgba(220, 220, 220, 0.8);
+  background: rgba(240, 240, 240, 0.7);
   margin: 0 auto;
   padding: clamp(20px, 3vw, 40px);
 }
@@ -1471,7 +1524,7 @@ small {
   margin: clamp(32px, 5vw, 60px) 0 clamp(16px, 2vw, 24px);
   padding: 0 clamp(20px, 3vw, 36px);
   text-align: center;
-  background: rgba(220, 220, 220, 0.5);
+  background: rgba(240, 240, 240, 0.5);
 }
 
 .contact-form h2 {
@@ -1685,7 +1738,6 @@ textarea.input-error {
 
 .zip-field .error-message {
   top: 100%;
-  /* bottom: 10%; */
   margin: 0;
   left: clamp(16px, 2vw, 24px);
   margin-top: clamp(-30px, -2vw, -18px);
