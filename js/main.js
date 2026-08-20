@@ -34,7 +34,7 @@ if (logoLink) {
 const container = document.querySelector('.particles');
 if (container) {
     //粒を入れる親要素取得
-    const count = 30;
+    const count = 60;
     // 作る個数
     for (let i = 0; i < count; i++) {
         //ループの中で「粒を 1 個つくる」処理
@@ -63,8 +63,8 @@ if (container) {
             p.style.setProperty('--c4', 'rgba(210,220,255,0.15)');
         }
         // ゴールド or シルバーをランダムに決定
-        const moveX = (Math.random() * 80) - 40; // -40〜40px
-        const moveY = (Math.random() * 80) - 40; // -40〜40px
+        const moveX = (Math.random() * 90) - 50; // -50〜50px
+        const moveY = (Math.random() * 90) - 50; // -50〜50px
         p.style.setProperty('--move-x', `${moveX}px`);
         p.style.setProperty('--move-y', `${moveY}px`);
         //ランダムな動きの強さ
@@ -165,78 +165,79 @@ if (form) {
             }
         });
     });
-    const addressSearchButton = document.querySelector(".address-search");
-    const postalCodeInput = document.getElementById("contact-address");
-    const prefectureSelect = document.getElementById("prefecture");
-    const municipalityInput = document.getElementById("municipality");
-    const postalCodeError = document.querySelector(".zip-error");
+    const addressSearchButton = form.querySelector(".address-search");
+    const postalCodeInput = form.querySelector("#contact-address");
+    const prefectureSelect = form.querySelector("#prefecture");
+    const municipalityInput = form.querySelector("#municipality");
+    const postalCodeError = form.querySelector(".zip-error");
+
+    let postalCodeHasError = false;
 
     function showPostalCodeError(message) {
+        postalCodeHasError = true;
         postalCodeInput.classList.add("input-error");
         postalCodeError.textContent = message;
     }
+
     function clearPostalCodeError() {
+        postalCodeHasError = false;
         postalCodeInput.classList.remove("input-error");
         postalCodeError.textContent = "";
     }
 
-    addressSearchButton.addEventListener("click", async () => {
+    function validatePostalCode() {
         const postalCode = postalCodeInput.value.replace(/\D/g, "");
-        clearPostalCodeError();
+
+        if (postalCode.length === 0) {
+            showPostalCodeError("郵便番号を入力してください。");
+            return false;
+        }
+
         if (postalCode.length !== 7) {
             showPostalCodeError("7桁の郵便番号を入力してください。");
-            return;
+            return false;
         }
-        try {
-            const response = await fetch(
-                `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postalCode}`
-            );
-            const data = await response.json();
-            if (!data.results) {
-                showPostalCodeError("住所が見つかりませんでした。");
-                return;
-            }
-            const address = data.results[0];
-            clearPostalCodeError();
-            prefectureSelect.value = address.address1;
-            municipalityInput.value =
-                address.address2 + address.address3;
-        } catch (error) {
-            console.error(error);
-            showPostalCodeError(
-                "住所検索中にエラーが発生しました。"
-            );
-        }
+
+        clearPostalCodeError();
+        return true;
+    }
+
+    /* 一度エラーが表示された後は、入力のたびに再チェックする */
+    postalCodeInput.addEventListener("input", () => {
+        validatePostalCode();
     });
 
-    addressSearchButton.addEventListener("click", async () => {
-        const postalCode = postalCodeInput.value.replace(/\D/g, "");
-
-        // ここでは最初にclearしない
-        if (postalCode.length !== 7) {
-            showPostalCodeError("7桁の郵便番号を入力してください。");
+    /* 住所検索 */
+    addressSearchButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+        if (!validatePostalCode()) {
+            postalCodeInput.focus();
             return;
         }
+
+        const postalCode = postalCodeInput.value.replace(/\D/g, "");
         try {
             const response = await fetch(
                 `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postalCode}`
             );
+            if (!response.ok) {
+                throw new Error(`HTTP error: ${response.status}`);
+            }
+
             const data = await response.json();
             if (!data.results) {
                 showPostalCodeError("住所が見つかりませんでした。");
                 return;
             }
+
             const address = data.results[0];
-            // 住所検索に成功したときだけ解除
+
             clearPostalCodeError();
             prefectureSelect.value = address.address1;
-            municipalityInput.value =
-                address.address2 + address.address3;
+            municipalityInput.value = address.address2 + address.address3;
         } catch (error) {
             console.error(error);
-            showPostalCodeError(
-                "住所検索中にエラーが発生しました。"
-            );
+            showPostalCodeError("住所検索中にエラーが発生しました。");
         }
     });
 }
