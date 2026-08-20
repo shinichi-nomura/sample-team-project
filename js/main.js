@@ -84,47 +84,149 @@ if (container) {
 
 //contact-form
 const form = document.getElementById("contactForm");
+
 if (form) {
-    const requiredFields = form.querySelectorAll("[required]");
-    // 項目ごとのエラーメッセージ
-    const errorMessages = {
-        "lastName": "苗字を入力してください。",
-        "firstName": "お名前を入力してください。",
+    const addressSearchButton = form.querySelector(".address-search");
+    const postalCodeInput = form.querySelector("#contact-address");
+    const prefectureSelect = form.querySelector("#prefecture");
+    const municipalityInput = form.querySelector("#municipality");
+    const postalCodeError = form.querySelector(".zip-error");
+
+    const emailInput = form.querySelector("#contact-email");
+    const emailCheckInput = form.querySelector("#email-check");
+    //required属性がある項目に郵便番号を追加、郵便番号にもrequiredが付いている場合Setで重複しない
+    // required属性がある必須項目だけを対象にする
+    const validationFields = [
+        ...form.querySelectorAll("[required]")
+    ];
+    const emptyMessages = {
+        lastName: "苗字を入力してください。",
+        firstName: "お名前を入力してください。",
         "lastName-check": "みょうじを入力してください。",
         "firstName-check": "おなまえを入力してください。",
         "contact-email": "メールアドレスを入力してください。",
         "email-check": "確認用メールアドレスを入力してください。",
+        "contact-address": "7桁の郵便番号を入力してください。",
         "contact-details": "お問い合わせ内容を入力してください。"
     };
+    //ひらがな、長音符、空白を許可*
+    const hiraganaPattern = /^[ぁ-ゖゝゞー\s　]+$/;
+    function normalizePostalCode(value) {
+        return value
+            //全角数字を半角数字へ変換
+            .replace(/[０-９]/g, (number) =>
+                String.fromCharCode(number.charCodeAt(0) - 0xFEE0)
+            )
+            //数字以外を除去
+            .replace(/\D/g, "");
+    }
 
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        let firstInvalid = null;
-        requiredFields.forEach((field) => {
-            // エラー表示を一旦リセット
-            field.classList.remove("input-error");
-            const errorMessage =
-                field.parentElement.querySelector(".error-message");
-            if (errorMessage) {
-                errorMessage.textContent = "";
+    function getErrorElement(field) {
+        if (field === postalCodeInput) {
+            return postalCodeError;
+        }
+        const wrapper = field.closest(
+            ".field, .full-group, .zip-field, .textarea-wrapper, .form-group"
+        );
+        return wrapper?.querySelector(".error-message") ?? null;
+    }
+
+    function showFieldError(field, message) {
+        const errorElement = getErrorElement(field);
+        field.classList.add("input-error");
+        field.setAttribute("aria-invalid", "true");
+        if (errorElement) {
+            errorElement.textContent = message;
+        }
+    }
+
+    function clearFieldError(field) {
+        const errorElement = getErrorElement(field);
+        field.classList.remove("input-error");
+        field.removeAttribute("aria-invalid");
+        if (errorElement) {
+            errorElement.textContent = "";
+        }
+    }
+    //すべての検証をこの関数にまとめる
+    function validateField(field) {
+        const value = field.value.trim();
+        //空欄チェック
+        if (value === "") {
+            showFieldError(
+                field,
+                emptyMessages[field.id] ??
+                "この項目を入力してください。"
+            );
+            return false;
+        }
+        //苗字・名前のふりがなチェック
+        if (
+            field.id === "lastName-check" ||
+            field.id === "firstName-check"
+        ) {
+            if (!hiraganaPattern.test(value)) {
+                showFieldError(
+                    field,
+                    "ひらがなで入力してください。"
+                );
+                return false;
             }
-            // 未入力チェック
-            if (field.value.trim() === "") {
-                // 一度エラーになったことを記録
-                field.dataset.hasError = "true";
-                field.classList.add("input-error");
-                if (errorMessage) {
-                    errorMessage.textContent =
-                        errorMessages[field.id] ||
-                        "この項目を入力してください。";
-                }
-                if (!firstInvalid) {
-                    firstInvalid = field;
-                }
+        }
+        //メールアドレスの形式チェック
+        if (field.id === "contact-email") {
+            if (!field.validity.valid) {
+                showFieldError(
+                    field,
+                    "正しいメールアドレスを入力してください。"
+                );
+                return false;
+            }
+        }
+        //確認用メールアドレス
+        if (field.id === "email-check") {
+            if (!field.validity.valid) {
+                showFieldError(
+                    field,
+                    "正しいメールアドレスを入力してください。"
+                );
+                return false;
+            }
+            if (value !== emailInput.value.trim()) {
+                showFieldError(
+                    field,
+                    "メールアドレスが一致していません。"
+                );
+                return false;
+            }
+        }
+        //郵便番号
+        if (field.id === "contact-address") {
+            const postalCode = normalizePostalCode(field.value);
+            if (postalCode.length !== 7) {
+                showFieldError(
+                    field,
+                    "7桁の郵便番号を入力してください。"
+                );
+                return false;
+            }
+        }
+        clearFieldError(field);
+        return true;
+    }
+    //決定ボタンを押したとき
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        let firstInvalid = null;
+        validationFields.forEach((field) => {
+            // 送信後は入力のたびに検証
+            field.dataset.hasValidated = "true";
+            const isValid = validateField(field);
+            if (!isValid && !firstInvalid) {
+                firstInvalid = field;
             }
         });
 
-        // エラーがある場合
         if (firstInvalid) {
             firstInvalid.scrollIntoView({
                 behavior: "smooth",
@@ -135,109 +237,76 @@ if (form) {
             }, 500);
             return;
         }
-        // 問題なければ送信
+        //エラーがなければ送信
         form.submit();
     });
 
-    // 入力されたらその項目のエラーだけ解除
-    requiredFields.forEach((field) => {
-        field.addEventListener("input", function () {
-            // まだ一度もエラーになっていない項目なら何もしない
-            if (field.dataset.hasError !== "true") {
+    //一度検証された項目は入力のたびに再検証
+    validationFields.forEach((field) => {
+        field.addEventListener("input", () => {
+            if (field.dataset.hasValidated !== "true") {
                 return;
             }
-            const errorMessage =
-                field.parentElement.querySelector(".error-message");
-            if (field.value.trim() !== "") {
-                // 入力されている場合
-                field.classList.remove("input-error");
-                if (errorMessage) {
-                    errorMessage.textContent = "";
-                }
-            } else {
-                // 再び空欄になった場合
-                field.classList.add("input-error");
-                if (errorMessage) {
-                    errorMessage.textContent =
-                        errorMessages[field.id] ||
-                        "この項目を入力してください。";
-                }
-            }
+            validateField(field);
         });
     });
-    const addressSearchButton = form.querySelector(".address-search");
-    const postalCodeInput = form.querySelector("#contact-address");
-    const prefectureSelect = form.querySelector("#prefecture");
-    const municipalityInput = form.querySelector("#municipality");
-    const postalCodeError = form.querySelector(".zip-error");
 
-    let postalCodeHasError = false;
-
-    function showPostalCodeError(message) {
-        postalCodeHasError = true;
-        postalCodeInput.classList.add("input-error");
-        postalCodeError.textContent = message;
-    }
-
-    function clearPostalCodeError() {
-        postalCodeHasError = false;
-        postalCodeInput.classList.remove("input-error");
-        postalCodeError.textContent = "";
-    }
-
-    function validatePostalCode() {
-        const postalCode = postalCodeInput.value.replace(/\D/g, "");
-
-        if (postalCode.length === 0) {
-            showPostalCodeError("郵便番号を入力してください。");
-            return false;
+    // 元のメールアドレスが変更されたら、 確認用メールアドレスも再検証
+    emailInput?.addEventListener("input", () => {
+        if (
+            emailCheckInput.value.trim() !== "" ||
+            emailCheckInput.dataset.hasValidated === "true"
+        ) {
+            emailCheckInput.dataset.hasValidated = "true";
+            validateField(emailCheckInput);
         }
-
-        if (postalCode.length !== 7) {
-            showPostalCodeError("7桁の郵便番号を入力してください。");
-            return false;
-        }
-
-        clearPostalCodeError();
-        return true;
-    }
-
-    /* 一度エラーが表示された後は、入力のたびに再チェックする */
-    postalCodeInput.addEventListener("input", () => {
-        validatePostalCode();
     });
 
-    /* 住所検索 */
-    addressSearchButton.addEventListener("click", async (event) => {
+    // 住所検索
+    addressSearchButton?.addEventListener("click", async (event) => {
         event.preventDefault();
-        if (!validatePostalCode()) {
+        postalCodeInput.dataset.hasValidated = "true";
+        if (!validateField(postalCodeInput)) {
             postalCodeInput.focus();
             return;
         }
 
-        const postalCode = postalCodeInput.value.replace(/\D/g, "");
+        const postalCode = normalizePostalCode(
+            postalCodeInput.value
+        );
         try {
             const response = await fetch(
                 `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postalCode}`
             );
             if (!response.ok) {
-                throw new Error(`HTTP error: ${response.status}`);
+                throw new Error(
+                    `HTTP error: ${response.status}`
+                );
             }
-
             const data = await response.json();
             if (!data.results) {
-                showPostalCodeError("住所が見つかりませんでした。");
+                showFieldError(
+                    postalCodeInput,
+                    "住所が見つかりませんでした。"
+                );
                 return;
             }
-
             const address = data.results[0];
-
-            clearPostalCodeError();
-            prefectureSelect.value = address.address1;
-            municipalityInput.value = address.address2 + address.address3;
+            clearFieldError(postalCodeInput);
+            if (prefectureSelect) {
+                prefectureSelect.value = address.address1;
+            }
+            if (municipalityInput) {
+                municipalityInput.value =
+                    address.address2 + address.address3;
+            }
         } catch (error) {
             console.error(error);
-            showPostalCodeError("住所検索中にエラーが発生しました。");
+
+            showFieldError(
+                postalCodeInput,
+                "住所検索中にエラーが発生しました。"
+            );
         }
     });
 }
