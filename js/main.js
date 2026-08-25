@@ -91,14 +91,21 @@ if (form) {
     const prefectureSelect = form.querySelector("#prefecture");
     const municipalityInput = form.querySelector("#municipality");
     const postalCodeError = form.querySelector(".zip-error");
-
     const emailInput = form.querySelector("#email");
     const emailCheckInput = form.querySelector("#email-check");
+    const telephoneInput = form.querySelector("#contact-tell");
+    const mobilePhoneInput = form.querySelector("#contact-phone");
+    //必須項目に、任意入力の電話番号2項目を加えてバリデーション対象にする
     //required属性がある項目に郵便番号を追加、郵便番号にもrequiredが付いている場合Setで重複しない
     // required属性がある必須項目だけを対象にする
     const validationFields = [
-        ...form.querySelectorAll("[required]")
+        ...new Set([
+            ...form.querySelectorAll("[required]"),
+            telephoneInput,
+            mobilePhoneInput
+        ].filter(Boolean))
     ];
+
     const emptyMessages = {
         lastName: "苗字を入力してください。",
         firstName: "お名前を入力してください。",
@@ -111,6 +118,13 @@ if (form) {
     };
     //ひらがな、長音符、空白を許可*
     const hiraganaPattern = /^[ぁ-ゖゝゞー\s　]+$/;
+    // 半角数字とハイフンのみ
+    const phonePattern = /^(?=.*\d)[0-9-]+$/;
+    const optionalPhoneIds = new Set([
+        "contact-tell",
+        "contact-phone"
+    ]);
+
     function normalizePostalCode(value) {
         return value
             //全角数字を半角数字へ変換
@@ -151,13 +165,23 @@ if (form) {
     //すべての検証をこの関数にまとめる
     function validateField(field) {
         const value = field.value.trim();
-        //空欄チェック
+        //電話番号・携帯電話番号は任意項目なので空欄の場合はエラーにしない
+        if (
+            optionalPhoneIds.has(field.id) &&
+            value === ""
+        ) {
+            clearFieldError(field);
+            return true;
+        }
+
+        // 必須項目の空欄チェック
         if (value === "") {
             showFieldError(
                 field,
                 emptyMessages[field.id] ??
                 "この項目を入力してください。"
             );
+
             return false;
         }
         //苗字・名前のふりがなチェック
@@ -194,7 +218,7 @@ if (form) {
                 );
                 return false;
             }
-            
+
             // 元メールが正しい形式で、確認欄と一致していない
             if (
                 emailInput.validity.valid &&
@@ -203,6 +227,16 @@ if (form) {
                 showFieldError(
                     field,
                     "メールアドレスが一致していません。入力内容をご確認ください。"
+                );
+                return false;
+            }
+        }
+        // 電話番号・携帯電話番号の検証
+        if (optionalPhoneIds.has(field.id)) {
+            if (!phonePattern.test(value)) {
+                showFieldError(
+                    field,
+                    "半角数字とハイフンのみで入力してください。"
                 );
                 return false;
             }
