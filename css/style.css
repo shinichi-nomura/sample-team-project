@@ -484,29 +484,51 @@ nav a:hover {
   overflow: hidden;
   margin: clamp(80px, 8vw, 98px) 0 clamp(40px, 5vw, 64px);
   z-index: 5;
+  /* background:; */
 }
 
-.hero-image-picture,
-.hero-frame-picture {
+.hero-images {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+
+  border-radius: 36px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-images>.hero-image {
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  /* 親要素と同じ角丸にする */
+  border-radius: inherit;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.88);
 }
 
-.hero-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* JSが読み込まれる前にも1枚目を表示 */
+.hero-images>.hero-image:first-child {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
 }
 
 .hero-frame {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
+  pointer-events: none;
   object-fit: cover;
+  z-index: 10;
 }
 
 .logo-content {
@@ -516,7 +538,11 @@ nav a:hover {
   bottom: 12%;
   width: clamp(180px, 38vw, 420px);
   height: auto;
-  z-index: 3;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
 }
 
 @media (max-width: 800px) {
@@ -885,8 +911,10 @@ main p {
   width: 96%;
   /* aspect-ratio: 1578 / 3447; */
   margin: 0 auto clamp(40px, 5vw, 64px);
+  /* padding:
+    clamp(32px, 5vw, 64px) clamp(20px, 4vw, 50px) clamp(40px, 6vw, 80px); */
   padding:
-    clamp(32px, 5vw, 64px) clamp(20px, 4vw, 50px) clamp(40px, 6vw, 80px);
+    clamp(20px, 4vw, 64px) clamp(12px, 3vw, 50px) clamp(24px, 4vw, 80px);
   overflow: hidden;
 }
 
@@ -916,7 +944,7 @@ main p {
   display: flex;
   flex-direction: column;
   gap: clamp(48px, 8vw, 100px);
-  margin-top: clamp(-40px, -3vw, -20px);
+  margin-top: clamp(-20px, -2vw, -12px);
 }
 
 .book-item {
@@ -929,12 +957,28 @@ main p {
 .book-images {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
+  align-self: start;
   width: 70%;
   height: auto;
+  padding-top: 0;
+}
+
+.book-images,
+.book-content {
+  min-width: 0;
+}
+
+.book-image,
+.book-image-2 {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  align-self: flex-start;
+  object-fit: contain;
 }
 
 .book-image {
-  display: block;
   width: min(100%, 367px);
   height: auto;
   top: 4%;
@@ -942,31 +986,43 @@ main p {
 }
 
 .book-image-2 {
-  width: min(90%, 330px);
   height: auto;
-  filter:
-    drop-shadow(0 0 4px white) drop-shadow(0 0 9px rgba(255, 255, 255, 0.93)) drop-shadow(0 0 17px rgba(255, 255, 255, 0.75)) drop-shadow(0 0 27px rgba(255, 255, 255, 0.48)) drop-shadow(7px 10px 10px rgba(0, 0, 0, 0.45));
+  width: min(90%, 330px);
+  filter: drop-shadow(0 0 4px white) drop-shadow(0 0 9px rgba(255, 255, 255, 0.93)) drop-shadow(0 0 17px rgba(255, 255, 255, 0.75)) drop-shadow(0 0 27px rgba(255, 255, 255, 0.48)) drop-shadow(7px 10px 10px rgba(0, 0, 0, 0.45));
 }
 
 .book-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-self: stretch;
   box-sizing: border-box;
   width: 100%;
-  padding: clamp(16px, 2vw, 28px) 0 clamp(12px, 1.5vw, 20px);
+  padding: 0 0 clamp(12px, 1.5vw, 20px);
   color: white;
   text-align: center;
+  gap: clamp(6px, 1vw, 14px);
+  padding: 0;
+}
+
+.book-content h5 {
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: normal;
+  margin: clamp(4px, 1.8vw, 16px) 0 clamp(24px, 2.8vw, 48px);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .book-content p {
   width: 100%;
   margin: 0;
-  font-size: clamp(18px, 2.2vw, 24px);
-  line-height: 1.8;
+  font-size: clamp(12px, 2vw, 18px);
+  line-height: 2;
   text-align: center;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .purchase {
@@ -1329,9 +1385,10 @@ small {
 .left-mirror,
 .right-mirror {
   position: absolute;
-  top: 12%;
-  width: clamp(28%, 35vw, 35%);
-  aspect-ratio: 1 / 1.7;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 35%;
+  aspect-ratio: 624 / 954;
 }
 
 .left-mirror {
@@ -1342,15 +1399,37 @@ small {
   right: 13%;
 }
 
-.l-mirror-image,
-.r-mirror-image {
+.mirror-slider {
   position: absolute;
-  width: 75.6%;
-  height: auto;
-  top: 18.9%;
+  top: 15.6%;
   left: 50%;
-  transform: translateX(-50%);
   z-index: 1;
+  width: 75.6%;
+  aspect-ratio: 540 / 740;
+  transform: translateX(-50%);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.mirror-slide {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.08);
+  will-change: opacity, transform;
+}
+
+/* JS読み込み前にも1枚目を表示 */
+.mirror-slide:first-child {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
 }
 
 .l-mirror-frame,
@@ -1479,6 +1558,7 @@ small {
   width: clamp(70%, 75vw, 75%);
   transform: translateX(-50%);
   background: rgba(240, 240, 240, 0.6);
+  border: 5px double black;
   margin: 0 auto;
   text-align: center;
   padding: clamp(16px, 2vw, 28px) clamp(16px, 3vw, 36px);
@@ -1489,6 +1569,7 @@ small {
   margin: clamp(20px, 4.2vw, 40px) 0 clamp(12px, 2vw, 20px);
   padding: 0 clamp(20px, 3vw, 36px);
   background: rgba(240, 240, 240, 0.6);
+  border: 4px double black;
 }
 
 .event-title h2 {
@@ -1551,6 +1632,7 @@ small {
   width: 80%;
   transform: translateX(-50%);
   background: rgba(240, 240, 240, 0.7);
+  border: 5px double black;
   margin: 0 auto;
   padding: clamp(20px, 3vw, 40px);
 }
@@ -1561,6 +1643,7 @@ small {
   padding: 0 clamp(20px, 3vw, 36px);
   text-align: center;
   background: rgba(240, 240, 240, 0.5);
+  border: 4px double black;
 }
 
 .contact-form h2 {
@@ -1843,7 +1926,6 @@ textarea {
 .decision {
   appearance: none;
   -webkit-appearance: none;
-  border: none;
   outline: none;
   background: #F30081;
   color: white;
@@ -1857,4 +1939,13 @@ textarea {
   border-radius: clamp(16px, 1.3vw, 32px);
   cursor: pointer;
   margin-top: clamp(40px, 5vw, 64px);
+  box-shadow: 10px 5px 5px gray;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.decision:active {
+  transform: translateY(7px);
+  box-shadow: none;
 }
