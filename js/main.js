@@ -82,6 +82,141 @@ if (container) {
     }
 }
 
+//hero-animation
+document.addEventListener("DOMContentLoaded", () => {
+    const images = gsap.utils.toArray(
+        ".hero-images > .hero-image"
+    );
+    if (images.length > 0) {
+        gsap.set(images, {
+            autoAlpha: 0,
+            scale: 1.08,
+            zIndex: 0
+        });
+        gsap.set(images[0], {
+            autoAlpha: 1,
+            scale: 1,
+            zIndex: 1
+        });
+
+        const timeline = gsap.timeline({
+            repeat: -1
+        });
+        images.forEach((currentImage, index) => {
+            const nextImage = images[(index + 1) % images.length];
+
+            timeline.to({}, {
+                duration: 2.5
+            });
+            timeline.set(nextImage, {
+                autoAlpha: 0,
+                scale: 1.08,
+                zIndex: 2
+            });
+            timeline.to(currentImage, {
+                autoAlpha: 0,
+                scale: 1.05,
+                duration: 1.2,
+                ease: "power2.inOut"
+            });
+            timeline.to(nextImage, {
+                autoAlpha: 1,
+                scale: 1,
+                duration: 1.2,
+                ease: "power2.out"
+            }, "<");
+            timeline.set(currentImage, {
+                scale: 1.08,
+                zIndex: 0
+            });
+        });
+    }
+
+    // ロゴは最初に1回だけ浮かび上がる
+    gsap.fromTo(
+        ".logo-content",
+        {
+            autoAlpha: 0,
+            yPercent: 150
+        },
+        {
+            autoAlpha: 1,
+            yPercent: 0,
+            duration: 1.4,
+            delay: 0.5,
+            ease: "power3.out"
+        }
+    );
+});
+
+
+// mirror-animation
+document.addEventListener("DOMContentLoaded", () => {
+    if (typeof gsap === "undefined") {
+        console.error("GSAPが読み込まれていません");
+        return;
+    }
+    const sliders = gsap.utils.toArray(".mirror-slider");
+
+    sliders.forEach((slider) => {
+        const images = gsap.utils.toArray(
+            slider.querySelectorAll(".mirror-slide")
+        );
+        if (images.length < 2) return;
+        // 全画像を初期状態へ
+        gsap.set(images, {
+            autoAlpha: 0,
+            scale: 1.08,
+            zIndex: 0
+        });
+        // 最初の画像だけ表示
+        gsap.set(images[0], {
+            autoAlpha: 1,
+            scale: 1,
+            zIndex: 1
+        });
+
+        const timeline = gsap.timeline({
+            repeat: -1
+        });
+        images.forEach((currentImage, index) => {
+            const nextImage = images[(index + 1) % images.length];
+            // 現在の画像を表示しておく
+            timeline.to({}, {
+                duration: 3
+            });
+            // 次の画像を前面に準備
+            timeline.set(nextImage, {
+                autoAlpha: 0,
+                scale: 1.08,
+                zIndex: 2
+            });
+            // 現在の画像を消す
+            timeline.to(currentImage, {
+                autoAlpha: 0,
+                scale: 1.03,
+                duration: 1.2,
+                ease: "power2.inOut"
+            });
+            // 次の画像を同時に表示
+            timeline.to(nextImage, {
+                autoAlpha: 1,
+                scale: 1,
+                duration: 1.2,
+                ease: "power2.out"
+            }, "<");
+            // 重なり順を整理
+            timeline.set(currentImage, {
+                autoAlpha: 0,
+                scale: 1.08,
+                zIndex: 0
+            });
+            timeline.set(nextImage, {
+                zIndex: 1
+            });
+        });
+    });
+});
 //contact-form
 const form = document.getElementById("contactForm");
 
