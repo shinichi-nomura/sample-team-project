@@ -82,6 +82,7 @@ if (container) {
     }
 }
 
+if (typeof gsap !== "undefined") {
 //hero-animation
 document.addEventListener("DOMContentLoaded", () => {
     const images = gsap.utils.toArray(
@@ -217,6 +218,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+}
+
 //contact-form
 const form = document.getElementById("contactForm");
 

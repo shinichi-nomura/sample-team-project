@@ -907,15 +907,12 @@ main p {
   position: relative;
   isolation: isolate;
   box-sizing: border-box;
-  max-width: 1240px;
-  width: 96%;
-  /* aspect-ratio: 1578 / 3447; */
+  width: min(96%, 1240px);
   margin: 0 auto clamp(40px, 5vw, 64px);
-  /* padding:
-    clamp(32px, 5vw, 64px) clamp(20px, 4vw, 50px) clamp(40px, 6vw, 80px); */
   padding:
-    clamp(20px, 4vw, 64px) clamp(12px, 3vw, 50px) clamp(24px, 4vw, 80px);
+    clamp(30px, 4vw, 64px) clamp(20px, 4vw, 50px) clamp(40px, 6vw, 80px);
   overflow: hidden;
+  aspect-ratio: 1351 / 2033;
 }
 
 .book-background {
@@ -924,17 +921,15 @@ main p {
   inset: 0;
   display: block;
   width: 100%;
-  height: auto;
-  /* height: 100%; */
-  object-fit: cover;
-  /* object-fit: contain; */
+  height: 100%;
+  object-fit: fill;
   filter: brightness(0.8) saturate(0.85);
 }
 
 .book h4 {
-  margin: clamp(-20px, 2vw, -12px) 0 clamp(20px, 2vw, 36px);
-  color: white;
-  font-size: clamp(24px, 3vw, 40px);
+  margin: 0 0 clamp(4px, 2vw, 16px);
+  color: #fff;
+  font-size: clamp(28px, 3.4vw, 48px);
   font-weight: normal;
   letter-spacing: clamp(1px, 0.15vw, 2px);
   text-align: center;
@@ -943,105 +938,132 @@ main p {
 .book-list {
   display: flex;
   flex-direction: column;
-  gap: clamp(48px, 8vw, 100px);
-  margin-top: clamp(-20px, -2vw, -12px);
+  gap: clamp(60px, 9vw, 110px);
 }
 
 .book-item {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: stretch;
-  gap: clamp(24px, 5vw, 70px);
+  grid-template-columns:
+    minmax(220px, 0.8fr) minmax(0, 1.2fr);
+  align-items: start;
+  gap: clamp(30px, 6vw, 80px);
+}
+
+.book-item:first-child {
+  margin-bottom: clamp(70px, 10vw, 140px);
+  grid-template-columns:
+    minmax(0, 1.2fr) minmax(220px, 0.8fr);
+}
+
+.book-item:first-child .book-content {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.book-item:first-child .book-images {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.book-item:first-child .book-image {
+  transform: translateY(40px) scale(1.2);
+  transform-origin: top center;
+  margin-top: clamp(80px, 12.9vw, 160px);
+}
+
+.book-item:first-child .book-content {
+  margin-top: clamp(-20px, -1.6vw, -10px);
+}
+
+.book-item:nth-child(2) {
+  grid-template-columns:
+    minmax(220px, 0.8fr) minmax(0, 1.2fr);
+}
+
+.book-item:nth-child(2) .book-images {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.book-item:nth-child(2) .book-content {
+  grid-column: 2;
+  grid-row: 1;
+  margin-top: clamp(68px, 11vw, 136px);
 }
 
 .book-images {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  align-self: start;
-  width: 70%;
-  height: auto;
-  padding-top: 0;
-}
-
-.book-images,
-.book-content {
+  width: 100%;
   min-width: 0;
 }
 
 .book-image,
 .book-image-2 {
   display: block;
+  width: auto;
   max-width: 100%;
-  height: auto;
-  align-self: flex-start;
+  height: clamp(280px, 35vw, 440px);
   object-fit: contain;
+  transform: none;
 }
 
 .book-image {
-  width: min(100%, 367px);
-  height: auto;
-  top: 4%;
   filter: drop-shadow(8px 12px 12px rgba(0, 0, 0, 0.45));
 }
 
 .book-image-2 {
-  height: auto;
-  width: min(90%, 330px);
-  filter: drop-shadow(0 0 4px white) drop-shadow(0 0 9px rgba(255, 255, 255, 0.93)) drop-shadow(0 0 17px rgba(255, 255, 255, 0.75)) drop-shadow(0 0 27px rgba(255, 255, 255, 0.48)) drop-shadow(7px 10px 10px rgba(0, 0, 0, 0.45));
+  filter:
+    drop-shadow(0 0 4px #fff) drop-shadow(0 0 9px rgba(255, 255, 255, 0.93)) drop-shadow(0 0 17px rgba(255, 255, 255, 0.75)) drop-shadow(7px 10px 10px rgba(0, 0, 0, 0.45));
 }
 
 .book-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  align-self: stretch;
-  box-sizing: border-box;
-  width: 100%;
-  padding: 0 0 clamp(12px, 1.5vw, 20px);
-  color: white;
+  min-width: 0;
+  color: #fff;
   text-align: center;
-  gap: clamp(6px, 1vw, 14px);
-  padding: 0;
 }
 
 .book-content h5 {
-  font-size: clamp(16px, 2vw, 24px);
+  margin: clamp(20px, 3vw, 40px) 0 clamp(16px, 2.6vw, 36px);
+  font-size: clamp(20px, 2.6vw, 32px);
   font-weight: normal;
-  margin: clamp(4px, 1.8vw, 16px) 0 clamp(24px, 2.8vw, 48px);
-  line-height: 1.4;
+  line-height: 1.5;
   overflow-wrap: anywhere;
-  word-break: normal;
 }
 
 .book-content p {
   width: 100%;
   margin: 0;
-  font-size: clamp(12px, 2vw, 18px);
+  font-size: clamp(14px, 1.6vw, 20px);
   line-height: 2;
   text-align: center;
   overflow-wrap: anywhere;
-  word-break: normal;
 }
 
 .purchase {
   display: inline-block;
   box-sizing: border-box;
-  margin-top: clamp(30px, 4vw, 50px);
-  padding: clamp(8px, 1vw, 12px) clamp(20px, 3vw, 40px);
-  color: white;
+  margin-top: clamp(24px, 4vw, 50px);
+  padding:
+    clamp(8px, 1vw, 12px) clamp(20px, 3vw, 40px);
+  color: #fff;
   background: transparent;
-  border: 1px solid white;
-  font-size: clamp(18px, 2.2vw, 24px);
-  letter-spacing: clamp(1px, 0.15vw, 2px);
+  border: 1px solid #fff;
+  font-size: clamp(16px, 2vw, 22px);
+  letter-spacing: 1px;
   text-decoration: none;
-  cursor: pointer;
+  transition:
+    color 0.25s,
+    background-color 0.25s;
 }
 
 .purchase:hover {
-  color: black;
-  background: white;
+  color: #000;
+  background-color: #fff;
 }
 
 @media (max-width: 700px) {

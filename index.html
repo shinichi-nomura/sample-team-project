@@ -21,6 +21,23 @@
     })(document);
   </script>
 </head>
+<script>
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  window.addEventListener("pageshow", function () {
+    const root = document.documentElement;
+    const originalBehavior = root.style.scrollBehavior;
+
+    root.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+
+    requestAnimationFrame(function () {
+      root.style.scrollBehavior = originalBehavior;
+    });
+  });
+</script>
 
 <body>
   <div class="particles"></div>
@@ -185,7 +202,7 @@
 
       <section class="book" id="book">
         <!-- <img src="images/responsive-images/Sumaho_Tyosyo_BG.png" class="book-background" alt="" width="2749" height="1694"> -->
-        <img src="images/top-images/Tyosyo-backgtound.png" class="book-background" alt="" width="2749" height="1694">
+        <img src="images/top-images/tyosyo.BG.webp" class="book-background" alt="" width="1351" height="2033">
         <h4>著書</h4>
         <div class="book-list">
           <article class="book-item">
@@ -193,18 +210,21 @@
               <img src="images/top-images/Tyosyo1.webp" alt="1冊目の著書" class="book-image" width="734" height="1052">
             </div>
             <div class="book-content">
-              <h5>学校ではおしえてくれないオンナの保健体育</h5>
-              <p>女性が女性の感覚を取り戻すための様々なヒントが満載。
-                女性磨きの集大成となり、人生を楽しく幸せに生きるための
-                ガイドブック。女性を元気にするバイブル!
-                幸せな結婚を望む方、自分の幸せはなんだろうと考えている方、
-                これから結婚する人はもちろん、既に結婚した人にとっても、
-                気持ちを新たにしたいと感じる時におすすめの1冊!
-                著者の美羽は、健康美研究家として、リンパケアや個性心理學を通じて女性の心身を支えてきました。本書には、その経験と、女性が自分らしく輝くための想いが込められています。
+              <h5>学校ではおしえてくれない！<br>オンナの保健体育</h5>
+              <p>女性が女性の感覚を取り戻すための様々なヒントが満載。<br>
+                女性磨きの集大成となり、人生を楽しく幸せに生きるための<br>
+                ガイドブック。女性を元気にするバイブル!<br>
+                幸せな結婚を望む方、自分の幸せはなんだろうと考えている方、<br>
+                これから結婚する人はもちろん、既に結婚した人にとっても、<br>
+                気持ちを新たにしたいと感じる時におすすめの1冊!<br>
+                著者の美羽は、健康美研究家として、リンパケアや<br>
+                個性心理學を通じて女性の心身を支えてきました。<br>
+                本書には、その経験と、<br>
+                女性が自分らしく輝くための想いが込められています。
               </p>
-              <a href="#" class="purchase">
+              <button type="button" class="purchase">
                 ご購入はこちら
-              </a>
+              </button>
             </div>
           </article>
           <article class="book-item">
@@ -213,9 +233,16 @@
             </div>
             <div class="book-content">
               <h5>美羽のボランティア奮闘記</h5>
-              <p>2011年、東日本大震災をきっかけに、妊娠・出産・子育てと向き合いながら、復興支援への「はじめの一歩」を踏み出した美羽の記録です。
-                福島での出産を決意するも、さまざまな事情から群馬県で出産。その経験を原点に、神奈川県と福島県の架け橋となることを願い、子育てをしながら地域振興と復興自立支援に取り組んできました。
-                心身の健康美を通じた持続可能な社会の実現、そして個性心理學（動物キャラナビ）を通じた世界平和への想いを、未来に向けて問いかけた2012年刊行の処女作です。</p>
+              <p>2011年、東日本大震災をきっかけに、<br>
+                妊娠・出産・子育てと向き合いながら、復興支援への<br>
+                「はじめの一歩」を踏み出した美羽の記録です。<br>
+                福島での出産を決意するも、さまざまな事情から群馬県で出産。<br>
+                その経験を原点に、神奈川県と福島県の架け橋となることを願い、<br>
+                子育てをしながら地域振興と復興自立支援に取り組んできました。<br>
+                心身の健康美を通じた持続可能な社会の実現、<br>
+                そして個性心理學（動物キャラナビ）を通じた<br>
+                世界平和への想いを、未来に向けて問いかけた<br>
+                2012年刊行の処女作です。</p>
             </div>
           </article>
         </div>
