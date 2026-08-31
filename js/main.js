@@ -82,154 +82,230 @@ if (container) {
     }
 }
 
-//GSAPアニメーション
+// GSAPアニメーション
 if (typeof gsap !== "undefined") {
-    //hero-animation
-    document.addEventListener("DOMContentLoaded", async () => {
-        const images = gsap.utils.toArray(
-            ".hero-images > .hero-image"
-        );
-        const frame = document.querySelector(".hero-frame-picture");
-        const logo = document.querySelector(".logo-content");
-
-        if (images.length === 0) return;
-        /* Hero画像の初期状態 */
-        gsap.set(images, {
-            autoAlpha: 0,
-            // scale: 1.03,
-            // x: 0,
-            // xPercent: 0,
-            zIndex: 0,
-            clearProps: "transform",
-            // transformOrigin: "50% 50%"
-        });
-        if (frame) {
-            gsap.set(frame, {
-                autoAlpha: 0
-            });
-        }
-        if (logo) {
-            gsap.set(logo, {
-                autoAlpha: 0,
-                yPercent: 150
-            });
-        }
-        //カクつき防止の先にデコード処理
-        await Promise.all(
-            images.map((image) => {
-                if (typeof image.decode === "function") {
-                    return image.decode().catch(() => { });
-                }
-                if (image.complete) {
-                    return Promise.resolve();
-                }
-                return new Promise((resolve) => {
-                    image.addEventListener("load", resolve, { once: true });
-                    image.addEventListener("error", resolve, { once: true });
-                });
-            })
-        );
-        //Hero画像の繰り返し部分
-        const startHeroLoop = () => {
-            const loopTimeline = gsap.timeline({
-                repeat: -1
-            });
-
-            images.forEach((currentImage, index) => {
-                const nextImage = images[(index + 1) % images.length];
-                /* 現在の画像を5秒間表示 */
-                loopTimeline.to({}, {
-                    duration: 5
-                });
-
-                //z-index: 1にする(カクつき防止)
-                loopTimeline.set(currentImage, {
-                    autoAlpha: 0,
-                    zIndex: 0,
-                    clearProps: "transform"
-                });
-                /* 次の画像を前面に準備 */
-                loopTimeline.set(nextImage, {
-                    autoAlpha: 1,
-                    // scale: 1.03,
-                    // x: 0,
-                    // xPercent: 0,
-                    zIndex: 1,
-                    clearProps: "transform",
-                });
-                /* 現在の画像を消す */
-                loopTimeline.to(currentImage, {
-                    autoAlpha: 0,
-                    // scale: 1.015,
-                    duration: 1.2,
-                    ease: "power2.inOut",
-                });
-                /* 次の画像を同時に表示 */
-                loopTimeline.to(nextImage, {
-                    autoAlpha: 1,
-                    // scale: 1,
-                    // x: 0,
-                    // xPercent: 0,
-                    duration: 1.2,
-                    ease: "power2.inOut",
-                }, "<");
-                /* 切り替え後の重なり順を整理 */
-                loopTimeline.set(currentImage, {
-                    autoAlpha: 0,
-                    // scale: 1.03,
-                    zIndex: 0
-                });
-                loopTimeline.set(nextImage, {
-                    autoAlpha: 1,
-                    // scale: 1,
-                    zIndex: 1
-                });
-            });
-        };
-        //初回のみのイントロアニメーション
-        const introTimeline = gsap.timeline({
-            onComplete: startHeroLoop
-        });
-        /* 1. 最初のHero画像 */
-        gsap.set(images[0], {
-            clearProps: "transform"
-        });
-        introTimeline.to(images[0], {
-            autoAlpha: 1,
-            // scale: 1,
-            zIndex: 1,
-            duration: 1.6,
-            ease: "power2.out",
-        });
-        /* 少し間を空ける */
-        introTimeline.to({}, {
-            duration: 0.2
-        });
-        /* 2. フレーム */
-        if (frame) {
-            introTimeline.to(frame, {
-                autoAlpha: 1,
-                duration: 1.8,
-                ease: "sine.out"
-            });
-        }
-        /* 3. ロゴ */
-        if (logo) {
-            introTimeline.to(
-                logo,
-                {
-                    autoAlpha: 1,
-                    yPercent: 0,
-                    duration: 1.4,
-                    ease: "power3.out"
-                },
-                ">-0.2"
-            );
-        }
+    document.addEventListener("DOMContentLoaded", () => {
+        initHeroAnimation();
+        initMirrorAnimation();
     });
 }
 
-//contact-form
+//Heroアニメーション
+async function initHeroAnimation() {
+    const images = gsap.utils.toArray(
+        ".hero-images > .hero-image"
+    );
+    const frame = document.querySelector(
+        ".hero-frame-picture"
+    );
+    const logo = document.querySelector(
+        ".logo-content"
+    );
+
+    if (images.length === 0) return;
+    // Hero画像の初期状態
+    gsap.set(images, {
+        autoAlpha: 0,
+        zIndex: 0,
+        clearProps: "transform"
+    });
+    // フレームの初期状態
+    if (frame) {
+        gsap.set(frame, {
+            autoAlpha: 0
+        });
+    }
+    // ロゴの初期状態
+    if (logo) {
+        gsap.set(logo, {
+            autoAlpha: 0,
+            yPercent: 150
+        });
+    }
+    // Hero画像のデコード完了を待つ
+    await Promise.all(
+        images.map((image) => {
+            if (typeof image.decode === "function") {
+                return image.decode().catch(() => { });
+            }
+            if (image.complete) {
+                return Promise.resolve();
+            }
+            return new Promise((resolve) => {
+                image.addEventListener(
+                    "load",
+                    resolve,
+                    { once: true }
+                );
+                image.addEventListener(
+                    "error",
+                    resolve,
+                    { once: true }
+                );
+            });
+        })
+    );
+
+    // Hero画像の無限ループ
+    const startHeroLoop = () => {
+        const loopTimeline = gsap.timeline({
+            repeat: -1
+        });
+        images.forEach((currentImage, index) => {
+            const nextImage =
+                images[(index + 1) % images.length];
+            // 現在の画像を5秒表示
+            loopTimeline.to({}, {
+                duration: 5
+            });
+            // 切り替え直前の状態
+            loopTimeline.set(currentImage, {
+                autoAlpha: 1,
+                zIndex: 1
+            });
+            loopTimeline.set(nextImage, {
+                autoAlpha: 0,
+                zIndex: 2
+            });
+            // 現在画像をふわっと消す
+            loopTimeline.to(currentImage, {
+                autoAlpha: 0,
+                duration: 1.8,
+                ease: "sine.inOut"
+            });
+            // 次画像を同時にふわっと表示
+            loopTimeline.to(nextImage, {
+                autoAlpha: 1,
+                duration: 1.8,
+                ease: "sine.inOut"
+            }, "<");
+            // 切り替え後の状態を整理
+            loopTimeline.set(currentImage, {
+                autoAlpha: 0,
+                zIndex: 0
+            });
+            loopTimeline.set(nextImage, {
+                autoAlpha: 1,
+                zIndex: 1
+            });
+        });
+    };
+
+    // 最初だけのイントロ
+    const introTimeline = gsap.timeline({
+        onComplete: startHeroLoop
+    });
+    // 1. 最初のHero画像
+    introTimeline.to(images[0], {
+        autoAlpha: 1,
+        zIndex: 1,
+        duration: 1.8,
+        ease: "sine.out"
+    });
+    // 少し待つ
+    introTimeline.to({}, {
+        duration: 0.3
+    });
+    // 2. フレーム
+    if (frame) {
+        introTimeline.to(frame, {
+            autoAlpha: 1,
+            duration: 1.8,
+            ease: "sine.out"
+        });
+    }
+    // 3. ロゴ
+    if (logo) {
+        introTimeline.to(
+            logo,
+            {
+                autoAlpha: 1,
+                yPercent: 0,
+                duration: 1.4,
+                ease: "power3.out"
+            },
+            ">-0.2"
+        );
+    }
+}
+
+//鏡アニメーション
+function initMirrorAnimation() {
+    const sliders = gsap.utils.toArray(
+        ".mirror-slider"
+    );
+    sliders.forEach((slider) => {
+        const images = gsap.utils.toArray(
+            slider.querySelectorAll(".mirror-slide")
+        );
+
+        if (images.length < 2) return;
+        // 全画像の初期状態
+        gsap.set(images, {
+            autoAlpha: 0,
+            scale: 1.03,
+            zIndex: 0,
+            transformOrigin: "50% 50%"
+        });
+        // 1枚目を表示
+        gsap.set(images[0], {
+            autoAlpha: 1,
+            scale: 1,
+            zIndex: 1
+        });
+
+        const mirrorTimeline = gsap.timeline({
+            repeat: -1,
+        });
+
+        images.forEach((currentImage, index) => {
+            const nextImage =
+                images[(index + 1) % images.length];
+            // 現在画像を表示する時間
+            mirrorTimeline.to({}, {
+                duration: 2.8
+            });
+            // 切り替え直前の状態
+            mirrorTimeline.set(currentImage, {
+                autoAlpha: 1,
+                scale: 1,
+                zIndex: 1
+            });
+            mirrorTimeline.set(nextImage, {
+                autoAlpha: 0,
+                scale: 1.03,
+                zIndex: 2
+            });
+            // 現在画像を消す
+            mirrorTimeline.to(currentImage, {
+                autoAlpha: 0,
+                scale: 1.015,
+                duration: 1.2,
+                ease: "power2.inOut"
+            });
+            // 次画像を同時に表示
+            mirrorTimeline.to(nextImage, {
+                autoAlpha: 1,
+                scale: 1,
+                duration: 1.2,
+                ease: "power2.out"
+            }, "<");
+            // 切り替え後の状態を整理
+            mirrorTimeline.set(currentImage, {
+                autoAlpha: 0,
+                scale: 1.03,
+                zIndex: 0
+            });
+            mirrorTimeline.set(nextImage, {
+                autoAlpha: 1,
+                scale: 1,
+                zIndex: 1
+            });
+        });
+    });
+}
+
+// contact-form
 const form = document.getElementById("contactForm");
 
 if (form) {
@@ -242,9 +318,8 @@ if (form) {
     const emailCheckInput = form.querySelector("#email-check");
     const telephoneInput = form.querySelector("#contact-tell");
     const mobilePhoneInput = form.querySelector("#contact-phone");
-    //必須項目に、任意入力の電話番号2項目を加えてバリデーション対象にする
-    //required属性がある項目に郵便番号を追加、郵便番号にもrequiredが付いている場合Setで重複しない
-    // required属性がある必須項目だけを対象にする
+
+    //必須項目に任意入力の電話番号と携帯電話番号を加えて検証対象にする
     const validationFields = [
         ...new Set([
             ...form.querySelectorAll("[required]"),
@@ -259,60 +334,83 @@ if (form) {
         "lastName-check": "みょうじを入力してください。",
         "firstName-check": "おなまえを入力してください。",
         email: "メールアドレスを入力してください。",
-        "email-check": "確認用メールアドレスを入力してください。",
-        "contact-address": "7桁の郵便番号を入力してください。",
-        "contact-details": "お問い合わせ内容を入力してください。"
+        "email-check":
+            "確認用メールアドレスを入力してください。",
+        "contact-address":
+            "7桁の郵便番号を入力してください。",
+        "contact-details":
+            "お問い合わせ内容を入力してください。"
     };
-    //ひらがな、長音符、空白を許可*
+
+    // ひらがな、長音符、空白を許可
     const hiraganaPattern = /^[ぁ-ゖゝゞー\s　]+$/;
-    // 半角数字とハイフンのみ
+    // 半角数字とハイフンのみ、数字は最低1文字含む
     const phonePattern = /^(?=.*\d)[0-9-]+$/;
+    // 任意入力の電話番号
     const optionalPhoneIds = new Set([
         "contact-tell",
         "contact-phone"
     ]);
+    // 最後に住所検索へ成功した郵便番号
+    let lastSearchedPostalCode = "";
 
+    //郵便番号を半角数字だけにする
     function normalizePostalCode(value) {
         return value
-            //全角数字を半角数字へ変換
+            // 全角数字を半角数字へ変換
             .replace(/[０-９]/g, (number) =>
-                String.fromCharCode(number.charCodeAt(0) - 0xFEE0)
+                String.fromCharCode(
+                    number.charCodeAt(0) - 0xFEE0
+                )
             )
-            //数字以外を除去
+            // 数字以外を除去
             .replace(/\D/g, "");
     }
 
+    // 各入力欄に対応するエラー表示要素を取得
     function getErrorElement(field) {
         if (field === postalCodeInput) {
             return postalCodeError;
         }
         const wrapper = field.closest(
-            ".field, .full-group, .zip-field, .textarea-wrapper, .form-group"
+            ".field, .full-group, .zip-field, " +
+            ".textarea-wrapper, .form-group"
         );
-        return wrapper?.querySelector(".error-message") ?? null;
+        return (
+            wrapper?.querySelector(".error-message") ??
+            null
+        );
     }
 
+    // エラーを表示
     function showFieldError(field, message) {
-        const errorElement = getErrorElement(field);
+        const errorElement =
+            getErrorElement(field);
         field.classList.add("input-error");
-        field.setAttribute("aria-invalid", "true");
+        field.setAttribute(
+            "aria-invalid",
+            "true"
+        );
         if (errorElement) {
             errorElement.textContent = message;
         }
     }
 
+    // エラーを解除
     function clearFieldError(field) {
-        const errorElement = getErrorElement(field);
+        const errorElement =
+            getErrorElement(field);
         field.classList.remove("input-error");
         field.removeAttribute("aria-invalid");
         if (errorElement) {
             errorElement.textContent = "";
         }
     }
-    //すべての検証をこの関数にまとめる
+
+    //入力欄1項目を検証
     function validateField(field) {
         const value = field.value.trim();
-        //電話番号・携帯電話番号は任意項目なので空欄の場合はエラーにしない
+        // 電話番号・携帯電話番号は任意項目、空欄なら有効
         if (
             optionalPhoneIds.has(field.id) &&
             value === ""
@@ -321,17 +419,18 @@ if (form) {
             return true;
         }
 
-        // 必須項目の空欄チェック
+        //必須項目の空欄チェック
+        //郵便番号は必須項目ではないが、住所検索ボタンからvalidateField()を呼び出したときはここで検証
         if (value === "") {
             showFieldError(
                 field,
                 emptyMessages[field.id] ??
                 "この項目を入力してください。"
             );
-
             return false;
         }
-        //苗字・名前のふりがなチェック
+
+        //ふりがな
         if (
             field.id === "lastName-check" ||
             field.id === "firstName-check"
@@ -344,7 +443,8 @@ if (form) {
                 return false;
             }
         }
-        //メールアドレスの形式チェック
+
+        //メールアドレス
         if (field.id === "email") {
             if (!field.validity.valid) {
                 showFieldError(
@@ -354,10 +454,11 @@ if (form) {
                 return false;
             }
         }
-        //確認用メールアドレスの検証
+
+        //確認用メールアドレス
         if (field.id === "email-check") {
-            const originalEmail = emailInput.value.trim();
-            // 確認用メールアドレス自体の形式が正しくない
+            const originalEmail =
+                emailInput.value.trim();
             if (!field.validity.valid) {
                 showFieldError(
                     field,
@@ -365,8 +466,6 @@ if (form) {
                 );
                 return false;
             }
-
-            // 元メールが正しい形式で、確認欄と一致していない
             if (
                 emailInput.validity.valid &&
                 value !== originalEmail
@@ -378,7 +477,8 @@ if (form) {
                 return false;
             }
         }
-        // 電話番号・携帯電話番号の検証
+
+        //電話番号・携帯電話番号
         if (optionalPhoneIds.has(field.id)) {
             if (!phonePattern.test(value)) {
                 showFieldError(
@@ -388,9 +488,11 @@ if (form) {
                 return false;
             }
         }
+
         //郵便番号
         if (field.id === "contact-address") {
-            const postalCode = normalizePostalCode(field.value);
+            const postalCode =
+                normalizePostalCode(field.value);
             if (postalCode.length !== 7) {
                 showFieldError(
                     field,
@@ -402,24 +504,21 @@ if (form) {
         clearFieldError(field);
         return true;
     }
-    //決定ボタンを押したとき
-    const formStatus = form.querySelector(".form-status");
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
+
+    //フォーム全体を検証
+    function validateForm() {
         let firstInvalid = null;
         validationFields.forEach((field) => {
-            // 送信後は入力のたびに検証
+            //決定ボタンを押した後は入力のたびに再検証
             field.dataset.hasValidated = "true";
-            const isValid = validateField(field);
+
+            const isValid =
+                validateField(field);
             if (!isValid && !firstInvalid) {
                 firstInvalid = field;
             }
         });
-
         if (firstInvalid) {
-            if (formStatus) {
-                formStatus.textContent = "";
-            }
             firstInvalid.scrollIntoView({
                 behavior: "smooth",
                 block: "center"
@@ -427,120 +526,168 @@ if (form) {
             setTimeout(() => {
                 firstInvalid.focus();
             }, 500);
-            return;
+            return false;
         }
+        return true;
+    }
 
-        //入力に問題がなくても送信しない。form.submit() は絶対に呼び出さない
-        if (formStatus) {
-            formStatus.textContent =
-                "入力内容を確認しました。現在、送信機能は準備中のため送信されません。";
+    //決定ボタン
+    form.addEventListener(
+        "submit",
+        (event) => {
+            // 制作途中のため送信を必ず停止、入力内容はURLにも追加されない
+            event.preventDefault();
+            if (!validateForm()) {
+                return;
+            }
+            // 入力に問題がなくても送信しない
+            alert(
+                "お問い合わせ機能は現在準備中です。"
+            );
         }
-    });
-
-    //一度検証された項目は入力のたびに再検証
+    );
+    //一度検証された項目は、入力のたびに再検証
     validationFields.forEach((field) => {
-        field.addEventListener("input", () => {
-            if (field.dataset.hasValidated !== "true") {
+        field.addEventListener(
+            "input",
+            () => {
+                if (
+                    field.dataset.hasValidated !==
+                    "true"
+                ) {
+                    return;
+                }
+                validateField(field);
+            }
+        );
+    });
+
+    //元メールを変更したとき、確認用メールも再検証
+    emailInput?.addEventListener(
+        "input",
+        () => {
+            if (!emailCheckInput) {
                 return;
             }
-            validateField(field);
-        });
-    });
 
-    // 確認欄が一度検証されている、または現在エラー中なら元メールの変更に合わせて確認欄も再検証
-    emailInput.addEventListener("input", () => {
-        const emailCheckWasValidated =
-            emailCheckInput.dataset.hasValidated === "true";
-        const emailCheckHasError =
-            emailCheckInput.classList.contains("input-error");
-        if (emailCheckWasValidated || emailCheckHasError) {
-            validateField(emailCheckInput);
-        }
-    });
+            const wasValidated =
+                emailCheckInput.dataset
+                    .hasValidated === "true";
+            const hasError =
+                emailCheckInput.classList
+                    .contains("input-error");
 
-    //郵便番号の入力イベント（一文字でも消えたら検索結果を消去）
-    postalCodeInput?.addEventListener("input", () => {
-        const currentPostalCode = normalizePostalCode(
-            postalCodeInput.value
-        );
-        //最後に検索した郵便番号から変更されたら検索によって入力された住所を消す
-        if (
-            lastSearchedPostalCode !== "" &&
-            currentPostalCode !== lastSearchedPostalCode
-        ) {
-            clearSearchedAddress();
-        }
-        //一度住所検索ボタンを押した後だけ入力のたびに郵便番号を再検証
-        if (
-            postalCodeInput.dataset.hasValidated === "true"
-        ) {
-            validateField(postalCodeInput);
-        }
-    });
-
-    // 住所検索
-    addressSearchButton?.addEventListener("click", async (event) => {
-        event.preventDefault();
-        postalCodeInput.dataset.hasValidated = "true";
-        if (!validateField(postalCodeInput)) {
-            clearSearchedAddress();
-            postalCodeInput.focus();
-            return;
-        }
-
-        const postalCode = normalizePostalCode(
-            postalCodeInput.value
-        );
-        try {
-            const response = await fetch(
-                `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postalCode}`
-            );
-            if (!response.ok) {
-                throw new Error(
-                    `HTTP error: ${response.status}`
-                );
+            if (wasValidated || hasError) {
+                validateField(emailCheckInput);
             }
-            const data = await response.json();
-            if (!data.results) {
-                clearSearchedAddress();
-                showFieldError(
-                    postalCodeInput,
-                    "住所が見つかりませんでした。"
-                );
-                return;
-            }
-            const address = data.results[0];
-            clearFieldError(postalCodeInput);
-            // 検索に成功した郵便番号を記録
-            lastSearchedPostalCode = postalCode;
-            if (prefectureSelect) {
-                prefectureSelect.value = address.address1;
-            }
-            if (municipalityInput) {
-                municipalityInput.value =
-                    address.address2 + address.address3;
-            }
-        } catch (error) {
-            console.error(error);
-            clearSearchedAddress();
-            showFieldError(
-                postalCodeInput,
-                "住所検索中にエラーが発生しました。"
-            );
         }
-    });
+    );
 
-    // 最後に住所検索へ成功した郵便番号
-    let lastSearchedPostalCode = "";
+    //検索によって自動入力された住所を消す
     function clearSearchedAddress() {
-        // 都道府県を最初の選択肢に戻す
         if (prefectureSelect) {
             prefectureSelect.selectedIndex = 0;
         }
-        // 自動入力された市区町村番地を消す
         if (municipalityInput) {
             municipalityInput.value = "";
         }
         lastSearchedPostalCode = "";
     }
+
+    //郵便番号を変更したとき
+    postalCodeInput?.addEventListener(
+        "input",
+        () => {
+            const currentPostalCode =
+                normalizePostalCode(
+                    postalCodeInput.value
+                );
+
+            //最後に検索した郵便番号から変更されたら検索結果を消す
+            if (
+                lastSearchedPostalCode !== "" &&
+                currentPostalCode !==
+                lastSearchedPostalCode
+            ) {
+                clearSearchedAddress();
+            }
+            //一度住所検索ボタンを押した後だけ入力のたびに再検証
+            if (
+                postalCodeInput.dataset
+                    .hasValidated === "true"
+            ) {
+                validateField(postalCodeInput);
+            }
+        }
+    );
+
+    //住所検索
+    addressSearchButton?.addEventListener(
+        "click",
+        async (event) => {
+            event.preventDefault();
+            if (!postalCodeInput) {
+                return;
+            }
+            postalCodeInput.dataset
+                .hasValidated = "true";
+            if (!validateField(postalCodeInput)) {
+                clearSearchedAddress();
+                postalCodeInput.focus();
+                return;
+            }
+
+            const postalCode =
+                normalizePostalCode(
+                    postalCodeInput.value
+                );
+            try {
+                const response = await fetch(
+                    `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postalCode}`
+                );
+                if (!response.ok) {
+                    throw new Error(
+                        `HTTP error: ${response.status}`
+                    );
+                }
+
+                const data =
+                    await response.json();
+                if (!data.results) {
+                    clearSearchedAddress();
+
+                    showFieldError(
+                        postalCodeInput,
+                        "住所が見つかりませんでした。"
+                    );
+                    return;
+                }
+
+                const address =
+                    data.results[0];
+                clearFieldError(
+                    postalCodeInput
+                );
+                //検索に成功した郵便番号を記録
+                lastSearchedPostalCode =
+                    postalCode;
+                if (prefectureSelect) {
+                    prefectureSelect.value =
+                        address.address1;
+                }
+                if (municipalityInput) {
+                    municipalityInput.value =
+                        address.address2 +
+                        address.address3;
+                }
+            } catch (error) {
+                console.error(error);
+                clearSearchedAddress();
+                showFieldError(
+                    postalCodeInput,
+                    "住所検索中にエラーが発生しました。"
+                );
+            }
+        }
+    );
 }
