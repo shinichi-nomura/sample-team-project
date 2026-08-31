@@ -483,10 +483,9 @@ nav a:hover {
   width: 100%;
   aspect-ratio: 1200 / 750;
   overflow: hidden;
-  border-top-left-radius: var(--hero-radius);
-  border-top-right-radius: var(--hero-radius);
-  border-bottom-right-radius: var(--hero-radius);
-  border-bottom-left-radius: var(--hero-radius);
+  border-radius: var(--hero-radius);
+  clip-path: inset(0 round var(--hero-radius));
+  isolation: isolate;
   margin: clamp(80px, 8vw, 98px) 0 clamp(40px, 5vw, 64px);
   z-index: 5;
 }
@@ -499,16 +498,10 @@ nav a:hover {
   height: 100%;
   overflow: hidden;
   border-radius: inherit;
+  clip-path: inset(0 round var(--hero-radius));
   isolation: isolate;
   backface-visibility: hidden;
   background: #000;
-  /* clip-path: inset(
-    10.5% 5.2% 9.5% 5.2%
-    round 20px);
-    -webkit-clip-path: inset(
-    10.5% 5.2% 9.5% 5.2%
-    round 20px
-  ); */
 }
 
 .hero-images>.hero-image {
@@ -519,11 +512,7 @@ nav a:hover {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  /* border-radius: 0; */
-  border-top-left-radius: var(--hero-radius);
-  border-top-right-radius: var(--hero-radius);
-  border-bottom-right-radius: var(--hero-radius);
-  border-bottom-left-radius: var(--hero-radius);
+  border-radius: inherit;
   opacity: 0;
   visibility: hidden;
   transform-origin: center;
@@ -1695,6 +1684,23 @@ small {
   margin: clamp(4px, 1vw, 8px);
   font-weight: normal;
   font-size: clamp(32px, 4.5vw, 56px);
+}
+
+.form-status {
+  min-height: 1.5em;
+  margin: clamp(16px, 2vw, 24px) 0 0;
+  color: #111;
+  font-size: clamp(14px, 1.5vw, 18px);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.form-status:not(:empty) {
+  display: inline-block;
+  padding: clamp(8px, 1vw, 12px) clamp(12px, 1.5vw, 20px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #f30081;
+  border-radius: 8px;
 }
 
 .form-row {

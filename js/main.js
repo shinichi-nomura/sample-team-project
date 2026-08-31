@@ -82,6 +82,7 @@ if (container) {
     }
 }
 
+//GSAPアニメーション
 if (typeof gsap !== "undefined") {
     //hero-animation
     document.addEventListener("DOMContentLoaded", async () => {
@@ -95,11 +96,12 @@ if (typeof gsap !== "undefined") {
         /* Hero画像の初期状態 */
         gsap.set(images, {
             autoAlpha: 0,
-            scale: 1.03,
-            x: 0,
-            xPercent: 0,
+            // scale: 1.03,
+            // x: 0,
+            // xPercent: 0,
             zIndex: 0,
-            transformOrigin: "50% 50%"
+            clearProps: "transform",
+            // transformOrigin: "50% 50%"
         });
         if (frame) {
             gsap.set(frame, {
@@ -142,41 +144,44 @@ if (typeof gsap !== "undefined") {
 
                 //z-index: 1にする(カクつき防止)
                 loopTimeline.set(currentImage, {
-                    zIndex: 1
+                    autoAlpha: 0,
+                    zIndex: 0,
+                    clearProps: "transform"
                 });
                 /* 次の画像を前面に準備 */
                 loopTimeline.set(nextImage, {
-                    autoAlpha: 0,
-                    scale: 1.03,
-                    x: 0,
-                    xPercent: 0,
-                    zIndex: 2
+                    autoAlpha: 1,
+                    // scale: 1.03,
+                    // x: 0,
+                    // xPercent: 0,
+                    zIndex: 1,
+                    clearProps: "transform",
                 });
                 /* 現在の画像を消す */
                 loopTimeline.to(currentImage, {
                     autoAlpha: 0,
-                    scale: 1.015,
+                    // scale: 1.015,
                     duration: 1.2,
                     ease: "power2.inOut",
                 });
                 /* 次の画像を同時に表示 */
                 loopTimeline.to(nextImage, {
                     autoAlpha: 1,
-                    scale: 1,
-                    x: 0,
-                    xPercent: 0,
+                    // scale: 1,
+                    // x: 0,
+                    // xPercent: 0,
                     duration: 1.2,
                     ease: "power2.inOut",
                 }, "<");
                 /* 切り替え後の重なり順を整理 */
                 loopTimeline.set(currentImage, {
                     autoAlpha: 0,
-                    scale: 1.03,
+                    // scale: 1.03,
                     zIndex: 0
                 });
                 loopTimeline.set(nextImage, {
                     autoAlpha: 1,
-                    scale: 1,
+                    // scale: 1,
                     zIndex: 1
                 });
             });
@@ -186,9 +191,12 @@ if (typeof gsap !== "undefined") {
             onComplete: startHeroLoop
         });
         /* 1. 最初のHero画像 */
+        gsap.set(images[0], {
+            clearProps: "transform"
+        });
         introTimeline.to(images[0], {
             autoAlpha: 1,
-            scale: 1,
+            // scale: 1,
             zIndex: 1,
             duration: 1.6,
             ease: "power2.out",
@@ -395,6 +403,7 @@ if (form) {
         return true;
     }
     //決定ボタンを押したとき
+    const formStatus = form.querySelector(".form-status");
     form.addEventListener("submit", (event) => {
         event.preventDefault();
         let firstInvalid = null;
@@ -408,6 +417,9 @@ if (form) {
         });
 
         if (firstInvalid) {
+            if (formStatus) {
+                formStatus.textContent = "";
+            }
             firstInvalid.scrollIntoView({
                 behavior: "smooth",
                 block: "center"
@@ -417,8 +429,12 @@ if (form) {
             }, 500);
             return;
         }
-        //エラーがなければ送信
-        form.submit();
+
+        //入力に問題がなくても送信しない。form.submit() は絶対に呼び出さない
+        if (formStatus) {
+            formStatus.textContent =
+                "入力内容を確認しました。現在、送信機能は準備中のため送信されません。";
+        }
     });
 
     //一度検証された項目は入力のたびに再検証
