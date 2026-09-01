@@ -856,6 +856,7 @@ main p {
   }
 }
 
+/*==event,latest==*/
 .events {
   max-width: 1240px;
   width: 100%;
@@ -865,7 +866,6 @@ main p {
   margin: 0 auto clamp(40px, 5vw, 64px);
 }
 
-/*==e,l==*/
 .event,
 .latest {
   flex: 1;
