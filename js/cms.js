@@ -54,19 +54,22 @@ async function loadNotices() {
         // ========================================
         // イベント
         // ========================================
+
         const events = data.contents
-            .filter((item) => item.type === "イベント")
+            .filter((item) => item.type?.includes("イベント"))
             .slice(0, 3);
+
+
 
 
 
         // ========================================
         // 近況報告
         // ========================================
-        const latestItems = data.contents
-            .filter((item) => item.type === "近況報告")
-            .slice(0, 3);
 
+        const latestItems = data.contents
+            .filter((item) => item.type?.includes("近況報告"))
+            .slice(0, 3);
 
 
 
