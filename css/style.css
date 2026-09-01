@@ -879,6 +879,7 @@ main p {
   font-size: clamp(22px, 2.6vw, 32px);
   font-weight: normal;
 }
+
 /* CMSコンテンツ全体の箱 */
 .event-contents,
 .latest-contents {
@@ -889,48 +890,56 @@ main p {
   border-radius: clamp(4px, 0.6vw, 8px);
   text-align: left;
 }
+
 /* CMS記事1件分 */
 .notice-item {
   margin: 0;
   padding: 0 0 clamp(16px, 2vw, 24px);
   text-align: left;
 }
+
 /* 2件目以降の記事 */
-.notice-item + .notice-item {
+.notice-item+.notice-item {
   /* padding-top: clamp(16px, 2vw, 24px); */
   border-top: 1px solid rgba(0, 0, 0, 0.25);
 }
+
 /* 最後の記事の下余白をなくす */
 .notice-item:last-child {
   padding-bottom: 0;
 }
+
 /* 日付とNEWを表示する1行 */
 .notice-date-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 0 0 clamp(4px, 0.6vw, 8px);
   padding: 0;
-  white-space: nowrap;
 }
+
 /* 日付 */
 .notice-date {
   display: inline;
   margin: 0;
   padding: 0;
 }
+
 /* NEWバッジ */
 .notice-new {
   display: inline-block;
-  margin-left: 8px;
+  margin-left: 0;
   padding: 2px 8px;
   color: #fff;
-  background-color: #f30081;
+  background-color: #F30081;
   border-radius: 999px;
   font-size: clamp(10px, 1vw, 13px);
   font-weight: bold;
   line-height: 1.4;
   letter-spacing: 0.05em;
-  vertical-align: middle;
   white-space: nowrap;
 }
+
 /* 記事タイトル */
 .notice-title {
   margin: 0 0 clamp(4px, 0.6vw, 8px);
@@ -939,6 +948,7 @@ main p {
   font-weight: 600;
   line-height: 1.5;
 }
+
 /* 本文全体 */
 .notice-body {
   margin: 0;
@@ -948,6 +958,7 @@ main p {
   text-align: left;
   overflow-wrap: anywhere;
 }
+
 /* リッチエディタ内の段落 */
 .notice-body p {
   margin: 0 0 clamp(16px, 2vw, 24px);
@@ -956,8 +967,9 @@ main p {
   line-height: inherit;
   text-align: left;
 }
+
 /* 本文の最後にある要素の下余白をなくす */
-.notice-body > :last-child {
+.notice-body> :last-child {
   margin-bottom: 0;
 }
 
