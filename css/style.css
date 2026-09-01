@@ -478,7 +478,7 @@ nav a:hover {
 
 /*==hero==*/
 .hero {
-  --hero-radius: 40px;
+  --hero-radius: 80px;
   position: relative;
   width: 100%;
   aspect-ratio: 1200 / 750;
@@ -856,6 +856,7 @@ main p {
   }
 }
 
+/*==event,latest==*/
 .events {
   max-width: 1240px;
   width: 100%;
@@ -865,7 +866,6 @@ main p {
   margin: 0 auto clamp(40px, 5vw, 64px);
 }
 
-/*==e,l==*/
 .event,
 .latest {
   flex: 1;
