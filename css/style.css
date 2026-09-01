@@ -894,13 +894,13 @@ main p {
 /* CMS記事1件分 */
 .notice-item {
   margin: 0;
-  padding: 0 0 clamp(16px, 2vw, 24px);
+  padding: 0 0 clamp(8px, 1.2vw, 16px);
   text-align: left;
 }
 
 /* 2件目以降の記事 */
 .notice-item+.notice-item {
-  /* padding-top: clamp(16px, 2vw, 24px); */
+  padding-top: clamp(8px, 1.2vw, 16px);
   border-top: 1px solid rgba(0, 0, 0, 0.25);
 }
 
@@ -944,8 +944,8 @@ main p {
 .notice-title {
   margin: 0 0 clamp(4px, 0.6vw, 8px);
   padding: 0;
-  font-size: clamp(12px, 1.4vw, 18px);
-  font-weight: 600;
+  font-size: clamp(14px, 1.6vw, 20px);
+  font-weight: normal;
   line-height: 1.5;
 }
 
@@ -953,7 +953,7 @@ main p {
 .notice-body {
   margin: 0;
   padding: 0;
-  font-size: clamp(14px, 1.6vw, 20px);
+  font-size: clamp(12px, 1.4vw, 18px);
   line-height: 1.8;
   text-align: left;
   overflow-wrap: anywhere;
