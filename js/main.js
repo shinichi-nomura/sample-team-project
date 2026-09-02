@@ -88,11 +88,32 @@
             console.error("GSAPが読み込まれていません。");
             return;
         }
-
+        // Heroアニメーション
         initHeroAnimation();
+        // 鏡アニメーション
         initMirrorAnimation();
+        // ScrollTriggerを使用するアニメーション
+        if (typeof ScrollTrigger !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger);
+            // Greetingアニメーション
+            initGreetingAnimation();
+            //suisoアニメーション
+            initSuisoAnimation();
+            //koseisinrigakuアニメーション
+            initKoseiAnimation();
+            //eighttipsアニメーション
+            initEightTipsAnimation();
+            requestAnimationFrame(() => {
+                ScrollTrigger.refresh();
+            });
+        } else {
+            console.error(
+                "ScrollTriggerが読み込まれていません。"
+            );
+        }
     }
 
+    // HTML読み込み後に実行
     if (document.readyState === "loading") {
         document.addEventListener(
             "DOMContentLoaded",
@@ -102,7 +123,6 @@
     } else {
         initAnimations();
     }
-
     //Heroアニメーション
     async function initHeroAnimation() {
         const images = gsap.utils.toArray(
@@ -260,6 +280,676 @@
                 ">-0.2"
             );
         }
+    }
+
+    /* 文字を1文字ずつspanで囲む */
+    function splitTextIntoChars(element) {
+        if (!element) return [];
+        // 二重変換を防ぐ
+        if (element.dataset.textSplit === "true") {
+            return gsap.utils.toArray(
+                element.querySelectorAll(".greeting-char")
+            );
+        }
+        const textNodes = [];
+        const walker = document.createTreeWalker(
+            element,
+            NodeFilter.SHOW_TEXT
+        );
+        let currentNode;
+        while ((currentNode = walker.nextNode())) {
+            // 空白しかないノードは対象外
+            if (currentNode.textContent.trim() !== "") {
+                textNodes.push(currentNode);
+            }
+        }
+        textNodes.forEach((textNode) => {
+            const fragment = document.createDocumentFragment();
+            Array.from(textNode.textContent).forEach((char) => {
+                // 空白はそのまま残す
+                if (/\s/.test(char)) {
+                    fragment.appendChild(
+                        document.createTextNode(char)
+                    );
+                    return;
+                }
+                const span = document.createElement("span");
+                span.className = "greeting-char";
+                span.textContent = char;
+                fragment.appendChild(span);
+            });
+            textNode.replaceWith(fragment);
+        });
+        element.dataset.textSplit = "true";
+
+        return gsap.utils.toArray(
+            element.querySelectorAll(".greeting-char")
+        );
+    }
+
+    /* Greetingアニメーション */
+    function initGreetingAnimation() {
+        const greeting = document.querySelector(".greeting");
+        if (!greeting) return;
+        const heading = greeting.querySelector("h4");
+        const profile = greeting.querySelector(".greet");
+        const content = greeting.querySelector(".greet-content");
+        const button = greeting.querySelector(".profile-button");
+
+        // 見出し、本文一文字ずつ分割
+        const headingChars = splitTextIntoChars(heading);
+        const contentChars = splitTextIntoChars(content);
+        //見出しの中央配置を維持
+        gsap.set(heading, {
+            autoAlpha: 1,
+            xPercent: -50,
+            x: 0
+        });
+        //見出し各文字の初期状態
+        gsap.set(headingChars, {
+            autoAlpha: 0,
+            x: -24
+        });
+        //プロフィール画像と名前の初期状態
+        gsap.set(profile, {
+            autoAlpha: 0,
+            x: 0,
+            y: 0
+        });
+        //本文の初期状態、中央配置は維持する
+        gsap.set(content, {
+            autoAlpha: 1,
+            xPercent: -50,
+            x: 0,
+            y: 0
+        });
+        //本文の各文字を透明にします
+        gsap.set(contentChars, {
+            autoAlpha: 0,
+            x: 0,
+            y: 0
+        });
+        //ボタンの初期状態
+        if (button) {
+            gsap.set(button, {
+                autoAlpha: 0,
+                xPercent: -50,
+                y: 60
+            });
+        }
+        const contentTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: greeting,
+                start: "top 98%",
+                once: true
+                // markers: true
+            }
+        });
+        //見出しを左から一文字ずつ表示
+        contentTimeline.to(headingChars, {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.5,
+            stagger: 0.12,
+            ease: "power3.out"
+        });
+        //プロフィール画像と名前を位置固定でふわっと表示
+        contentTimeline.to(
+            profile,
+            {
+                autoAlpha: 1,
+                duration: 1.4,
+                ease: "sine.out"
+            },
+            ">-0.2"
+        );
+
+        // 本文を左側の文字から順番にふわっと表示
+        gsap.to(contentChars, {
+            autoAlpha: 1,
+            duration: 1,
+            stagger: 0.025,
+            ease: "sine.out",
+            scrollTrigger: {
+                trigger: greeting,
+                start: "top 90%",
+                once: true
+                // markers: true
+            }
+        });
+        //ボタンを下から表示
+        if (button) {
+            gsap.to(button, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 1.3,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: button,
+                    start: "top 90%",
+                    once: true
+                    // markers: true
+                }
+            });
+        }
+    }
+
+    /* Suisoアニメーション */
+    function initSuisoAnimation() {
+        const suiso = document.querySelector(".suiso");
+        if (!suiso) return;
+        const content = suiso.querySelector(".suiso-content");
+        const heading = suiso.querySelector("h3");
+        const text = suiso.querySelector("p");
+        if (!content || !heading || !text) return;
+        //Greetingで使用している関数でh3とpを一文字ずつ分割
+        const headingChars = splitTextIntoChars(heading);
+        const textChars = splitTextIntoChars(text);
+        const allChars = [
+            ...headingChars,
+            ...textChars
+        ];
+        const button = suiso.querySelector(".suiso-button");
+        //親要素の座標は一切変更しない
+        gsap.set(content, {
+            autoAlpha: 1,
+            x: 0,
+            y: 0
+        });
+        //各文字は透明にするだけ
+        gsap.set(allChars, {
+            autoAlpha: 0,
+            x: 24,
+            y: 0
+        });
+        // 水素ボタンの初期状態
+        if (button) {
+            gsap.set(button, {
+                autoAlpha: 0,
+                xPercent: -50,
+                y: 60
+            });
+            //h3の先頭からpの最後まで一文字ずつ順番に表示
+            gsap.to(allChars, {
+                autoAlpha: 1,
+                x: 0,
+                y: 0,
+                duration: 0.7,
+                stagger: 0.04,
+                ease: "sine.out",
+                scrollTrigger: {
+                    trigger: suiso,
+                    start: "top 90%",
+                    once: true
+                    // markers: true
+                }
+            });
+            // 水素ボタンを下からふわっと表示
+            gsap.to(button, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 1.3,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: button,
+                    start: "top 80%",
+                    once: true
+                    // markers: true
+                }
+            });
+        }
+    }
+
+    //個性心理學セクションのアニメーション
+    function initKoseiAnimation() {
+        const section = document.querySelector(
+            ".koseisinrigaku"
+        );
+        if (!section) return;
+        //ぼかし・透明状態からスクロールに合わせて鮮明にする
+        gsap.fromTo(
+            section,
+            {
+                autoAlpha: 0,
+                filter: "blur(20px)"
+            },
+            {
+                autoAlpha: 1,
+                filter: "blur(0px)",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: section,
+                    // セクションが画面下部へ入ると開始
+                    start: "top 90%",
+                    // セクション上端が画面45%地点に来たら完成
+                    end: "top 45%",
+                    // スクロール量とアニメーションを連動
+                    scrub: 1,
+                    // 完成後は元に戻さない
+                    once: true
+                    // markers: true
+                }
+            }
+        );
+    }
+
+    //八つのヒントアニメーション
+    function initEightTipsAnimation() {
+        const section = document.querySelector(".eightTips");
+
+        if (!section) return;
+        if (typeof ScrollTrigger === "undefined") return;
+
+        const heading = section.querySelector("h3");
+
+        const tips = gsap.utils.toArray(
+            section.querySelectorAll(".tip")
+        );
+
+        // 上段4個＋下段4個
+        if (tips.length < 8) return;
+
+        const topRow = tips.slice(0, 4);
+        const bottomRow = tips.slice(4, 8);
+
+        // アニメーション速度
+        const entryDuration = 3.4;
+        const moveDuration = 3.6;
+        const waitDuration = 0.8;
+
+        // 各列の中央X座標
+        const columnCenters = topRow.map((tip) => {
+            const rect = tip.getBoundingClientRect();
+
+            return rect.left + rect.width / 2;
+        });
+
+        // 上段と下段の距離
+        const firstTopRect =
+            topRow[0].getBoundingClientRect();
+
+        const firstBottomRect =
+            bottomRow[0].getBoundingClientRect();
+
+        const rowDistance =
+            firstBottomRect.top +
+            firstBottomRect.height / 2 -
+            (
+                firstTopRect.top +
+                firstTopRect.height / 2
+            );
+
+        /*
+         * 本来は上段に配置されるTip
+         *
+         * 最初は一番右の下段に登場
+         */
+        const topItems = topRow.map(
+            (element, index) => ({
+                element,
+                type: "top",
+
+                targetColumn: index,
+                targetRow: 0,
+
+                currentColumn: 3,
+                currentRow: 1,
+
+                entered: false
+            })
+        );
+
+        /*
+         * 本来は下段に配置されるTip
+         *
+         * 最初は一番右の上段に登場
+         */
+        const bottomItems = bottomRow.map(
+            (element, index) => ({
+                element,
+                type: "bottom",
+
+                targetColumn: index,
+                targetRow: 1,
+
+                currentColumn: 3,
+                currentRow: 0,
+
+                entered: false
+            })
+        );
+
+        /*
+         * 登場順
+         *
+         * 左上 → 左下
+         * → 2番目上 → 2番目下
+         * → 3番目上 → 3番目下
+         * → 右上 → 右下
+         */
+        const entryOrder = [];
+
+        for (let index = 0; index < 4; index++) {
+            entryOrder.push(topItems[index]);
+            entryOrder.push(bottomItems[index]);
+        }
+
+        /*
+         * 指定した列へのX移動量
+         */
+        function getColumnX(item, column) {
+            return (
+                columnCenters[column] -
+                columnCenters[item.targetColumn]
+            );
+        }
+
+        /*
+         * 指定した段へのY移動量
+         */
+        function getRowY(item, row) {
+            // 本来上段のTip
+            if (item.type === "top") {
+                return row === 0
+                    ? 0
+                    : rowDistance;
+            }
+
+            // 本来下段のTip
+            return row === 1
+                ? 0
+                : -rowDistance;
+        }
+
+        /*
+         * Tipが本来の位置に到着したか
+         */
+        function isComplete(item) {
+            return (
+                item.currentColumn ===
+                item.targetColumn &&
+                item.currentRow ===
+                item.targetRow
+            );
+        }
+
+        /*
+         * Tipを一列だけ左へ進める
+         *
+         * 一列進むたびに上下を反転
+         */
+        function advanceItem(
+            item,
+            timeline,
+            label
+        ) {
+            if (!item.entered || isComplete(item)) {
+                return false;
+            }
+
+            if (
+                item.currentColumn >
+                item.targetColumn
+            ) {
+                // 必ず一列だけ左へ移動
+                item.currentColumn -= 1;
+
+                // 一列進むたびに上下を反転
+                item.currentRow =
+                    item.currentRow === 0 ? 1 : 0;
+            } else if (
+                item.currentRow !==
+                item.targetRow
+            ) {
+                /*
+                 * 本来の列に着いているが
+                 * 段だけ違う場合は同じ列で交差
+                 */
+                item.currentRow =
+                    item.targetRow;
+            }
+
+            // 移動中は前面にする
+            timeline.set(
+                item.element,
+                {
+                    zIndex: 3
+                },
+                label
+            );
+
+            timeline.to(
+                item.element,
+                {
+                    x: getColumnX(
+                        item,
+                        item.currentColumn
+                    ),
+
+                    y: getRowY(
+                        item,
+                        item.currentRow
+                    ),
+
+                    duration: moveDuration,
+                    ease: "sine.inOut"
+                },
+                label
+            );
+
+            return true;
+        }
+
+        /*
+         * 上段または下段グループを
+         * 一列だけ進める
+         */
+        function advanceStrand(
+            items,
+            timeline,
+            label
+        ) {
+            let moved = false;
+
+            items.forEach((item) => {
+                const didMove = advanceItem(
+                    item,
+                    timeline,
+                    label
+                );
+
+                if (didMove) {
+                    moved = true;
+                }
+            });
+
+            return moved;
+        }
+
+        // 見出しの初期状態
+        if (heading) {
+            gsap.set(heading, {
+                autoAlpha: 0,
+                y: 20
+            });
+        }
+
+        /*
+         * 一番右の列より少し右側に隠す
+         */
+        const entryOffset = Math.max(
+            160,
+            section.clientWidth * 0.2
+        );
+
+        entryOrder.forEach((item) => {
+            const startX =
+                getColumnX(item, 3) +
+                entryOffset;
+
+            gsap.set(item.element, {
+                autoAlpha: 0,
+                x: startX,
+                y: 0,
+                zIndex: 2
+            });
+        });
+
+        /*
+         * メインタイムライン
+         */
+        const timeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: section,
+                start: "top 80%",
+                once: true
+                // markers: true
+            }
+        });
+
+        // 見出しを表示
+        if (heading) {
+            timeline.to(heading, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 1.5,
+                ease: "sine.out"
+            });
+
+            timeline.to({}, {
+                duration: waitDuration
+            });
+        }
+
+        /*
+         * Tipを1個ずつ順番に登場させる
+         */
+        entryOrder.forEach(
+            (currentItem, index) => {
+                const label =
+                    `tip-entry-${index}`;
+
+                timeline.addLabel(label);
+
+                /*
+                 * 上段Tipが登場するときは、
+                 * 登場済みの下段Tipが
+                 * 左へ一列進みながら上下反転
+                 */
+                if (currentItem.type === "top") {
+                    advanceStrand(
+                        bottomItems,
+                        timeline,
+                        label
+                    );
+                }
+
+                /*
+                 * 下段Tipが登場するときは、
+                 * 登場済みの上段Tipが
+                 * 左へ一列進みながら上下反転
+                 */
+                if (
+                    currentItem.type === "bottom"
+                ) {
+                    advanceStrand(
+                        topItems,
+                        timeline,
+                        label
+                    );
+                }
+
+                /*
+                 * 新しいTipを右から表示
+                 *
+                 * 上段Tipは右端下段へ
+                 * 下段Tipは右端上段へ
+                 */
+                timeline.to(
+                    currentItem.element,
+                    {
+                        autoAlpha: 1,
+
+                        x: getColumnX(
+                            currentItem,
+                            3
+                        ),
+
+                        y: getRowY(
+                            currentItem,
+                            currentItem.currentRow
+                        ),
+
+                        duration: entryDuration,
+                        ease: "sine.inOut"
+                    },
+                    label
+                );
+
+                currentItem.entered = true;
+
+                // 次のTipまで少し待つ
+                timeline.to({}, {
+                    duration: waitDuration
+                });
+            }
+        );
+
+        /*
+         * 8個すべてが登場した後、
+         * まだ到着していないTipを交互に進める
+         */
+        let nextStrand = bottomItems;
+        let safetyCount = 0;
+
+        while (
+            entryOrder.some(
+                (item) => !isComplete(item)
+            ) &&
+            safetyCount < 12
+        ) {
+            const unfinishedItems =
+                nextStrand.filter(
+                    (item) =>
+                        item.entered &&
+                        !isComplete(item)
+                );
+
+            if (unfinishedItems.length > 0) {
+                const label =
+                    `finish-step-${safetyCount}`;
+
+                timeline.addLabel(label);
+
+                advanceStrand(
+                    nextStrand,
+                    timeline,
+                    label
+                );
+
+                timeline.to({}, {
+                    duration: waitDuration
+                });
+            }
+
+            // 上段・下段を交互に動かす
+            nextStrand =
+                nextStrand === bottomItems
+                    ? topItems
+                    : bottomItems;
+
+            safetyCount++;
+        }
+
+        /*
+         * 最終状態を揃える
+         */
+        timeline.set(tips, {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            zIndex: 1
+        });
     }
 
     //鏡アニメーション

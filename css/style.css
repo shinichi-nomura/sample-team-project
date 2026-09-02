@@ -617,7 +617,7 @@ main p {
 
 .greeting h4 {
   position: absolute;
-  top: 4%;
+  top: 8%;
   left: 50%;
   transform: translateX(-50%);
   font-size: clamp(22px, 2.2vw, 36px);
@@ -628,7 +628,7 @@ main p {
 
 .greet {
   position: absolute;
-  top: 5%;
+  top: 9%;
   left: 5%;
 }
 
@@ -658,21 +658,30 @@ main p {
 }
 
 .profile-button {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  z-index: 3;
+  display: block;
+  width: 22%;
+  max-width: 295px;
   background: none;
   border: none;
   padding: 0;
+  transform: translateX(-50%);
   cursor: pointer;
 }
 
 .profile-bottun-image {
+  position: static;
   display: block;
-  position: absolute;
-  width: 22%;
-  max-width: 295px;
+  width: 100%;
   height: auto;
-  bottom: 12%;
-  left: 50%;
-  transform: translateX(-50%);
+}
+
+.greeting-char {
+  display: inline-block;
+  will-change: transform, opacity;
 }
 
 @media (max-width: 800px) {
@@ -1361,17 +1370,19 @@ small {
 .first-greet-image {
   height: auto;
   position: absolute;
-  top: 4%;
+  top: 4.4%;
   left: 50%;
   transform: translateX(-50%);
-  width: clamp(120px, 12vw, 280px);
+  /* width: clamp(100px, 10vw, 240px); */
+  width: clamp(110px, 11vw, 260px);
+  /* width: clamp(120px, 12vw, 280px); */
   height: auto;
   filter: drop-shadow(0 0 clamp(6px, 0.8vw, 10px) rgba(255, 255, 255, 1));
 }
 
 .name {
   position: absolute;
-  top: 10.5%;
+  top: 11%;
   left: 50%;
   text-align: center;
   transform: translateX(-50%);
@@ -1406,22 +1417,22 @@ small {
 }
 
 .title-1 {
-  top: 14.5%;
+  top: 14.8%;
   font-size: clamp(26px, 4vw, 48px);
 }
 
 .title-2 {
-  top: 17.2%;
+  top: 17.4%;
   font-size: clamp(26px, 4vw, 48px);
 }
 
 .title-3 {
-  top: 19.4%;
+  top: 19.6%;
   font-size: clamp(34px, 5.3vw, 66px);
 }
 
 .title-4 {
-  top: 23%;
+  top: 23.2%;
   font-size: clamp(26px, 4vw, 48px);
 }
 
@@ -1431,7 +1442,7 @@ small {
   display: block;
   position: absolute;
   inset: 0;
-  top: 26%;
+  top: 26.2%;
   left: 50%;
   width: 90%;
   height: auto;
@@ -1461,19 +1472,19 @@ small {
 }
 
 .message-1 {
-  top: 31%;
+  top: 32.5%;
 }
 
 .message-2 {
-  top: 50%;
+  top: 53%;
 }
 
 .message-3 {
-  top: 64%;
+  top: 69%;
 }
 
 .message-4 {
-  top: 74%;
+  top: 81%;
 }
 
 /*==mirror==*/
