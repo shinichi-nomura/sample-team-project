@@ -240,7 +240,7 @@ header a {
 #top,
 #about,
 #book {
-    scroll-margin-top: 0;
+  scroll-margin-top: 0;
 }
 
 header h1 {
@@ -1531,6 +1531,31 @@ small {
   top: 81%;
 }
 
+/*JS実行前の一瞬の表示を防ぐ,背景画像は隠さない*/
+.first-greet-animation-pending .first-greet-image,
+.first-greet-animation-pending .name,
+.first-greet-animation-pending .title-1,
+.first-greet-animation-pending .title-2,
+.first-greet-animation-pending .title-3,
+.first-greet-animation-pending .title-4,
+.first-greet-animation-pending .message-frame,
+.first-greet-animation-pending .message-content {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/*アニメーション対象の描画を安定させる*/
+.first-greet-image,
+.first-greet .name,
+.first-greet .title-1,
+.first-greet .title-2,
+.first-greet .title-3,
+.first-greet .title-4,
+.message-frame,
+.message-content {
+  will-change: opacity, transform;
+}
+
 /*==mirror==*/
 .mirror {
   position: relative;
@@ -1607,6 +1632,18 @@ small {
   z-index: 2;
   filter:
     drop-shadow(0 22px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 18px rgba(255, 220, 140, 0.25));
+}
+
+/*JS実行前は左右の鏡だけ隠す,mirror-backgroundは隠さない*/
+.mirror-animation-pending .left-mirror,
+.mirror-animation-pending .right-mirror {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.left-mirror,
+.right-mirror {
+  will-change: opacity;
 }
 
 /*==pegasus==*/
@@ -1698,6 +1735,27 @@ small {
   color: #00E5FF;
 }
 
+/* 背景以外をJS実行前から隠す*/
+.pegasus-animation-pending .pegasus-title-1,
+.pegasus-animation-pending .pegasus-title-2,
+.pegasus-animation-pending .pegasus-title-3,
+.pegasus-animation-pending .pegasus-content-1,
+.pegasus-animation-pending .pegasus-content-2 {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pegasus-title-1,
+.pegasus-title-2,
+.pegasus-title-3 {
+  will-change: opacity, transform;
+}
+
+.pegasus-content-1,
+.pegasus-content-2 {
+  will-change: opacity;
+}
+
 /*==event-page==*/
 .event-page {
   position: relative;
@@ -1768,6 +1826,23 @@ small {
 
 .line-4 {
   padding-bottom: clamp(18px, 4vw, 32px);
+}
+
+/*背景画像は隠さない*/
+.event-page-animation-pending .event-detail,
+.event-page-animation-pending .event-title,
+.event-page-animation-pending .event-content > p {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.event-detail,
+.event-title {
+    will-change: opacity;
+}
+
+.event-content > p {
+    will-change: opacity, transform;
 }
 
 /*==contact-page==*/
@@ -2128,4 +2203,29 @@ textarea {
 .decision:active {
   transform: translateY(7px);
   box-shadow: none;
+}
+
+/*背景画像は隠さない*/
+.contact-page-animation-pending .contact,
+.contact-page-animation-pending .contact-title,
+.contact-page-animation-pending .contact > .form-row,
+.contact-page-animation-pending .contact > .full-group,
+.contact-page-animation-pending .contact > .address-group,
+.contact-page-animation-pending .contact > .details,
+.contact-page-animation-pending .contact > .decision-button {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.contact,
+.contact-title {
+    will-change: opacity;
+}
+
+.contact > .form-row,
+.contact > .full-group,
+.contact > .address-group,
+.contact > .details,
+.contact > .decision-button {
+    will-change: opacity, transform;
 }
