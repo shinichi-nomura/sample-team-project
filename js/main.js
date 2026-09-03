@@ -75,7 +75,7 @@
     const hamburger = document.querySelector('.hamburger-menu');
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll(".nav-list a");
-    const logoLink = document.querySelector(".logo-link");
+    const logoLink = document.querySelector(".header-logo a");
 
     function closeMenu() {
         hamburger.classList.remove("active");
@@ -174,7 +174,47 @@
         });
     });
     if (logoLink) {
-        logoLink.addEventListener("click", closeMenu);
+        logoLink.addEventListener(
+            "click",
+            (event) => {
+                closeMenu();
+                const url = new URL(
+                    logoLink.getAttribute("href"),
+                    window.location.href
+                );
+                const isSamePage =
+                    url.origin ===
+                    window.location.origin &&
+                    url.pathname ===
+                    window.location.pathname &&
+                    url.search ===
+                    window.location.search;
+                //別ページのトップへ移動する場合は通常のページ遷移を行う
+                if (!isSamePage) {
+                    return;
+                }
+                //同じページ内の場合はページを再読み込みせず、最上部へスムーズに移動
+                event.preventDefault();
+                document.documentElement.classList.remove(
+                    "initial-anchor-moving"
+                );
+                document.documentElement.style
+                    .scrollBehavior = "";
+                //URLを#topへ更新する
+                history.replaceState(
+                    null,
+                    "",
+                    url.pathname +
+                    url.search +
+                    "#top"
+                );
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth"
+                });
+            }
+        );
     }
 
     //==background==
