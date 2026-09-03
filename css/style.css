@@ -7,7 +7,7 @@
 html {
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
-  scroll-padding-top: 100px;
+  scroll-padding-top: 120px;
 }
 
 body {
@@ -240,7 +240,7 @@ header a {
 #top,
 #about,
 #book {
-  scroll-margin-top: 0;
+    scroll-margin-top: 0;
 }
 
 header h1 {
@@ -814,6 +814,7 @@ main p {
   width: 96%;
   padding-bottom: clamp(40px, 5vw, 64px);
   margin: 0 auto clamp(40px, 5vw, 64px);
+  overflow: hidden;
 }
 
 .eightTips h3 {
@@ -836,8 +837,12 @@ main p {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: clamp(-120px, -8vw, -60px);
   flex: 0 0 24%;
+  will-change: transform, opacity;
+}
+
+.tip:nth-child(-n + 4) {
+  margin-bottom: clamp(-116px, -7.6vw, -56px);
 }
 
 .tip img {
@@ -873,7 +878,7 @@ main p {
   display: flex;
   padding: clamp(16px, 2vw, 24px) 0;
   gap: clamp(20px, 2.6vw, 32px);
-  margin: 0 auto clamp(40px, 5vw, 64px);
+  margin: clamp(-64px, -5vw, -40px) auto clamp(64px, 5vw, 40px);
 }
 
 .event,
@@ -1028,6 +1033,7 @@ main p {
   font-weight: normal;
   letter-spacing: clamp(1px, 0.15vw, 2px);
   text-align: center;
+  will-change: opacity;
 }
 
 .book-list {
@@ -1092,6 +1098,7 @@ main p {
   align-items: flex-start;
   width: 100%;
   min-width: 0;
+  will-change: clip-path, opacity;
 }
 
 .book-image,
@@ -1120,6 +1127,7 @@ main p {
   min-width: 0;
   color: #fff;
   text-align: center;
+  will-change: clip-path, opacity;
 }
 
 .book-content h5 {
@@ -1182,6 +1190,8 @@ footer {
   display: flex;
   width: 100%;
   margin-top: clamp(20px, 2.9vw, 36px);
+  position: relative;
+  z-index: 3;
 }
 
 .footer-left {
@@ -1250,6 +1260,8 @@ footer {
 }
 
 .icon-image {
+  position: relative;
+  z-index: 3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1258,12 +1270,15 @@ footer {
 }
 
 .sns-box {
+  position: relative;
+  z-index: 3;
   width: clamp(36px, 4.84vw, 60px);
   height: clamp(36px, 4.84vw, 60px);
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: visible;
+  will-change: transform, opacity;
 }
 
 .sns-icon {
@@ -1272,7 +1287,10 @@ footer {
   height: 100%;
   object-fit: contain;
   flex-shrink: 0;
+  position: relative;
   z-index: 2;
+  opacity: 1;
+  visibility: visible;
 }
 
 .line-icon {
@@ -1326,6 +1344,32 @@ small {
   color: white;
   font-size: clamp(10px, 1.1vw, 14px);
   z-index: 2;
+}
+
+.footer-animation-pending .footer-top-image,
+.footer-animation-pending .footer-right p,
+.footer-animation-pending .footer-bottom,
+.footer-animation-pending .copyright-content,
+.footer-animation-pending .sns-box,
+.footer-animation-pending .privacy-policy {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.footer-top-image,
+.footer-right p,
+.footer-bottom {
+  will-change: opacity;
+}
+
+.copyright-content,
+.privacy-policy {
+  will-change: transform, opacity;
+}
+
+.icon-image {
+  position: relative;
+  z-index: 3;
 }
 
 /* @media (max-width: 800px) {
