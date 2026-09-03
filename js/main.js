@@ -1,5 +1,76 @@
 'use strict';
 {
+    const initialPageHash = window.location.hash;
+    // 通常遷移か再読み込みかを判定
+    const navigationEntry =
+        performance.getEntriesByType("navigation")[0];
+    const isReload =
+        navigationEntry?.type === "reload" ||
+        (
+            performance.navigation &&
+            performance.navigation.type === 1
+        );
+    const isSectionHash =
+        initialPageHash === "#about" ||
+        initialPageHash === "#book";
+    //#aboutまたは#bookで再読み込みした場合はHeroへ戻す
+    if (isReload && isSectionHash) {
+        //ブラウザによる以前のスクロール位置復元を停止
+        if ("scrollRestoration" in history) {
+            history.scrollRestoration = "manual";
+        }
+        // URLを#topへ変更 replaceStateなので、この時点では自動移動しない
+        history.replaceState(
+            null,
+            "",
+            window.location.pathname +
+            window.location.search +
+            "#top"
+        );
+        const moveToHero = () => {
+            const html = document.documentElement;
+            const previousBehavior =
+                html.style.scrollBehavior;
+            html.style.scrollBehavior = "auto";
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "auto"
+            });
+            requestAnimationFrame(() => {
+                html.style.scrollBehavior =
+                    previousBehavior;
+
+                if ("scrollRestoration" in history) {
+                    history.scrollRestoration = "auto";
+                }
+            });
+        };
+        //すぐにページ上部へ戻す
+        moveToHero();
+        //ブラウザのスクロール位置復元より後にも実行
+        window.addEventListener(
+            "load",
+            () => {
+                window.setTimeout(moveToHero, 50);
+            },
+            { once: true }
+        );
+        window.addEventListener(
+            "pageshow",
+            () => {
+                window.setTimeout(moveToHero, 100);
+            },
+            { once: true }
+        );
+    }
+    //再読み込みではなく、別ページから#about・#bookへ来た場合
+    if (!isReload && isSectionHash) {
+        document.documentElement.classList.add(
+            "initial-anchor-moving"
+        );
+    }
+
     //==hamburger-menu==
     const hamburger = document.querySelector('.hamburger-menu');
     const navMenu = document.querySelector('.nav-menu');
@@ -23,7 +94,97 @@
     });
 
     navLinks.forEach((link) => {
-        link.addEventListener("click", closeMenu);
+        link.addEventListener("click", (event) => {
+            closeMenu();
+
+            const url = new URL(
+                link.getAttribute("href"),
+                window.location.href
+            );
+
+            /*
+             * リンク先が現在表示しているページと
+             * 同じページかどうかを判定
+             */
+            const isSamePage =
+                url.origin === window.location.origin &&
+                url.pathname === window.location.pathname &&
+                url.search === window.location.search;
+
+            /*
+             * 別ページへのリンクは通常どおり遷移させる
+             */
+            if (!isSamePage || !url.hash) {
+                return;
+            }
+
+            const targetId = decodeURIComponent(
+                url.hash.slice(1)
+            );
+
+            const target =
+                document.getElementById(targetId);
+
+            if (!target) return;
+
+            /*
+             * ブラウザ標準のアンカー移動を止める
+             */
+            event.preventDefault();
+
+            /*
+             * 初回アンカー移動用のauto指定を解除
+             */
+            document.documentElement.classList.remove(
+                "initial-anchor-moving"
+            );
+
+            document.documentElement.style.scrollBehavior = "";
+
+            const header =
+                document.querySelector("header");
+
+            const headerHeight = header
+                ? Math.ceil(
+                    header.getBoundingClientRect().height
+                )
+                : 0;
+
+            const anchorGap = 24;
+
+            const targetTop =
+                target.getBoundingClientRect().top +
+                window.scrollY -
+                headerHeight -
+                anchorGap;
+
+            /*
+             * URLの#about／#bookを更新する
+             * pushStateは自動スクロールを発生させない
+             */
+            if (window.location.hash === url.hash) {
+                history.replaceState(
+                    null,
+                    "",
+                    url.hash
+                );
+            } else {
+                history.pushState(
+                    null,
+                    "",
+                    url.hash
+                );
+            }
+
+            /*
+             * 同じページ内では必ずスムーズに移動
+             */
+            window.scrollTo({
+                top: Math.max(0, targetTop),
+                left: 0,
+                behavior: "smooth"
+            });
+        });
     });
 
     if (logoLink) {
@@ -82,17 +243,162 @@
         }
     }
 
+    function initInitialAnchorFix() {
+        const hash = window.location.hash;
+        if (
+            hash !== "#about" &&
+            hash !== "#book"
+        ) {
+            return;
+        }
+        const targetId = hash.slice(1);
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        const moveToTarget = () => {
+            //ユーザーが別のアンカーを押した場合は、古い初回位置補正を実行しない
+            if (window.location.hash !== hash) {
+                return;
+            }
+            if (typeof ScrollTrigger !== "undefined") {
+                ScrollTrigger.refresh();
+            }
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    const header =
+                        document.querySelector("header");
+                    const headerHeight = header
+                        ? Math.ceil(
+                            header.getBoundingClientRect().height
+                        )
+                        : 0;
+                    const anchorGap = 24;
+                    const targetTop =
+                        target.getBoundingClientRect().top +
+                        window.scrollY -
+                        headerHeight -
+                        anchorGap;
+                    const html = document.documentElement;
+                    const previousBehavior =
+                        html.style.scrollBehavior;
+                    html.style.scrollBehavior = "auto";
+                    window.scrollTo({
+                        top: Math.max(0, targetTop),
+                        left: 0,
+                        behavior: "auto"
+                    });
+                    requestAnimationFrame(() => {
+                        html.style.scrollBehavior =
+                            previousBehavior;
+
+                        html.classList.remove(
+                            "initial-anchor-moving"
+                        );
+                    });
+                });
+            });
+        };
+        //ブラウザ標準のアンカー移動が完了してから補正
+        const moveAfterBrowser = () => {
+            window.setTimeout(moveToTarget, 150);
+        };
+        if (document.readyState === "complete") {
+            moveAfterBrowser();
+        } else {
+            window.addEventListener(
+                "load",
+                moveAfterBrowser,
+                { once: true }
+            );
+        }
+        //ブラウザの戻る・進むにも対応
+        window.addEventListener(
+            "pageshow",
+            moveAfterBrowser,
+            { once: true }
+        );
+        //Webフォント適用後の位置変化を補正
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready
+                .then(() => {
+                    window.setTimeout(moveToTarget, 100);
+                })
+                .catch(() => { });
+        }
+        //#bookより上にあるCMSの読み込み後に再調整
+        if (targetId === "book") {
+            const cmsContainers = [
+                document.querySelector("#event-contents"),
+                document.querySelector("#latest-contents")
+            ].filter(Boolean);
+            if (cmsContainers.length > 0) {
+                const observer = new MutationObserver(() => {
+                    window.setTimeout(moveToTarget, 50);
+                    const loadingFinished =
+                        cmsContainers.every((container) => {
+                            return !container.textContent.includes(
+                                "読み込み中"
+                            );
+                        });
+                    if (loadingFinished) {
+                        window.setTimeout(() => {
+                            observer.disconnect();
+                        }, 300);
+                    }
+                });
+                cmsContainers.forEach((container) => {
+                    observer.observe(container, {
+                        childList: true,
+                        subtree: true,
+                        characterData: true
+                    });
+                });
+                // 念のため10秒で監視終了
+                window.setTimeout(() => {
+                    observer.disconnect();
+                }, 10000);
+            }
+        }
+    }
+
     // GSAPアニメーション
     function initAnimations() {
         if (typeof gsap === "undefined") {
             console.error("GSAPが読み込まれていません。");
             return;
         }
-
+        // Heroアニメーション
         initHeroAnimation();
+        //eighttipsアニメーション
+        initEightTipsAnimation();
+        // 鏡アニメーション
         initMirrorAnimation();
+        // ScrollTriggerを使用するアニメーション
+        if (typeof ScrollTrigger !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger);
+            // Greetingアニメーション
+            initGreetingAnimation();
+            //suisoアニメーション
+            initSuisoAnimation();
+            //koseisinrigakuアニメーション
+            initKoseiAnimation();
+            //eventsアニメーション
+            initEventsAnimation();
+            //bookアニメーション
+            initBookAnimation();
+            //footerアニメーション
+            initFooterAnimation();
+            requestAnimationFrame(() => {
+                ScrollTrigger.refresh();
+            });
+        } else {
+            console.error(
+                "ScrollTriggerが読み込まれていません。"
+            );
+        }
+        //全アニメーション設定後にアンカー位置を修正
+        initInitialAnchorFix();
     }
-
+    // HTML読み込み後に実行
     if (document.readyState === "loading") {
         document.addEventListener(
             "DOMContentLoaded",
@@ -114,7 +420,6 @@
         const logo = document.querySelector(
             ".logo-content"
         );
-
         if (images.length === 0) return;
         // Hero画像の初期状態
         gsap.set(images, {
@@ -158,17 +463,14 @@
                 });
             })
         );
-
         // Hero画像の無限ループ
         const startHeroLoop = () => {
             let currentIndex = 0;
-
             const changeImage = () => {
                 const currentImage = images[currentIndex];
                 const nextIndex =
                     (currentIndex + 1) % images.length;
                 const nextImage = images[nextIndex];
-
                 // 現在画像の状態
                 gsap.set(currentImage, {
                     autoAlpha: 1,
@@ -179,7 +481,6 @@
                     autoAlpha: 0,
                     zIndex: 2
                 });
-
                 const changeTimeline = gsap.timeline({
                     delay: 5,
                     onComplete: () => {
@@ -223,7 +524,6 @@
             };
             changeImage();
         };
-
         // 最初だけのイントロ
         const introTimeline = gsap.timeline({
             onComplete: startHeroLoop
@@ -258,6 +558,666 @@
                     ease: "power3.out"
                 },
                 ">-0.2"
+            );
+        }
+    }
+
+    /* 文字を1文字ずつspanで囲む */
+    function splitTextIntoChars(element) {
+        if (!element) return [];
+        // 二重変換を防ぐ
+        if (element.dataset.textSplit === "true") {
+            return gsap.utils.toArray(
+                element.querySelectorAll(".greeting-char")
+            );
+        }
+        const textNodes = [];
+        const walker = document.createTreeWalker(
+            element,
+            NodeFilter.SHOW_TEXT
+        );
+        let currentNode;
+        while ((currentNode = walker.nextNode())) {
+            // 空白しかないノードは対象外
+            if (currentNode.textContent.trim() !== "") {
+                textNodes.push(currentNode);
+            }
+        }
+        textNodes.forEach((textNode) => {
+            const fragment = document.createDocumentFragment();
+            Array.from(textNode.textContent).forEach((char) => {
+                // 空白はそのまま残す
+                if (/\s/.test(char)) {
+                    fragment.appendChild(
+                        document.createTextNode(char)
+                    );
+                    return;
+                }
+                const span = document.createElement("span");
+                span.className = "greeting-char";
+                span.textContent = char;
+                fragment.appendChild(span);
+            });
+            textNode.replaceWith(fragment);
+        });
+        element.dataset.textSplit = "true";
+
+        return gsap.utils.toArray(
+            element.querySelectorAll(".greeting-char")
+        );
+    }
+
+    /* Greetingアニメーション */
+    function initGreetingAnimation() {
+        const greeting = document.querySelector(".greeting");
+        if (!greeting) return;
+        const heading = greeting.querySelector("h4");
+        const profile = greeting.querySelector(".greet");
+        const content = greeting.querySelector(".greet-content");
+        const button = greeting.querySelector(".profile-button");
+        // 見出し、本文一文字ずつ分割
+        const headingChars = splitTextIntoChars(heading);
+        const contentChars = splitTextIntoChars(content);
+        //見出しの中央配置を維持
+        gsap.set(heading, {
+            autoAlpha: 1,
+            xPercent: -50,
+            x: 0
+        });
+        //見出し各文字の初期状態
+        gsap.set(headingChars, {
+            autoAlpha: 0,
+            x: -24
+        });
+        //プロフィール画像と名前の初期状態
+        gsap.set(profile, {
+            autoAlpha: 0,
+            x: 0,
+            y: 0
+        });
+        //本文の初期状態、中央配置は維持する
+        gsap.set(content, {
+            autoAlpha: 1,
+            xPercent: -50,
+            x: 0,
+            y: 0
+        });
+        //本文の各文字を透明にします
+        gsap.set(contentChars, {
+            autoAlpha: 0,
+            x: 0,
+            y: 0
+        });
+        //ボタンの初期状態
+        if (button) {
+            gsap.set(button, {
+                autoAlpha: 0,
+                xPercent: -50,
+                y: 60
+            });
+        }
+        const contentTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: greeting,
+                start: "top 98%",
+                once: true
+                // markers: true
+            }
+        });
+        //見出しを左から一文字ずつ表示
+        contentTimeline.to(headingChars, {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.5,
+            stagger: 0.12,
+            ease: "power3.out"
+        });
+        //プロフィール画像と名前を位置固定でふわっと表示
+        contentTimeline.to(
+            profile,
+            {
+                autoAlpha: 1,
+                duration: 1.4,
+                ease: "sine.out"
+            },
+            ">-0.2"
+        );
+        // 本文を左側の文字から順番にふわっと表示
+        gsap.to(contentChars, {
+            autoAlpha: 1,
+            duration: 1,
+            stagger: 0.025,
+            ease: "sine.out",
+            scrollTrigger: {
+                trigger: greeting,
+                start: "top 90%",
+                once: true
+                // markers: true
+            }
+        });
+        //ボタンを下から表示
+        if (button) {
+            gsap.to(button, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 1.3,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: button,
+                    start: "top 90%",
+                    once: true
+                    // markers: true
+                }
+            });
+        }
+    }
+
+    //Suisoアニメーション
+    function initSuisoAnimation() {
+        const suiso = document.querySelector(".suiso");
+        if (!suiso) return;
+        const content = suiso.querySelector(".suiso-content");
+        const heading = suiso.querySelector("h3");
+        const text = suiso.querySelector("p");
+        if (!content || !heading || !text) return;
+        //Greetingで使用している関数でh3とpを一文字ずつ分割
+        const headingChars = splitTextIntoChars(heading);
+        const textChars = splitTextIntoChars(text);
+        const allChars = [
+            ...headingChars,
+            ...textChars
+        ];
+        const button = suiso.querySelector(".suiso-button");
+        //親要素の座標は一切変更しない
+        gsap.set(content, {
+            autoAlpha: 1,
+            x: 0,
+            y: 0
+        });
+        //各文字は透明にするだけ
+        gsap.set(allChars, {
+            autoAlpha: 0,
+            x: 24,
+            y: 0
+        });
+        // 水素ボタンの初期状態
+        if (button) {
+            gsap.set(button, {
+                autoAlpha: 0,
+                xPercent: -50,
+                y: 60
+            });
+            //h3の先頭からpの最後まで一文字ずつ順番に表示
+            gsap.to(allChars, {
+                autoAlpha: 1,
+                x: 0,
+                y: 0,
+                duration: 0.7,
+                stagger: 0.04,
+                ease: "sine.out",
+                scrollTrigger: {
+                    trigger: suiso,
+                    start: "top 90%",
+                    once: true
+                    // markers: true
+                }
+            });
+            // 水素ボタンを下からふわっと表示
+            gsap.to(button, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 1.3,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: button,
+                    start: "top 80%",
+                    once: true
+                    // markers: true
+                }
+            });
+        }
+    }
+
+    //個性心理學セクションのアニメーション
+    function initKoseiAnimation() {
+        const section = document.querySelector(
+            ".koseisinrigaku"
+        );
+        if (!section) return;
+        //ぼかし・透明状態からスクロールに合わせて鮮明にする
+        gsap.fromTo(
+            section,
+            {
+                autoAlpha: 0,
+                filter: "blur(20px)"
+            },
+            {
+                autoAlpha: 1,
+                filter: "blur(0px)",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: section,
+                    // セクションが画面下部へ入ると開始
+                    start: "top 90%",
+                    // セクション上端が画面45%地点に来たら完成
+                    end: "top 45%",
+                    // スクロール量とアニメーションを連動
+                    scrub: 1,
+                    // 完成後は元に戻さない
+                    once: true
+                    // markers: true
+                }
+            }
+        );
+    }
+
+    //八つのヒントアニメーション
+    function initEightTipsAnimation() {
+        const section = document.querySelector(".eightTips");
+        if (!section) return;
+        const tips = gsap.utils.toArray(
+            section.querySelectorAll(".tip")
+        );
+        if (tips.length < 8) return;
+        //HTML上の並びtips[0] tips[1] tips[2] tips[3] tips[4] tips[5] tips[6] tips[7]
+        //グループ1 一番左下段,二番目左上段.三番目左下段,四番目左上段
+        const group1 = [
+            tips[4],
+            tips[1],
+            tips[6],
+            tips[3]
+        ];
+        //グループ2 一番左上段,二番目左下段,三番目左上段,四番目左下段
+        const group2 = [
+            tips[0],
+            tips[5],
+            tips[2],
+            tips[7]
+        ];
+        //左右の開始位置,数値を大きくするとより遠くから登場
+        const moveDistance = Math.max(
+            200,
+            section.clientWidth * 0.25
+        );
+        // 全Tipを最初は非表示
+        gsap.set(tips, {
+            autoAlpha: 0,
+            scale: 0.92
+        });
+        // グループ1は左側に配置
+        gsap.set(group1, {
+            x: -moveDistance
+        });
+        // グループ2は右側に配置
+        gsap.set(group2, {
+            x: moveDistance
+        });
+        //通常のGSAPタイムライン,スクロール量とは連動ない
+        const timeline = gsap.timeline({
+            paused: true,
+            defaults: {
+                duration: 2.4,
+                ease: "power3.out"
+            }
+        });
+        //グループ1を左から表示
+        timeline.to(
+            group1,
+            {
+                autoAlpha: 1,
+                x: 0,
+                scale: 1,
+                stagger: {
+                    each: 0.25,
+                    from: "start"
+                }
+            },
+            0
+        );
+        //グループ2を右から表示,右端のTipから順番に登場
+        timeline.to(
+            group2,
+            {
+                autoAlpha: 1,
+                x: 0,
+                scale: 1,
+                stagger: {
+                    each: 0.25,
+                    from: "end"
+                }
+            },
+            0.15
+        );
+        //アニメーション完了後、GSAPが付けたtransformを削除
+        timeline.set(tips, {
+            clearProps: "transform,opacity,visibility"
+        });
+        //セクションが画面に入ったことだけ検知,アニメーション自体はスクロール量に連動しない
+        const observer = new IntersectionObserver(
+            (entries, currentObserver) => {
+                const entry = entries[0];
+                if (!entry.isIntersecting) return;
+                timeline.play();
+                // 一度だけ実行
+                currentObserver.disconnect();
+            },
+            {
+                threshold: 0.2,
+                rootMargin: "0px 0px -10% 0px"
+            }
+        );
+        observer.observe(section);
+    }
+
+    //イベント近況報告アニメーション
+    function initEventsAnimation() {
+        const eventsSection =
+            document.querySelector(".events");
+        if (!eventsSection) return;
+        if (typeof ScrollTrigger === "undefined") return;
+        const panels = gsap.utils.toArray(
+            eventsSection.querySelectorAll(
+                ".event, .latest"
+            )
+        );
+        if (panels.length === 0) return;
+        //初期状態
+        gsap.set(panels, {
+            autoAlpha: 0
+        });
+        //同時にふわっと再生
+        gsap.to(panels, {
+            autoAlpha: 1,
+            duration: 1.6,
+            ease: "sine.out",
+            scrollTrigger: {
+                trigger: eventsSection,
+                start: "top 80%",
+                once: true
+                // markers: true
+            },
+            onComplete: () => {
+                //アニメーション後にGSAPのインライン指定を削除
+                gsap.set(panels, {
+                    clearProps: "opacity,visibility"
+                });
+            }
+        });
+    }
+
+    //著書アニメーション
+    function initBookAnimation() {
+        const book = document.querySelector(".book");
+        if (!book) return;
+        if (typeof ScrollTrigger === "undefined") return;
+        const heading = book.querySelector("h4");
+        const bookItems = gsap.utils.toArray(
+            book.querySelectorAll(".book-item")
+        );
+        //「著書」を位置固定で表示
+        if (heading) {
+            gsap.set(heading, {
+                autoAlpha: 0
+            });
+            gsap.to(heading, {
+                autoAlpha: 1,
+                duration: 1.5,
+                ease: "sine.out",
+                scrollTrigger: {
+                    trigger: book,
+                    start: "top 80%",
+                    once: true
+                    // markers: true
+                }
+            });
+        }
+        bookItems.forEach((item) => {
+            const content =
+                item.querySelector(".book-content");
+            //親の.book-imagesではなく画像本体を取得
+            const image = item.querySelector(
+                ".book-image, .book-image-2"
+            );
+            //文章は左側から表示
+            if (content) {
+                gsap.set(content, {
+                    autoAlpha: 0,
+                    clipPath:
+                        "inset(0 100% 0 0)"
+                });
+            }
+            //画像は右側から表示,上下左右をマイナス値で広げ拡大・移動した画像や影が途中で切れないようにする
+            if (image) {
+                gsap.set(image, {
+                    autoAlpha: 0,
+                    clipPath:
+                        "inset(-35% -35% -35% 135%)"
+                });
+            }
+            const itemTimeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 80%",
+                    once: true
+                    // markers: true
+                }
+            });
+            //文章全体を左から表示
+            if (content) {
+                itemTimeline.to(
+                    content,
+                    {
+                        autoAlpha: 1,
+                        clipPath:
+                            "inset(0 0% 0 0)",
+                        duration: 1.8,
+                        ease: "power2.out"
+                    },
+                    0
+                );
+            }
+            //画像全体を右から表示
+            if (image) {
+                itemTimeline.to(
+                    image,
+                    {
+                        autoAlpha: 1,
+                        //最終状態にも上下左右の余裕を残す
+                        clipPath:
+                            "inset(-35% -35% -35% -35%)",
+                        duration: 1.8,
+                        ease: "power2.out"
+                    },
+                    0
+                );
+            }
+            //文章側だけclip-pathを削除
+            if (content) {
+                itemTimeline.set(content, {
+                    clearProps:
+                        "clipPath,opacity,visibility"
+                });
+            }
+            //画像側はclip-pathを削除しない,削除時のカクつきを防ぐ
+            if (image) {
+                itemTimeline.set(image, {
+                    clearProps:
+                        "opacity,visibility"
+                });
+            }
+        });
+    }
+
+    //footerアニメーション
+    async function initFooterAnimation() {
+        const footer = document.querySelector("footer");
+        if (!footer) return;
+        // 二重実行を防止
+        if (footer.dataset.footerAnimationInitialized === "true") {
+            return;
+        }
+        footer.dataset.footerAnimationInitialized = "true";
+        const footerTop = footer.querySelector(".footer-top");
+        const footerTopImages = gsap.utils.toArray(
+            footer.querySelectorAll(".footer-top-image")
+        );
+        const footerTopText = footer.querySelector(".footer-right p");
+        const footerBottom = footer.querySelector(".footer-bottom");
+        const copyright = footer.querySelector(".copyright-content");
+        const snsBoxes = gsap.utils.toArray(
+            footer.querySelectorAll(".sns-box")
+        );
+        const snsIcons = gsap.utils.toArray(
+            footer.querySelectorAll(".sns-icon")
+        );
+        const privacy = footer.querySelector(".privacy-policy");
+        //SNS画像の読み込み完了を待つ
+        await Promise.all(
+            snsIcons.map((icon) => {
+                if (typeof icon.decode === "function") {
+                    return icon.decode().catch(() => { });
+                }
+                if (icon.complete) {
+                    return Promise.resolve();
+                }
+                return new Promise((resolve) => {
+                    icon.addEventListener("load", resolve, {
+                        once: true
+                    });
+
+                    icon.addEventListener("error", resolve, {
+                        once: true
+                    });
+                });
+            })
+        );
+        //footer-top本体は隠さない
+        if (footerTop) {
+            gsap.set(footerTop, {
+                opacity: 1,
+                visibility: "visible"
+            });
+        }
+        const footerTopParts = [
+            ...footerTopImages,
+            footerTopText
+        ].filter(Boolean);
+        //footer-top内の画像とテキスト
+        gsap.set(footerTopParts, {
+            opacity: 0,
+            visibility: "visible"
+        });
+        //footer-bottom
+        if (footerBottom) {
+            gsap.set(footerBottom, {
+                opacity: 0,
+                visibility: "visible"
+            });
+        }
+        //copyright
+        if (copyright) {
+            gsap.set(copyright, {
+                opacity: 0,
+                visibility: "visible",
+                y: 40
+            });
+        }
+        //SNSアイコン opacityを完全な0にせず、ごく小さい値にすることで,アニメーション前にブラウザへ描画させておく
+        gsap.set(snsBoxes, {
+            clearProps: "transform"
+        });
+        gsap.set(snsBoxes, {
+            opacity: 0.001,
+            visibility: "visible"
+        });
+        gsap.set(snsIcons, {
+            opacity: 1,
+            visibility: "visible"
+        });
+        //privacy-policy
+        if (privacy) {
+            gsap.set(privacy, {
+                opacity: 0,
+                visibility: "visible",
+                y: 40
+            });
+        }
+        //CSSの初期非表示クラスを解除
+        footer.classList.remove("footer-animation-pending");
+        //2フレーム待ち、SNS画像を先に描画させる
+        await new Promise((resolve) => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(resolve);
+            });
+        });
+        //Footer全体のタイムライン
+        const footerTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: footer,
+                start: "top 75%",
+                once: true
+                // markers: true
+            }
+        });
+        //1. footer-top
+        if (footerTopParts.length > 0) {
+            footerTimeline.to(footerTopParts, {
+                opacity: 1,
+                duration: 1.8,
+                ease: "sine.out"
+            });
+        }
+        //2. footer-bottom
+        if (footerBottom) {
+            footerTimeline.to(
+                footerBottom,
+                {
+                    opacity: 1,
+                    duration: 1,
+                    ease: "sine.out"
+                },
+                "<"
+            );
+        }
+        //3. copyright
+        if (copyright) {
+            footerTimeline.to(copyright, {
+                opacity: 1,
+                y: 0,
+                duration: 1.4,
+                ease: "power2.out"
+            },
+                "<+=0.6"
+            );
+        }
+        //copyright完了後に少し待つ
+        footerTimeline.to({}, {
+            duration: 0.2
+        });
+        //4. SNSアイコン DOMの並び順、つまり左から順番に表示,移動させず、不透明度だけを変化させる
+        if (snsBoxes.length > 0) {
+            footerTimeline.to(snsBoxes, {
+                opacity: 1,
+                duration: 0.5,
+                stagger: {
+                    each: 0.25,
+                    from: "start"
+                },
+                ease: "sine.inOut",
+                lazy: false
+            });
+        }
+        //5. privacy-policy
+        if (privacy) {
+            footerTimeline.to(
+                privacy,
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out"
+                },
+                ">+=0.3"
             );
         }
     }
