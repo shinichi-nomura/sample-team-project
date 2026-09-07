@@ -20,7 +20,6 @@ async function loadNotices() {
     if (!eventContainer || !latestContainer) {
         return;
     }
-
     try {
         // microCMSから記事一覧を取得
         const response = await fetch(
@@ -59,7 +58,6 @@ async function loadNotices() {
             "microCMSの読み込みに失敗しました。",
             error
         );
-
         eventContainer.innerHTML =
             "<p>情報を読み込めませんでした。</p>";
         latestContainer.innerHTML =
@@ -83,40 +81,28 @@ function renderItems(container, items) {
     // 記事を1件ずつ表示
     items.forEach((item) => {
         // 日付とNEWを表示する1行
-        const dateLine =
-            document.createElement("div");
-
+        const dateLine = document.createElement("div");
         dateLine.className = "notice-date-line";
-
         // 日付
         const date =
             document.createElement("time");
-
         date.className = "notice-date";
         date.textContent = formatDate(item.date);
-
         if (item.date) {
             date.dateTime = item.date;
         }
-
         dateLine.appendChild(date);
-
         // 公開から指定日数以内ならNEWを表示
-        const publishedDate =
-            item.publishedAt ?? item.createdAt;
-
+        const displayDate = item.date;
         if (
             isNewPost(
-                publishedDate,
+                displayDate,
                 NEW_DISPLAY_DAYS
             )
         ) {
-            const newBadge =
-                document.createElement("span");
-
+            const newBadge = document.createElement("span");
             newBadge.className = "notice-new";
             newBadge.textContent = "NEW";
-
             dateLine.appendChild(newBadge);
         }
         const article = document.createElement("article");
