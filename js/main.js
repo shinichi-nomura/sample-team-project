@@ -746,57 +746,88 @@
         }
     }
 
-    //Suisoアニメーション
+    // Suisoアニメーション
     function initSuisoAnimation() {
         const suiso = document.querySelector(".suiso");
         if (!suiso) return;
         const content = suiso.querySelector(".suiso-content");
         const heading = suiso.querySelector("h3");
-        const text = suiso.querySelector("p");
-        if (!content || !heading || !text) return;
-        //Greetingで使用している関数でh3とpを一文字ずつ分割
+        // .suiso-p以外のpをすべて取得
+        const leadTexts = gsap.utils.toArray(
+            suiso.querySelectorAll(
+                ".suiso-content > p:not(.suiso-p)"
+            )
+        );
+        const description = suiso.querySelector(".suiso-p");
+        const button = suiso.querySelector(".suiso-button");
+        if (!content || !heading) return;
+        // h3を一文字ずつ分割
         const headingChars = splitTextIntoChars(heading);
-        const textChars = splitTextIntoChars(text);
+        // 2つのpをそれぞれ一文字ずつ分割
+        const leadTextChars = leadTexts.flatMap((element) => {
+            return splitTextIntoChars(element);
+        });
+        // h3 → 1つ目のp → 2つ目のpの順番
         const allChars = [
             ...headingChars,
-            ...textChars
+            ...leadTextChars
         ];
-        const button = suiso.querySelector(".suiso-button");
-        //親要素の座標は一切変更しない
+        // 親要素の位置は変更しない
         gsap.set(content, {
             autoAlpha: 1,
             x: 0,
             y: 0
         });
-        //各文字は透明にするだけ
+        // 各文字を右側に置いて透明にする
         gsap.set(allChars, {
             autoAlpha: 0,
             x: 24,
             y: 0
         });
-        // 水素ボタンの初期状態
+        // h3から2つ目のpまで一文字ずつ表示
+        gsap.to(allChars, {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.04,
+            ease: "sine.out",
+            scrollTrigger: {
+                trigger: suiso,
+                start: "top 90%",
+                once: true
+                // markers: true
+            }
+        });
+        // 説明文全体を下にずらして隠す
+        if (description) {
+            gsap.set(description, {
+                autoAlpha: 0,
+                x: 0,
+                y: 40
+            });
+            // 説明文全体を元の位置へふわっと表示
+            gsap.to(description, {
+                autoAlpha: 1,
+                x: 0,
+                y: 0,
+                duration: 1.7,
+                ease: "sine.out",
+                scrollTrigger: {
+                    trigger: description,
+                    start: "top 86%",
+                    once: true
+                    // markers: true
+                }
+            });
+        }
+        // 水素ボタンのアニメーション
         if (button) {
             gsap.set(button, {
                 autoAlpha: 0,
                 xPercent: -50,
                 y: 60
             });
-            //h3の先頭からpの最後まで一文字ずつ順番に表示
-            gsap.to(allChars, {
-                autoAlpha: 1,
-                x: 0,
-                y: 0,
-                duration: 0.7,
-                stagger: 0.04,
-                ease: "sine.out",
-                scrollTrigger: {
-                    trigger: suiso,
-                    start: "top 90%",
-                    once: true
-                    // markers: true
-                }
-            });
-            // 水素ボタンを下からふわっと表示
             gsap.to(button, {
                 autoAlpha: 1,
                 y: 0,

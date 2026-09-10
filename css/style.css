@@ -711,7 +711,10 @@ main p {
   z-index: 2;
   position: absolute;
   top: 6%;
-  left: 20%;
+  left: 50%;
+  width: 90%;
+  transform: translateX(-50%);
+  font-size: clamp(25px, 2.6vw, 52px);
   text-shadow: clamp(1px, 0.15vw, 2px) clamp(1px, 0.15vw, 2px) 0 black;
 }
 
@@ -722,12 +725,25 @@ main p {
   font-weight: normal;
 }
 
-.suiso p {
+.suiso-content>p:not(.suiso-p) {
+  margin: 0;
   color: #BDF8FF;
   text-shadow: 1px 1px 0 #0033FF;
   font-size: clamp(22px, 2.2vw, 32px);
+  line-height: 1.9;
   font-weight: normal;
-  margin-top: clamp(-24px, -1.5vw, -12px);
+  margin-top: clamp(-20px, -2.4vw, -28px);
+}
+
+.suiso .suiso-content p.suiso-p {
+  width: 80%;
+  margin: clamp(20px, 2.6vw, 32px) auto 0;
+  color: #D2FAFF;
+  font-size: clamp(1px, 1.4vw, 24px);
+  line-height: 1.65;
+  text-align: center;
+  text-shadow: 1px 1px 0 #0033FF;
+  white-space: nowrap;
 }
 
 .suiso1 {
@@ -761,6 +777,7 @@ main p {
   bottom: 12%;
   left: 50%;
   transform: translateX(-50%);
+  text-align: center;
 }
 
 /*==koseisinrigaku==*/
@@ -1831,18 +1848,18 @@ small {
 /*背景画像は隠さない*/
 .event-page-animation-pending .event-detail,
 .event-page-animation-pending .event-title,
-.event-page-animation-pending .event-content > p {
-    opacity: 0;
-    visibility: hidden;
+.event-page-animation-pending .event-content>p {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .event-detail,
 .event-title {
-    will-change: opacity;
+  will-change: opacity;
 }
 
-.event-content > p {
-    will-change: opacity, transform;
+.event-content>p {
+  will-change: opacity, transform;
 }
 
 /*==contact-page==*/
@@ -2208,24 +2225,24 @@ textarea {
 /*背景画像は隠さない*/
 .contact-page-animation-pending .contact,
 .contact-page-animation-pending .contact-title,
-.contact-page-animation-pending .contact > .form-row,
-.contact-page-animation-pending .contact > .full-group,
-.contact-page-animation-pending .contact > .address-group,
-.contact-page-animation-pending .contact > .details,
-.contact-page-animation-pending .contact > .decision-button {
-    opacity: 0;
-    visibility: hidden;
+.contact-page-animation-pending .contact>.form-row,
+.contact-page-animation-pending .contact>.full-group,
+.contact-page-animation-pending .contact>.address-group,
+.contact-page-animation-pending .contact>.details,
+.contact-page-animation-pending .contact>.decision-button {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .contact,
 .contact-title {
-    will-change: opacity;
+  will-change: opacity;
 }
 
-.contact > .form-row,
-.contact > .full-group,
-.contact > .address-group,
-.contact > .details,
-.contact > .decision-button {
-    will-change: opacity, transform;
+.contact>.form-row,
+.contact>.full-group,
+.contact>.address-group,
+.contact>.details,
+.contact>.decision-button {
+  will-change: opacity, transform;
 }
