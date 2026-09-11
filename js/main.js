@@ -446,7 +446,7 @@
     //Heroアニメーション
     async function initHeroAnimation() {
         const images = gsap.utils.toArray(
-            ".hero-images > .hero-image"
+            ".hero-images .hero-image-file"
         );
         const frame = document.querySelector(
             ".hero-frame-picture"

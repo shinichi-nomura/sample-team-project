@@ -196,6 +196,16 @@ body.menu-open {
   margin: 0 auto;
 }
 
+@media (max-width: 800px) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+  .wrapper {
+    width: 100%;
+  }
+}
+
 /*==header==*/
 header {
   max-width: 1240px;
@@ -313,21 +323,17 @@ nav a:hover {
   header {
     height: 98px;
   }
-
   .header-inner {
     height: 98px;
   }
-
   .header-logo {
     position: relative;
     z-index: 10;
   }
-
   .logo-image {
     position: relative;
     z-index: 10;
   }
-
   .hamburger-menu {
     position: fixed;
     top: 20px;
@@ -346,30 +352,24 @@ nav a:hover {
     padding: 8px;
     border-radius: 8px;
   }
-
   .hamburger-line {
     width: 24px;
     height: 3px;
     background: #f30081;
     border-radius: 2px;
-
     transition:
       transform 0.5s ease,
       opacity 0.5s ease;
   }
-
   .hamburger-menu.active .hamburger-line:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
   }
-
   .hamburger-menu.active .hamburger-line:nth-child(2) {
     opacity: 0;
   }
-
   .hamburger-menu.active .hamburger-line:nth-child(3) {
     transform: translateY(-9px) rotate(-45deg);
   }
-
   .nav-menu {
     position: fixed;
     inset: 0;
@@ -389,7 +389,6 @@ nav a:hover {
       opacity 0.6s ease,
       visibility 0.6s ease;
   }
-
   .nav-menu.active {
     opacity: 1;
     visibility: visible;
@@ -398,7 +397,6 @@ nav a:hover {
       opacity 0.6s ease,
       visibility 0s;
   }
-
   .nav-list {
     width: 100%;
     margin: 0;
@@ -411,18 +409,15 @@ nav a:hover {
     list-style: none;
     text-align: center;
   }
-
   .nav-list li {
     width: 100%;
     margin: 0;
     text-align: left;
     min-height: 0;
   }
-
   .nav-list li:first-child {
     margin-top: 12%;
   }
-
   .nav-list a {
     min-height: 0;
     line-height: 36px;
@@ -434,13 +429,11 @@ nav a:hover {
     padding: 12px 24px;
     transition: background-color 0.4s ease;
   }
-
   .nav-list a:hover {
     transform: none;
     filter: none;
     background-color: rgba(255, 255, 255, 0.08);
   }
-
   .nav-list span {
     position: relative;
     display: block;
@@ -449,7 +442,6 @@ nav a:hover {
     font-size: inherit;
     text-decoration: none;
   }
-
   .nav-list span::after {
     content: "";
     position: absolute;
@@ -462,15 +454,12 @@ nav a:hover {
     transform-origin: left;
     transition: transform 0.4s ease;
   }
-
   .nav-list a:hover span::after {
     transform: scaleX(1);
   }
-
   .nav-list .main-text {
     margin-top: 0;
   }
-
   .nav-2 .span-1,
   .nav-5 .span-2 {
     margin-left: 0;
@@ -506,6 +495,16 @@ nav a:hover {
 }
 
 .hero-images>.hero-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.hero-image-file {
   position: absolute;
   inset: 0;
   display: block;
@@ -559,33 +558,22 @@ nav a:hover {
 @media (max-width: 800px) {
   .hero {
     width: 100%;
-    height: auto;
-    aspect-ratio: 1600 / 1600;
-    margin: 98px 0 40px 0;
+    aspect-ratio: 1 / 1;
+    margin: 98px 0 40px;
   }
-
-  .hero-image-picture,
-  .hero-frame-picture {
-    position: absolute;
-    inset: 0;
+  .hero-images>.hero-image {
     width: 100%;
     height: 100%;
   }
-
-  .hero-image,
+  .hero-image-file {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   .hero-frame {
-    display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
-  }
-
-  .logo-content {
-    position: absolute;
-    right: 5%;
-    bottom: 6%;
-    width: clamp(130px, 70vw, 600px);
-    height: auto;
   }
 }
 
@@ -601,12 +589,28 @@ main p {
   z-index: 1;
 }
 
+@media (max-width: 800px) {
+  .greeting,
+  .suiso,
+  .koseisinrigaku,
+  .eightTips,
+  .book {
+    width: 96%;
+    margin-bottom: 32px;
+  }
+}
+
 /*==greeting==*/
 .greeting {
   position: relative;
   width: 96%;
   max-width: 1240px;
   margin: 0 auto clamp(40px, 5vw, 64px);
+}
+
+.greeting-picture {
+  display: block;
+  width: 100%;
 }
 
 .greeting-image {
@@ -685,9 +689,53 @@ main p {
 }
 
 @media (max-width: 800px) {
-  .greet-contents {
-    width: 70%;
-    margin: 0 auto;
+  .greeting {
+    width: 96%;
+  }
+  .greeting-picture,
+  .greeting-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .greeting h4 {
+    top: 7%;
+    width: 90%;
+    margin: 0;
+    font-size: clamp(24px, 5.4vw, 34px);
+    letter-spacing: 1px;
+    text-align: center;
+  }
+  .greet {
+    top: 17%;
+    left: 50%;
+    width: clamp(94px, 32vw, 150px);
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  .greet-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .greet p {
+    margin: 4px 0 0;
+    font-size: clamp(20px, 4.2vw, 26px);
+    line-height: 1.4;
+  }
+  .greet-content {
+    top: 38%;
+    left: 50%;
+    width: 84%;
+    margin: 0;
+    transform: translateX(-50%);
+    font-size: clamp(16px, 3.8vw, 24px);
+    line-height: 2.5;
+    letter-spacing: clamp(0.2px, 0.2vw, 1px);
+  }
+  .profile-button {
+    bottom: 10%;
+    width: clamp(130px, 38vw, 220px);
   }
 }
 
@@ -739,7 +787,7 @@ main p {
   width: 80%;
   margin: clamp(20px, 2.6vw, 32px) auto 0;
   color: #D2FAFF;
-  font-size: clamp(1px, 1.4vw, 24px);
+  font-size: clamp(14px, 1.4vw, 24px);
   line-height: 1.65;
   text-align: center;
   text-shadow: 1px 1px 0 #0033FF;
@@ -778,6 +826,58 @@ main p {
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+}
+
+@media(max-width: 800px) {
+  .suiso-content {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    right: 5%;
+    width: auto;
+    transform: none;
+    text-align: center;
+    z-index: 2;
+  }
+  .suiso h3 {
+    margin: 0 0 clamp(3px, 1vw, 8px);
+    font-size: clamp(24px, 5.4vw, 34px);
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .suiso-content>p:not(.suiso-p) {
+    margin: 0;
+    font-size: clamp(16px, 3.8vw, 24px);
+    line-height: 1.35;
+    white-space: nowrap;
+  }
+  .suiso .suiso-content p.suiso-p {
+    width: 72%;
+    margin: clamp(20px, 4.2vw, 36px) auto 0;
+    color: #D2FAFF;
+    font-size: clamp(12px, 3vw, 20px);
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+  .suiso1 {
+    left: 5%;
+    bottom: 14%;
+    width: 18%;
+  }
+  .suiso2 {
+    right: 5%;
+    bottom: 14%;
+    width: 17%;
+  }
+  .suiso-button {
+    bottom: 8%;
+    width: clamp(80px, 24vw, 160px);
+  }
+  .suiso-button img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 }
 
 /*==koseisinrigaku==*/
@@ -823,6 +923,24 @@ main p {
     -1px 1px 1px black, 1px -1px 1px black,
     1px 0px 1px black, -1px -0px 1px black,
     0px 1px 1px black, 0px -1px 1px black;
+}
+
+@media(max-width: 800px) {
+  .koseisinrigaku h3 {
+    top: 42%;
+    width: 90%;
+    font-size: clamp(20px, 7vw, 38px);
+    text-align: center;
+  }
+  .koseisinrigaku p {
+    bottom: 5%;
+    width: 90%;
+    margin: 0;
+    font-size: clamp(8px, 2.5vw, 16px);
+    line-height: 1.5;
+    text-align: center;
+    white-space: normal;
+  }
 }
 
 /*==eightTips==*/
@@ -883,8 +1001,35 @@ main p {
 }
 
 @media (max-width: 800px) {
+  .eightTips {
+    padding-bottom: 24px;
+  }
+  .eightTips h3 {
+    margin: 0 0 -20px;
+    font-size: clamp(22px, 6vw, 30px);
+  }
+  .tips {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+  }
   .tip {
-    width: 50%;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    flex: none;
+  }
+  .tip:nth-child(-n + 4) {
+    margin-bottom: -12%;
+  }
+  .tip img {
+    width: 125%;
+    max-width: none;
+  }
+  .tip p {
+    padding: 12%;
+    font-size: clamp(10px, 3.5vw, 17px);
+    line-height: 1.4;
   }
 }
 
@@ -1006,16 +1151,32 @@ main p {
 
 @media (max-width: 800px) {
   .events {
+    width: 96%;
+    margin: 0 auto 40px;
+    padding: 0;
     flex-direction: column;
+    gap: 32px;
   }
-
-  .event {
-    width: 100%;
-    padding-bottom: 24px;
-  }
-
+  .event,
   .latest {
     width: 100%;
+    padding: 0;
+  }
+  .event-contents,
+  .latest-contents {
+    width: min(88%, 560px);
+    padding: 16px;
+  }
+  .event h3,
+  .latest h3 {
+    font-size: clamp(22px, 6vw, 30px);
+  }
+  .notice-title {
+    font-size: clamp(14px, 4vw, 18px);
+  }
+  .notice-body {
+    font-size: clamp(12px, 3.5vw, 16px);
+    line-height: 1.7;
   }
 }
 
@@ -1032,15 +1193,21 @@ main p {
   aspect-ratio: 1351 / 2033;
 }
 
-.book-background {
+.book-background-picture {
   position: absolute;
-  z-index: -1;
   inset: 0;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.book-background {
+  position: static;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: fill;
-  filter: brightness(0.8) saturate(0.85);
 }
 
 .book h4 {
@@ -1186,13 +1353,74 @@ main p {
   background-color: #fff;
 }
 
-@media (max-width: 700px) {
-  .book-item {
-    grid-template-columns: 1fr;
+@media (max-width: 800px) {
+  .book {
+    aspect-ratio: 1578 / 3447;
+    padding:
+      clamp(18px, 4vw, 28px) clamp(12px, 4vw, 24px) clamp(24px, 5vw, 36px);
   }
-
-  .book-image {
-    width: min(65%, 280px);
+  .book-background {
+    object-fit: cover;
+  }
+  .book h4 {
+    margin: clamp(7px, 2vw, 12px) 0 clamp(12px, 3vw, 20px);
+    font-size: clamp(20px, 5.5vw, 32px);
+  }
+  .book-item {
+    margin-bottom: clamp(10px, 3vw, 18px);
+  }
+  .book-item,
+  .book-item:first-child,
+  .book-item:nth-child(2) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(10px, 3vw, 18px);
+    margin: 0;
+  }
+  /* 画像を上、説明文を下に配置 */
+  .book-item:first-child .book-images,
+  .book-item:nth-child(2) .book-images {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .book-item:first-child .book-content,
+  .book-item:nth-child(2) .book-content {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0;
+  }
+  .book-item:first-child .book-image {
+    margin: 0;
+    transform: none;
+  }
+  /* 本の画像を縮小 */
+  .book-image,
+  .book-image-2,
+  .book-item:first-child .book-image {
+    width: auto;
+    max-width: 72%;
+    height: clamp(135px, 42vw, 270px);
+    object-fit: contain;
+  }
+  .book-content h5 {
+    margin: 0 0 clamp(12px, 3.2vw, 20px);
+    font-size: clamp(18px, 4.8vw, 26px);
+    line-height: 1.35;
+  }
+  .book-content p {
+    margin: 0;
+    font-size: clamp(12px, 3.2vw, 20px);
+    line-height: 1.55;
+  }
+  /* HTMLで指定した改行を維持 */
+  .book-content p br {
+    display: initial;
+  }
+  .purchase {
+    margin: clamp(12px, 3vw, 20px) 0 clamp(12px, 3vw, 20px);
+    padding:
+      clamp(5px, 1.5vw, 8px) clamp(16px, 5vw, 26px);
+    font-size: clamp(12px, 3.3vw, 17px);
   }
 }
 
@@ -1389,29 +1617,55 @@ small {
   z-index: 3;
 }
 
-/* @media (max-width: 800px) {
-  .footer {
+@media (max-width: 800px) {
+  footer {
     width: 100%;
-    height: auto;
-    aspect-ratio: 1600 / 936;
-    margin: 98px 0 40px 0;
+    padding-bottom: 28px;
   }
-
-  .footer-image-picture {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+  .footer-top {
+    margin-top: 20px;
   }
-
-  .copyright-image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  .footer-left {
+    width: 38%;
   }
-
-} */
+  .footer-right {
+    width: 62%;
+  }
+  .footer-left img {
+    width: clamp(80px, 26vw, 150px);
+  }
+  .footer-right img {
+    width: clamp(160px, 48vw, 280px);
+  }
+  .footer-right p {
+    width: auto;
+    margin: 2px 0 0 clamp(16px, 5vw, 32px);
+    font-size: clamp(11px, 3.5vw, 18px);
+  }
+  .footer-bottom {
+    margin-top: -10vw;
+  }
+  .copyright-content {
+    top: auto;
+    width: 92%;
+    margin: -21vw auto 12px;
+    font-size: clamp(8px, 2.5vw, 14px);
+  }
+  .icon-image {
+    margin: 0 auto 10px;
+    gap: clamp(8px, 3vw, 14px);
+  }
+  .sns-box {
+    width: clamp(30px, 9vw, 48px);
+    height: clamp(30px, 9vw, 48px);
+  }
+  footer a {
+    font-size: clamp(11px, 3vw, 14px);
+  }
+  small {
+    font-size: clamp(9px, 2.5vw, 12px);
+  }
+}
 
 /*==first-page==*/
 .first-greet {
@@ -1434,9 +1688,7 @@ small {
   top: 4.4%;
   left: 50%;
   transform: translateX(-50%);
-  /* width: clamp(100px, 10vw, 240px); */
   width: clamp(110px, 11vw, 260px);
-  /* width: clamp(120px, 12vw, 280px); */
   height: auto;
   filter: drop-shadow(0 0 clamp(6px, 0.8vw, 10px) rgba(255, 255, 255, 1));
 }
@@ -1502,7 +1754,6 @@ small {
   margin: clamp(6px, 0.85vw, 10px) auto 0;
   display: block;
   position: absolute;
-  inset: 0;
   top: 26.2%;
   left: 50%;
   width: 90%;
@@ -1773,6 +2024,165 @@ small {
   will-change: opacity;
 }
 
+@media (max-width: 800px) {
+/* 固定ヘッダー分の空間を確保 */
+  .first-greet {
+    width: 96%;
+    margin-top: 98px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: visible;
+    scroll-margin-top: 98px;
+  }
+  #profile {
+    scroll-margin-top: 98px;
+  }
+  .first-greet,
+  .mirror,
+  .with-pegasus {
+    width: 100%;
+    margin-bottom: clamp(20px, 5vw, 32px);
+  }
+  .message-background {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  .first-greet-image {
+    top: 2%;
+    width: clamp(82px, 32vw, 152px);
+  }
+  .name {
+    top: 11%;
+    margin: 0;
+    padding:
+      clamp(1px, 0.5vw, 3px) clamp(8px, 2.5vw, 14px);
+    font-size: clamp(11px, 3.5vw, 18px);
+    line-height: 1.4;
+  }
+  .first-greet h2,
+  .first-greet h3 {
+    width: 92%;
+    margin: 0;
+    line-height: 1.3;
+  }
+  .title-1 {
+    top: 14%;
+    font-size: clamp(18px, 5.5vw, 34px);
+  }
+  .title-2 {
+    top: 17.5%;
+    font-size: clamp(17px, 5vw, 32px);
+  }
+  .title-3 {
+    top: 20.5%;
+    font-size: clamp(22px, 6.5vw, 42px);
+  }
+  .title-4 {
+    top: 24.5%;
+    font-size: clamp(18px, 5.5vw, 34px);
+  }
+  .message-frame {
+    position: absolute;
+    top: 28.5%;
+    left: 50%;
+    width: 88%;
+    height: auto;
+    margin: 0;
+    transform: translateX(-50%);
+    display: block;
+    max-width: none;
+  }
+  .message p {
+    width: 84%;
+    margin: 0;
+    font-size: clamp(10px, 4.4vw, 24px);
+    line-height: 1.65;
+    letter-spacing: clamp(0.2px, 0.15vw, 1px);
+  }
+  .message-1 {
+    top: 31.5%;
+  }
+  .message-2 {
+    top: 54.5%;
+  }
+  .message-3 {
+    top: 66.5%;
+  }
+  .message-4 {
+    top: 81%;
+  }
+  .mirror-background {
+    width: 100%;
+    height: auto;
+  }
+  .left-mirror,
+  .right-mirror {
+    top: 50%;
+    width: 38%;
+  }
+  .left-mirror {
+    left: 8%;
+  }
+  .right-mirror {
+    right: 8%;
+  }
+  .mirror-slider {
+    top: 15.6%;
+    width: 75.6%;
+  }
+  .mirror-slide {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .l-mirror-frame,
+  .r-mirror-frame {
+    width: 100%;
+    height: auto;
+  }
+  .with-pegasus {
+    display: block;
+  }
+  .pegasus-background {
+    width: 100%;
+    height: auto;
+  }
+  .pegasus-title-1,
+  .pegasus-title-2,
+  .pegasus-title-3 {
+    width: 94%;
+    margin: 0;
+    font-size: clamp(32px, 64vw, 48px);
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .pegasus-title-1 {
+    top: 6%;
+  }
+  .pegasus-title-2 {
+    top: 11.5%;
+  }
+  .pegasus-title-3 {
+    top: 16.5%;
+  }
+  .pegasus-content-1,
+  .pegasus-content-2 {
+    width: 88%;
+    margin: 0;
+    font-size: clamp(10px, 4.4vw, 24px);
+    line-height: 1.75;
+    letter-spacing: 0;
+  }
+  .pegasus-content-1 {
+    top: 27%;
+  }
+  .pegasus-content-2 {
+    top: 63%;
+  }
+}
+
 /*==event-page==*/
 .event-page {
   position: relative;
@@ -1860,6 +2270,54 @@ small {
 
 .event-content>p {
   will-change: opacity, transform;
+}
+
+@media (max-width: 800px) {
+  .event-page {
+    width: 96%;
+    margin-top: 98px; /* 固定ヘッダーとの重なりを防止 */
+    margin-bottom: 40px;
+  }
+  .event-background {
+    width: 100%;
+    height: auto;
+  }
+  .event-detail {
+    top: 4%;
+    bottom: 1.5%;
+    width: 92%;
+    padding: clamp(8px, 2.5vw, 16px);
+    border-width: 3px;
+  }
+  .event-title {
+    margin: clamp(8px, 2.5vw, 18px) 0 clamp(8px, 2vw, 14px);
+    padding: 0 clamp(10px, 3vw, 20px);
+    border-width: 3px;
+  }
+  .event-title h2 {
+    margin: clamp(8px, 2vw, 14px) 0;
+    font-size: clamp(24px, 6.2vw, 34px);
+    line-height: 1.35;
+    letter-spacing: clamp(0.5px, 0.3vw, 2px);
+  }
+  .event-content p {
+    font-size: clamp(14px, 3.4vw, 20px);
+    line-height: 1.5;
+    letter-spacing: clamp(0, 0.15vw, 1px);
+    overflow-wrap: anywhere;
+  }
+  .line-1 {
+    padding-bottom: clamp(1px, 0.3vw, 2px);
+  }
+  .line-2 {
+    padding-bottom: clamp(5px, 1.5vw, 12px);
+  }
+  .line-3 {
+    padding-bottom: clamp(16px, 4vw, 32px);
+  }
+  .line-4 {
+    padding-bottom: clamp(8px, 2.5vw, 18px);
+  }
 }
 
 /*==contact-page==*/
@@ -2245,4 +2703,181 @@ textarea {
 .contact>.details,
 .contact>.decision-button {
   will-change: opacity, transform;
+}
+
+@media (max-width: 800px) {
+  .contact-form {
+    position: relative;
+    isolation: isolate;
+    display: block;
+    width: 96%;
+    margin: 0 auto 40px;
+    padding: 98px 0 28px;
+    overflow: hidden;
+  }
+
+  .contact-background {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .contact {
+    position: relative;
+    inset: auto;
+    width: 94%;
+    margin: clamp(4px, 2.4vw, 12px) auto 0;
+    padding: clamp(12px, 3.5vw, 24px);
+    transform: none;
+    border-width: 3px;
+  }
+
+  .contact-title {
+    margin: clamp(8px, 2vw, 16px) 0
+      clamp(16px, 3vw, 24px);
+    padding: 0 clamp(12px, 3vw, 22px);
+    border-width: 3px;
+  }
+
+  .contact-form h2 {
+    margin: 6px;
+    font-size: clamp(22px, 6vw, 34px);
+    line-height: 1.4;
+  }
+
+  /* PC版と同じ2列を維持 */
+  .contact .form-row {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(8px, 2.5vw, 18px);
+    margin-top: clamp(18px, 3vw, 28px);
+  }
+
+  .contact .form-row .form-group {
+    flex: 1 1 0;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .contact .field {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .contact .label-row {
+    gap: 4px;
+  }
+
+  .contact label,
+  .contact .address-title {
+    font-size: clamp(12px, 3.6vw, 19px);
+    line-height: 1.4;
+  }
+
+  .contact .required {
+    flex-shrink: 0;
+    padding: 2px 4px;
+    font-size: clamp(9px, 2.5vw, 12px);
+  }
+
+  .contact input,
+  .contact select,
+  .contact textarea {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 6px 8px;
+    font-size: 16px;
+  }
+
+  .contact input,
+  .contact select {
+    height: clamp(40px, 11vw, 46px);
+  }
+
+  .contact .full-group {
+    width: 100%;
+    margin: clamp(20px, 4vw, 32px) 0 0;
+  }
+
+  .contact .mail {
+    padding-top: 0;
+  }
+
+  .contact .tell-section {
+    margin-top: clamp(20px, 4vw, 30px);
+  }
+
+  /* 住所欄の配置も維持 */
+  .contact .address-group {
+    width: 70%;
+    min-width: 0;
+    margin: clamp(30px, 6vw, 48px) 0
+      clamp(20px, 4vw, 30px);
+  }
+
+  .contact .zip-field {
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+  }
+
+  .contact .zip-row {
+    display: flex;
+    gap: clamp(4px, 1.5vw, 10px);
+    width: 100%;
+  }
+
+  .contact .zip-mark {
+    flex-shrink: 0;
+    font-size: clamp(16px, 4vw, 22px);
+  }
+
+  .contact .zip-input {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
+
+  .contact .address-search {
+    flex-shrink: 0;
+    margin-left: 0;
+    padding: 7px clamp(6px, 2vw, 14px);
+    font-size: clamp(11px, 3vw, 15px);
+    border-radius: 8px;
+  }
+
+  .contact .address-item {
+    margin: 0 0 clamp(18px, 4vw, 28px);
+  }
+
+  .contact .details {
+    margin-top: clamp(28px, 6vw, 44px);
+  }
+
+  .contact textarea {
+    height: clamp(160px, 42vw, 240px);
+  }
+
+  .contact .decision {
+    width: min(70%, 280px);
+    height: clamp(42px, 11vw, 50px);
+    margin-top: clamp(30px, 6vw, 44px);
+    padding: 0 20px;
+    font-size: clamp(16px, 4vw, 20px);
+  }
+
+  .contact .form-status {
+    font-size: clamp(12px, 3vw, 14px);
+  }
+
+  .contact .field .error-message,
+  .contact .full-group .error-message,
+  .contact .zip-field .error-message,
+  .contact .textarea-wrapper .error-message {
+    font-size: clamp(11px, 3vw, 13px);
+  }
 }
