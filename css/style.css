@@ -197,12 +197,32 @@ body.menu-open {
 }
 
 @media (max-width: 800px) {
+
   html,
   body {
     overflow-x: clip;
   }
+
   .wrapper {
     width: 100%;
+  }
+
+  .pc-br {
+    display: inline;
+  }
+
+  .res-br {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .pc-br {
+    display: none;
+  }
+
+  .res-br {
+    display: inline;
   }
 }
 
@@ -321,67 +341,80 @@ nav a:hover {
 
 @media (max-width: 800px) {
   header {
-    height: 98px;
+    height: clamp(84px, 12.25vw, 98px);
   }
+
   .header-inner {
-    height: 98px;
+    height: clamp(84px, 12.25vw, 98px);
   }
+
   .header-logo {
     position: relative;
     z-index: 10;
+    width: clamp(240px, 44vw, 360px);
+    height: auto;
   }
+
   .logo-image {
     position: relative;
     z-index: 10;
   }
+
   .hamburger-menu {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    background: transparent;
-    border: none;
+    top: clamp(20px, 2.875vw, 23px);
+    right: clamp(14px, 2.5vw, 20px);
     z-index: 11;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 6px;
-    padding: 8px;
-    border-radius: 8px;
+    justify-content: center;
+    gap: clamp(6px, 0.875vw, 7px);
+    width: clamp(44px, 6.5vw, 52px);
+    height: clamp(44px, 6.5vw, 52px);
+    padding: clamp(6px, 1vw, 8px);
+    background: transparent;
+    border: none;
+    border-radius: clamp(6px, 1vw, 8px);
+    cursor: pointer;
   }
+
   .hamburger-line {
-    width: 24px;
-    height: 3px;
+    width: clamp(28px, 4.25vw, 34px);
+    height: clamp(3px, 0.5vw, 4px);
     background: #f30081;
-    border-radius: 2px;
+    border-radius: clamp(1px, 0.25vw, 2px);
     transition:
       transform 0.5s ease,
       opacity 0.5s ease;
   }
+
   .hamburger-menu.active .hamburger-line:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
+    transform:
+      translateY(clamp(9px, 1.25vw, 10px)) rotate(45deg);
   }
+
   .hamburger-menu.active .hamburger-line:nth-child(2) {
     opacity: 0;
   }
+
   .hamburger-menu.active .hamburger-line:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
+    transform:
+      translateY(clamp(-10px, -1.25vw, -9px)) rotate(-45deg);
   }
+
   .nav-menu {
     position: fixed;
     inset: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100dvh;
     margin: 0;
     padding: 0;
-    z-index: 3;
     background: rgba(0, 0, 0, 0.95);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -389,6 +422,7 @@ nav a:hover {
       opacity 0.6s ease,
       visibility 0.6s ease;
   }
+
   .nav-menu.active {
     opacity: 1;
     visibility: visible;
@@ -397,69 +431,109 @@ nav a:hover {
       opacity 0.6s ease,
       visibility 0s;
   }
+
   .nav-list {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    height: auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 24px;
+    align-items: flex-start;
+    gap: clamp(16px, 3vw, 24px);
+    width: clamp(260px, 80%, 420px);
+    height: auto;
+    margin: 0 auto;
+    padding: 0;
     list-style: none;
-    text-align: center;
+    text-align: left;
   }
+
   .nav-list li {
     width: 100%;
+    min-height: 0;
     margin: 0;
     text-align: left;
-    min-height: 0;
   }
+
   .nav-list li:first-child {
-    margin-top: 12%;
+    margin-top: 0;
   }
+
   .nav-list a {
-    min-height: 0;
-    line-height: 36px;
     display: inline-block;
-    transform: none;
-    filter: none;
+    min-height: 0;
+    padding: clamp(8px, 1.5vw, 12px) 0;
+    color: white;
+    font-size: clamp(18px, 3vw, 24px);
+    line-height: clamp(28px, 4.5vw, 36px);
     text-decoration: none;
-    font-size: 24px;
-    padding: 12px 24px;
-    transition: background-color 0.4s ease;
-  }
-  .nav-list a:hover {
     transform: none;
     filter: none;
-    background-color: rgba(255, 255, 255, 0.08);
+    transition:
+      color 0.25s ease,
+      background-color 0.4s ease;
   }
+
   .nav-list span {
     position: relative;
     display: block;
     width: fit-content;
-    margin: 8px 0 0;
+    margin: clamp(5px, 1vw, 8px) 0 0;
+    color: inherit;
     font-size: inherit;
     text-decoration: none;
   }
+
   .nav-list span::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -5px;
+    bottom: clamp(-5px, -0.625vw, -3px);
     width: 100%;
-    height: 2px;
-    background-color: currentColor;
+    height: clamp(1px, 0.25vw, 2px);
+    background-color: white;
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.4s ease;
+    transition:
+      transform 0.4s ease,
+      background-color 0.2s ease;
   }
+
+  .nav-list a:hover {
+    color: white;
+    background-color: transparent;
+    text-shadow: none;
+  }
+
   .nav-list a:hover span::after {
+    background-color: white;
     transform: scaleX(1);
   }
+
+  .nav-list a:active {
+    color: #f30081;
+    background-color: transparent;
+  }
+
+  .nav-list a:active span::after {
+    background-color: #f30081;
+    transform: scaleX(1);
+  }
+
+  /* クリック・タップ後 */
+  .nav-list a:focus {
+    color: #f30081;
+    background-color: transparent;
+    outline: none;
+  }
+
+  .nav-list a:focus span::after {
+    background-color: #f30081;
+    transform: scaleX(1);
+  }
+
+  /* 2行メニューの余白調整 */
   .nav-list .main-text {
     margin-top: 0;
   }
+
   .nav-2 .span-1,
   .nav-5 .span-2 {
     margin-left: 0;
@@ -557,23 +631,66 @@ nav a:hover {
 
 @media (max-width: 800px) {
   .hero {
+    --hero-radius: clamp(18px, 6vw, 48px);
     width: 100%;
-    aspect-ratio: 1 / 1;
-    margin: 98px 0 40px;
+    aspect-ratio: 1200 / 750;
+    margin: clamp(84px, 12.25vw, 98px) 0 clamp(24px, 5vw, 40px);
   }
+
+  .hero-images,
   .hero-images>.hero-image {
     width: 100%;
     height: 100%;
   }
+
+  .hero-image-file {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-frame {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .logo-content {
+    right: 6%;
+    bottom: 12%;
+    width: clamp(110px, 35vw, 280px);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 84px 0 40px;
+  }
+
+  .hero-images>.hero-image {
+    width: 100%;
+    height: 100%;
+  }
+
   .hero-image-file {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+
   .hero-frame {
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+
+  .logo-content {
+    right: 6%;
+    bottom: 8%;
+    width: clamp(126px, 50vw, 296px);
   }
 }
 
@@ -590,13 +707,14 @@ main p {
 }
 
 @media (max-width: 800px) {
+
   .greeting,
   .suiso,
   .koseisinrigaku,
   .eightTips,
   .book {
     width: 96%;
-    margin-bottom: 32px;
+    margin-bottom: clamp(20px, 4vw, 32px);
   }
 }
 
@@ -692,50 +810,123 @@ main p {
   .greeting {
     width: 96%;
   }
+
   .greeting-picture,
   .greeting-image {
     display: block;
     width: 100%;
     height: auto;
   }
+
+  .greeting-image {
+    filter: none;
+  }
+
   .greeting h4 {
-    top: 7%;
+    top: 10%;
+    width: auto;
+    margin: 0;
+    font-size: clamp(22px, 3.8vw, 38px);
+    letter-spacing: clamp(0.5px, 0.3vw, 2px);
+    white-space: nowrap;
+  }
+
+  .greet {
+    top: 9%;
+    left: 6%;
+    width: auto;
+    transform: none;
+    text-align: center;
+  }
+
+  .greet-image {
+    display: block;
+    width: clamp(48px, 18vw, 106px);
+    height: auto;
+  }
+
+  .greet p {
+    margin: clamp(1px, 0.25vw, 2px) 0 0;
+    font-size: clamp(12px, 2.4vw, 24px);
+    line-height: 1.4;
+  }
+
+  .greet-content {
+    top: 22%;
+    left: 50%;
+    width: 70%;
+    margin: 0;
+    transform: translateX(-50%);
+    font-size: clamp(10px, 2.2vw, 20px);
+    line-height: 2;
+    letter-spacing: clamp(0px, 0.2vw, 1px);
+  }
+
+  .profile-button {
+    bottom: 10%;
+    width: clamp(72px, 20vw, 160px);
+  }
+}
+
+@media (max-width: 600px) {
+  .greeting {
+    width: 96%;
+  }
+
+  .greeting-picture,
+  .greeting-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .greeting-image {
+    filter: brightness(0.65);
+  }
+
+  .greeting h4 {
+    top: 6%;
     width: 90%;
     margin: 0;
     font-size: clamp(24px, 5.4vw, 34px);
-    letter-spacing: 1px;
+    letter-spacing: clamp(0.5px, 0.17vw, 1px);
     text-align: center;
   }
+
   .greet {
-    top: 17%;
+    top: 15%;
     left: 50%;
-    width: clamp(94px, 32vw, 150px);
+    width: clamp(90px, 28vw, 146px);
     transform: translateX(-50%);
     text-align: center;
   }
+
   .greet-image {
     display: block;
     width: 100%;
     height: auto;
   }
+
   .greet p {
-    margin: 4px 0 0;
+    margin: clamp(2px, 0.67vw, 4px) 0 0;
     font-size: clamp(20px, 4.2vw, 26px);
     line-height: 1.4;
   }
+
   .greet-content {
-    top: 38%;
+    top: 40%;
     left: 50%;
     width: 84%;
     margin: 0;
     transform: translateX(-50%);
-    font-size: clamp(16px, 3.8vw, 24px);
-    line-height: 2.5;
+    font-size: clamp(12px, 3.4vw, 20px);
+    line-height: 2.2;
     letter-spacing: clamp(0.2px, 0.2vw, 1px);
   }
+
   .profile-button {
-    bottom: 10%;
-    width: clamp(130px, 38vw, 220px);
+    bottom: 8%;
+    width: clamp(124px, 32vw, 214px);
   }
 }
 
@@ -839,40 +1030,106 @@ main p {
     text-align: center;
     z-index: 2;
   }
+
   .suiso h3 {
     margin: 0 0 clamp(3px, 1vw, 8px);
-    font-size: clamp(24px, 5.4vw, 34px);
+    font-size: clamp(22px, 5.2vw, 32px);
     line-height: 1.3;
     white-space: nowrap;
   }
+
   .suiso-content>p:not(.suiso-p) {
     margin: 0;
     font-size: clamp(16px, 3.8vw, 24px);
     line-height: 1.35;
     white-space: nowrap;
   }
+
   .suiso .suiso-content p.suiso-p {
     width: 72%;
-    margin: clamp(20px, 4.2vw, 36px) auto 0;
+    margin: clamp(32px, 5.4vw, 48px) auto 0;
     color: #D2FAFF;
-    font-size: clamp(12px, 3vw, 20px);
+    font-size: clamp(10px, 2.2vw, 20px);
     line-height: 1.5;
     white-space: nowrap;
   }
+
   .suiso1 {
     left: 5%;
     bottom: 14%;
     width: 18%;
   }
+
   .suiso2 {
     right: 5%;
     bottom: 14%;
     width: 17%;
   }
+
   .suiso-button {
-    bottom: 8%;
+    bottom: 10%;
     width: clamp(80px, 24vw, 160px);
   }
+
+  .suiso-button img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media(max-width: 600px) {
+  .suiso-content {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    right: 5%;
+    width: auto;
+    transform: none;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .suiso h3 {
+    margin: clamp(-8px, -3.6vw, -16px) 0 clamp(3px, 1vw, 8px);
+    font-size: clamp(16px, 4.6vw, 26px);
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+
+  .suiso-content>p:not(.suiso-p) {
+    margin: 0;
+    font-size: clamp(14px, 3.6vw, 22px);
+    line-height: 1.35;
+    white-space: nowrap;
+  }
+
+  .suiso .suiso-content p.suiso-p {
+    width: 72%;
+    margin: clamp(32px, 5.4vw, 48px) auto 0;
+    color: #D2FAFF;
+    font-size: clamp(12px, 2.4vw, 22px);
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+
+  .suiso1 {
+    left: 5%;
+    bottom: 14%;
+    width: 18%;
+  }
+
+  .suiso2 {
+    right: 5%;
+    bottom: 14%;
+    width: 17%;
+  }
+
+  .suiso-button {
+    bottom: 6.5%;
+    width: clamp(80px, 24vw, 160px);
+  }
+
   .suiso-button img {
     display: block;
     width: 100%;
@@ -929,14 +1186,34 @@ main p {
   .koseisinrigaku h3 {
     top: 42%;
     width: 90%;
-    font-size: clamp(20px, 7vw, 38px);
+    font-size: clamp(22px, 8vw, 40px);
     text-align: center;
   }
+
   .koseisinrigaku p {
-    bottom: 5%;
+    bottom: 6%;
     width: 90%;
     margin: 0;
-    font-size: clamp(8px, 2.5vw, 16px);
+    font-size: clamp(12px, 3vw, 20px);
+    line-height: 1.5;
+    text-align: center;
+    white-space: normal;
+  }
+}
+
+@media(max-width: 600px) {
+  .koseisinrigaku h3 {
+    top: 42%;
+    width: 90%;
+    font-size: clamp(22px, 8vw, 40px);
+    text-align: center;
+  }
+
+  .koseisinrigaku p {
+    bottom: 8%;
+    width: 90%;
+    margin: 0;
+    font-size: clamp(10px, 2.8vw, 18px);
     line-height: 1.5;
     text-align: center;
     white-space: normal;
@@ -1001,34 +1278,82 @@ main p {
 }
 
 @media (max-width: 800px) {
-  .eightTips {
-    padding-bottom: 24px;
-  }
   .eightTips h3 {
-    margin: 0 0 -20px;
+    margin: 0 0 clamp(-20px, -2.5vw, -8px);
     font-size: clamp(22px, 6vw, 30px);
   }
+
+  .tips {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .tip {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .tip img {
+    display: block;
+    width: 128%;
+    height: auto;
+    margin: 0 -16%;
+  }
+
+  .tip p {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 10%;
+    color: black;
+    font-size: clamp(9px, 1.9vw, 13px);
+    line-height: 1.35;
+    text-align: center;
+    overflow-wrap: anywhere;
+    transform: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .eightTips h3 {
+    margin: 0 0 -24px;
+    font-size: clamp(28px, 6.6vw, 36px);
+  }
+
   .tips {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: center;
   }
+
   .tip {
     width: 100%;
     min-width: 0;
     margin: 0;
     flex: none;
   }
+
   .tip:nth-child(-n + 4) {
     margin-bottom: -12%;
   }
+
   .tip img {
     width: 125%;
     max-width: none;
   }
+
   .tip p {
     padding: 12%;
-    font-size: clamp(10px, 3.5vw, 17px);
+    font-size: clamp(11px, 3.7vw, 19px);
     line-height: 1.4;
   }
 }
@@ -1151,31 +1476,103 @@ main p {
 
 @media (max-width: 800px) {
   .events {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     width: 96%;
-    margin: 0 auto 40px;
+    margin: clamp(-32px, -4vw, -16px) auto clamp(24px, 5vw, 40px);
+    padding: clamp(8px, 2vw, 16px) 0;
+    gap: clamp(8px, 2.5vw, 20px);
+  }
+
+  .event,
+  .latest {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .event h3,
+  .latest h3 {
+    margin-bottom: clamp(6px, 1.5vw, 12px);
+    font-size: clamp(20px, 3.8vw, 32px);
+  }
+
+  .event-contents,
+  .latest-contents {
+    width: 92%;
+    margin: 0 auto;
+    padding: clamp(8px, 2vw, 16px);
+  }
+
+  .notice-date-line {
+    flex-wrap: wrap;
+    gap: clamp(3px, 0.5vw, 4px);
+  }
+
+  .notice-date {
+    font-size: clamp(10px, 2vw, 14px);
+  }
+
+  .notice-new {
+    padding: clamp(1px, 0.2vw, 2px) clamp(4px, 0.65vw, 5px);
+    font-size: clamp(8px, 1.6vw, 12px);
+  }
+
+  .notice-title {
+    font-size: clamp(12px, 2.4vw, 18px);
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .notice-body {
+    font-size: clamp(10px, 2vw, 16px);
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 600px) {
+  .events {
+    width: 96%;
+    margin: -40px auto 40px;
     padding: 0;
     flex-direction: column;
     gap: 32px;
   }
+
   .event,
   .latest {
     width: 100%;
     padding: 0;
   }
+
   .event-contents,
   .latest-contents {
     width: min(88%, 560px);
     padding: 16px;
   }
+
   .event h3,
   .latest h3 {
-    font-size: clamp(22px, 6vw, 30px);
+    font-size: clamp(24px, 6.2vw, 32px);
   }
+
+  .notice-date {
+    font-size: clamp(12px, 2.2vw, 16px);
+  }
+
+  .notice-new {
+    padding: clamp(1px, 0.2vw, 2px) clamp(4px, 0.65vw, 5px);
+    font-size: clamp(10px, 1.8vw, 14px);
+  }
+
   .notice-title {
-    font-size: clamp(14px, 4vw, 18px);
+    font-size: clamp(16px, 4.2vw, 20px);
   }
+
   .notice-body {
-    font-size: clamp(12px, 3.5vw, 16px);
+    font-size: clamp(12px, 3.4vw, 16px);
     line-height: 1.7;
   }
 }
@@ -1200,6 +1597,7 @@ main p {
   display: block;
   width: 100%;
   height: 100%;
+  filter: brightness(0.8);
 }
 
 .book-background {
@@ -1355,72 +1753,239 @@ main p {
 
 @media (max-width: 800px) {
   .book {
-    aspect-ratio: 1578 / 3447;
+    width: 96%;
+    aspect-ratio: 1351 / 2033;
     padding:
-      clamp(18px, 4vw, 28px) clamp(12px, 4vw, 24px) clamp(24px, 5vw, 36px);
+      clamp(12px, 3vw, 28px) clamp(10px, 3vw, 24px) clamp(18px, 4vw, 36px);
   }
+
+  .book-background-picture {
+    width: 100%;
+    height: 100%;
+  }
+
   .book-background {
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
   }
+
   .book h4 {
-    margin: clamp(7px, 2vw, 12px) 0 clamp(12px, 3vw, 20px);
-    font-size: clamp(20px, 5.5vw, 32px);
+    margin: clamp(12px, 2.4vw, 20px) 0 clamp(46px, 6.8vw, 54px);
+    font-size: clamp(28px, 4.8vw, 40px);
   }
-  .book-item {
-    margin-bottom: clamp(10px, 3vw, 18px);
+
+  .book-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(18px, 5vw, 48px);
   }
+
   .book-item,
   .book-item:first-child,
   .book-item:nth-child(2) {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(10px, 3vw, 18px);
+    align-items: start;
+    gap: clamp(10px, 3vw, 30px);
+  }
+
+  /* 1冊目：説明文・画像 */
+  .book-item:first-child {
+    grid-template-columns:
+      minmax(0, 1.2fr) minmax(0, 0.8fr);
+    margin-bottom: clamp(44px, 7.8vw, 76px);
+  }
+
+  .book-item:first-child .book-content {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 0;
+  }
+
+  .book-item:first-child .book-images {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /* 2冊目：画像・説明文 */
+  .book-item:nth-child(2) {
+    grid-template-columns:
+      minmax(0, 0.8fr) minmax(0, 1.2fr);
     margin: 0;
   }
-  /* 画像を上、説明文を下に配置 */
-  .book-item:first-child .book-images,
+
   .book-item:nth-child(2) .book-images {
     grid-column: 1;
     grid-row: 1;
   }
-  .book-item:first-child .book-content,
+
   .book-item:nth-child(2) .book-content {
-    grid-column: 1;
-    grid-row: 2;
-    margin: 0;
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: clamp(100px, 50vw, 120px);
   }
-  .book-item:first-child .book-image {
-    margin: 0;
-    transform: none;
+
+  .book-images {
+    width: 100%;
+    min-width: 0;
   }
-  /* 本の画像を縮小 */
+
   .book-image,
   .book-image-2,
   .book-item:first-child .book-image {
+    display: block;
     width: auto;
-    max-width: 72%;
-    height: clamp(135px, 42vw, 270px);
+    max-width: 100%;
+    height: clamp(135px, 39vw, 320px);
+    margin: 0;
     object-fit: contain;
   }
-  .book-content h5 {
-    margin: 0 0 clamp(12px, 3.2vw, 20px);
-    font-size: clamp(18px, 4.8vw, 26px);
-    line-height: 1.35;
+
+  .book-item:first-child .book-image {
+    margin-top: clamp(16px, 7vw, 56px);
+    transform: none;
   }
+
+  .book-content {
+    min-width: 0;
+  }
+
+  .book-content h5 {
+    margin:
+      clamp(4px, 1vw, 10px) 0 clamp(14px, 2.4vw, 22px);
+    font-size: clamp(18px, 3vw, 26px);
+    line-height: 1.4;
+  }
+
   .book-content p {
     margin: 0;
-    font-size: clamp(12px, 3.2vw, 20px);
-    line-height: 1.55;
+    font-size: clamp(9px, 1.9vw, 13px);
+    line-height: 2;
+    overflow-wrap: anywhere;
   }
-  /* HTMLで指定した改行を維持 */
+
   .book-content p br {
     display: initial;
   }
+
   .purchase {
-    margin: clamp(12px, 3vw, 20px) 0 clamp(12px, 3vw, 20px);
+    margin-top: clamp(16px, 3vw, 26px);
     padding:
-      clamp(5px, 1.5vw, 8px) clamp(16px, 5vw, 26px);
+      clamp(3px, 0.8vw, 7px) clamp(8px, 2vw, 18px);
+    font-size: clamp(7px, 1.8vw, 14px);
+  }
+}
+
+@media (max-width: 600px) {
+  .book {
+    aspect-ratio: 1578 / 3447;
+    padding: clamp(18px, 4vw, 28px) clamp(12px, 4vw, 24px) clamp(24px, 5vw, 36px);
+  }
+
+  .book-background {
+    object-fit: cover;
+  }
+
+  .book h4 {
+    margin: clamp(6px, 2vw, 10px) 0 clamp(14px, 3vw, 20px);
+    font-size: clamp(20px, 5.5vw, 32px);
+  }
+
+  .book-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(28px, 7vw, 48px);
+  }
+
+  .book-item,
+  .book-item:first-child,
+  .book-item:nth-child(2) {
+    position: relative;
+    display: block;
+    margin: 0;
+  }
+
+  .book-item .book-images,
+  .book-item:first-child .book-images,
+  .book-item:nth-child(2) .book-images {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 36%;
+    height: clamp(120px, 34vw, 220px);
+    margin: 0;
+  }
+
+  .book-image,
+  .book-image-2,
+  .book-item:first-child .book-image {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+    object-fit: contain;
+    transform: none;
+  }
+
+  .book-item .book-content,
+  .book-item:first-child .book-content,
+  .book-item:nth-child(2) .book-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .book-content h5 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 62%;
+    min-height: clamp(120px, 34vw, 220px);
+    margin: 0 0 clamp(12px, 3vw, 20px) 38%;
+    padding: 0 clamp(4px, 1.5vw, 10px);
+    font-size: clamp(15px, 4.3vw, 23px);
+    line-height: 1.4;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .book-content p {
+    width: 100%;
+    margin: 0;
+    font-size: clamp(9px, 2.8vw, 17px);
+    line-height: 1.6;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .book-content p br {
+    display: initial;
+  }
+
+  .purchase {
+    display: inline-block;
+    margin: clamp(12px, 3vw, 20px) 0 clamp(32px, 33vw, 40px);
+    padding: clamp(5px, 1.5vw, 8px) clamp(16px, 5vw, 26px);
     font-size: clamp(12px, 3.3vw, 17px);
+  }
+
+  /* 2冊目：タイトルを左、画像を右にする */
+  .book-item:nth-child(2) .book-images {
+    right: 0;
+    left: auto;
+  }
+
+  .book-item:nth-child(2) .book-content h5 {
+    width: 62%;
+    margin: 0 38% clamp(12px, 3vw, 20px) 0;
   }
 }
 
@@ -1620,50 +2185,124 @@ small {
 @media (max-width: 800px) {
   footer {
     width: 100%;
-    padding-bottom: 28px;
+    padding-bottom: clamp(18px, 3.5vw, 28px);
   }
+
   .footer-top {
-    margin-top: 20px;
+    margin-top: clamp(12px, 2.5vw, 20px);
   }
+
   .footer-left {
     width: 38%;
   }
+
   .footer-right {
     width: 62%;
   }
+
   .footer-left img {
     width: clamp(80px, 26vw, 150px);
   }
+
   .footer-right img {
     width: clamp(160px, 48vw, 280px);
   }
+
   .footer-right p {
     width: auto;
-    margin: 2px 0 0 clamp(16px, 5vw, 32px);
+    margin: clamp(1px, 0.25vw, 2px) 0 0 clamp(16px, 5vw, 32px);
     font-size: clamp(11px, 3.5vw, 18px);
   }
+
   .footer-bottom {
-    margin-top: -10vw;
+    margin-top: clamp(-80px, -10vw, -32px);
   }
+
   .copyright-content {
     top: auto;
     width: 92%;
-    margin: -21vw auto 12px;
-    font-size: clamp(8px, 2.5vw, 14px);
+    margin: clamp(-192px, -24vw, -77px) auto clamp(20px, 4vw, 32px);
+    font-size: clamp(10px, 2.6vw, 18px);
   }
+
   .icon-image {
-    margin: 0 auto 10px;
+    margin: 0 auto clamp(6px, 1.25vw, 10px);
     gap: clamp(8px, 3vw, 14px);
   }
+
   .sns-box {
     width: clamp(30px, 9vw, 48px);
     height: clamp(30px, 9vw, 48px);
   }
+
   footer a {
     font-size: clamp(11px, 3vw, 14px);
   }
+
   small {
     font-size: clamp(9px, 2.5vw, 12px);
+  }
+}
+
+@media (max-width: 800px) {
+  footer {
+    width: 100%;
+    padding-bottom: clamp(18px, 3.5vw, 28px);
+  }
+
+  .footer-top {
+    margin-top: clamp(12px, 2.5vw, 20px);
+  }
+
+  .footer-left {
+    width: 38%;
+  }
+
+  .footer-right {
+    width: 62%;
+  }
+
+  .footer-left img {
+    width: clamp(60px, 16vw, 130px);
+  }
+
+  .footer-right img {
+    width: clamp(140px, 38vw, 260px);
+  }
+
+  .footer-right p {
+    width: auto;
+    margin: clamp(1px, 0.25vw, 2px) 0 0 clamp(16px, 5vw, 32px);
+    font-size: clamp(9px, 3.3vw, 15px);
+  }
+
+  .footer-bottom {
+    margin-top: clamp(-80px, -10vw, -32px);
+  }
+
+  .copyright-content {
+    top: auto;
+    width: 92%;
+    margin: clamp(-192px, -24vw, -77px) auto clamp(20px, 4vw, 32px);
+    font-size: clamp(8px, 2.4vw, 16px);
+  }
+
+  .icon-image {
+    margin: 0 auto clamp(6px, 1.25vw, 10px);
+    gap: clamp(8px, 3vw, 14px);
+  }
+
+  .sns-box {
+    width: clamp(24px, 7vw, 44px);
+    height: clamp(24px, 7vw, 44px);
+  }
+
+  footer a {
+    font-size: clamp(9px, 2.8vw, 12px);
+  }
+
+  small {
+    font-size: clamp(7px, 2.3vw, 10px);
   }
 }
 
@@ -2025,7 +2664,6 @@ small {
 }
 
 @media (max-width: 800px) {
-/* 固定ヘッダー分の空間を確保 */
   .first-greet {
     width: 96%;
     margin-top: 98px;
@@ -2034,25 +2672,30 @@ small {
     overflow: visible;
     scroll-margin-top: 98px;
   }
+
   #profile {
     scroll-margin-top: 98px;
   }
+
   .first-greet,
   .mirror,
   .with-pegasus {
     width: 100%;
     margin-bottom: clamp(20px, 5vw, 32px);
   }
+
   .message-background {
     display: block;
     width: 100%;
     height: auto;
     object-fit: contain;
   }
+
   .first-greet-image {
     top: 2%;
     width: clamp(82px, 32vw, 152px);
   }
+
   .name {
     top: 11%;
     margin: 0;
@@ -2061,28 +2704,34 @@ small {
     font-size: clamp(11px, 3.5vw, 18px);
     line-height: 1.4;
   }
+
   .first-greet h2,
   .first-greet h3 {
     width: 92%;
     margin: 0;
     line-height: 1.3;
   }
+
   .title-1 {
     top: 14%;
     font-size: clamp(18px, 5.5vw, 34px);
   }
+
   .title-2 {
     top: 17.5%;
     font-size: clamp(17px, 5vw, 32px);
   }
+
   .title-3 {
     top: 20.5%;
     font-size: clamp(22px, 6.5vw, 42px);
   }
+
   .title-4 {
     top: 24.5%;
     font-size: clamp(18px, 5.5vw, 34px);
   }
+
   .message-frame {
     position: absolute;
     top: 28.5%;
@@ -2094,6 +2743,7 @@ small {
     display: block;
     max-width: none;
   }
+
   .message p {
     width: 84%;
     margin: 0;
@@ -2101,54 +2751,68 @@ small {
     line-height: 1.65;
     letter-spacing: clamp(0.2px, 0.15vw, 1px);
   }
+
   .message-1 {
     top: 31.5%;
   }
+
   .message-2 {
     top: 54.5%;
   }
+
   .message-3 {
     top: 66.5%;
   }
+
   .message-4 {
     top: 81%;
   }
+
   .mirror-background {
     width: 100%;
     height: auto;
   }
+
   .left-mirror,
   .right-mirror {
     top: 50%;
     width: 38%;
   }
+
   .left-mirror {
     left: 8%;
   }
+
   .right-mirror {
     right: 8%;
   }
+
   .mirror-slider {
     top: 15.6%;
     width: 75.6%;
   }
+
   .mirror-slide {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+
   .l-mirror-frame,
   .r-mirror-frame {
     width: 100%;
     height: auto;
   }
+
   .with-pegasus {
     display: block;
   }
+
   .pegasus-background {
     width: 100%;
     height: auto;
   }
+
   .pegasus-title-1,
   .pegasus-title-2,
   .pegasus-title-3 {
@@ -2158,15 +2822,19 @@ small {
     line-height: 1.3;
     white-space: nowrap;
   }
+
   .pegasus-title-1 {
     top: 6%;
   }
+
   .pegasus-title-2 {
     top: 11.5%;
   }
+
   .pegasus-title-3 {
     top: 16.5%;
   }
+
   .pegasus-content-1,
   .pegasus-content-2 {
     width: 88%;
@@ -2175,9 +2843,201 @@ small {
     line-height: 1.75;
     letter-spacing: 0;
   }
+
   .pegasus-content-1 {
     top: 27%;
   }
+
+  .pegasus-content-2 {
+    top: 63%;
+  }
+}
+
+@media (max-width: 600px) {
+  .first-greet {
+    width: 96%;
+    margin-top: 98px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: visible;
+    scroll-margin-top: 98px;
+  }
+
+  #profile {
+    scroll-margin-top: 98px;
+  }
+
+  .first-greet,
+  .mirror,
+  .with-pegasus {
+    width: 100%;
+    margin-bottom: clamp(20px, 5vw, 32px);
+  }
+
+  .message-background {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .first-greet-image {
+    top: 0;
+    width: clamp(72px, 22vw, 142px);
+  }
+
+  .name {
+    top: 10.5%;
+    margin: 0;
+    padding:
+      clamp(1px, 0.5vw, 3px) clamp(8px, 2.5vw, 14px);
+    font-size: clamp(10px, 3.4vw, 16px);
+    line-height: 1.4;
+  }
+
+  .first-greet h2,
+  .first-greet h3 {
+    width: 92%;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .title-1 {
+    top: 14%;
+    font-size: clamp(12px, 4.8vw, 28px);
+  }
+
+  .title-2 {
+    top: 17.5%;
+    font-size: clamp(10px, 4.4vw, 24px);
+  }
+
+  .title-3 {
+    top: 20.5%;
+    font-size: clamp(14px, 5.6vw, 34px);
+  }
+
+  .title-4 {
+    top: 24.5%;
+    font-size: clamp(12px, 4.8vw, 28px);
+  }
+
+  .message-frame {
+    position: absolute;
+    top: 28.5%;
+    left: 50%;
+    width: 88%;
+    height: auto;
+    margin: 0;
+    transform: translateX(-50%);
+    display: block;
+    max-width: none;
+  }
+
+  .message p {
+    width: 84%;
+    margin: 0;
+    font-size: clamp(4px, 3.8vw, 18px);
+    line-height: 1.65;
+    letter-spacing: clamp(0.2px, 0.15vw, 1px);
+  }
+
+  .message-1 {
+    top: 31.5%;
+  }
+
+  .message-2 {
+    top: 54.5%;
+  }
+
+  .message-3 {
+    top: 66.5%;
+  }
+
+  .message-4 {
+    top: 81%;
+  }
+
+  .mirror-background {
+    width: 100%;
+    height: auto;
+  }
+
+  .left-mirror,
+  .right-mirror {
+    top: 50%;
+    width: 38%;
+  }
+
+  .left-mirror {
+    left: 8%;
+  }
+
+  .right-mirror {
+    right: 8%;
+  }
+
+  .mirror-slider {
+    top: 15.6%;
+    width: 75.6%;
+  }
+
+  .mirror-slide {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .l-mirror-frame,
+  .r-mirror-frame {
+    width: 100%;
+    height: auto;
+  }
+
+  .with-pegasus {
+    display: block;
+  }
+
+  .pegasus-background {
+    width: 100%;
+    height: auto;
+  }
+
+  .pegasus-title-1,
+  .pegasus-title-2,
+  .pegasus-title-3 {
+    width: 94%;
+    margin: 0;
+    font-size: clamp(24px, 56vw, 40px);
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+
+  .pegasus-title-1 {
+    top: 6%;
+  }
+
+  .pegasus-title-2 {
+    top: 11.5%;
+  }
+
+  .pegasus-title-3 {
+    top: 16.5%;
+  }
+
+  .pegasus-content-1,
+  .pegasus-content-2 {
+    width: 88%;
+    margin: 0;
+    font-size: clamp(8px, 4vw, 18px);
+    line-height: 1.75;
+    letter-spacing: 0;
+  }
+
+  .pegasus-content-1 {
+    top: 27%;
+  }
+
   .pegasus-content-2 {
     top: 63%;
   }
@@ -2275,48 +3135,112 @@ small {
 @media (max-width: 800px) {
   .event-page {
     width: 96%;
-    margin-top: 98px; /* 固定ヘッダーとの重なりを防止 */
-    margin-bottom: 40px;
+    margin: clamp(84px, 12.25vw, 98px) auto clamp(24px, 5vw, 40px);
   }
+
   .event-background {
     width: 100%;
     height: auto;
   }
+
   .event-detail {
     top: 4%;
     bottom: 1.5%;
     width: 92%;
     padding: clamp(8px, 2.5vw, 16px);
-    border-width: 3px;
+    border-width: clamp(2px, 0.4vw, 3px);
   }
+
   .event-title {
     margin: clamp(8px, 2.5vw, 18px) 0 clamp(8px, 2vw, 14px);
     padding: 0 clamp(10px, 3vw, 20px);
-    border-width: 3px;
+    border-width: clamp(2px, 0.4vw, 3px);
   }
+
   .event-title h2 {
     margin: clamp(8px, 2vw, 14px) 0;
     font-size: clamp(24px, 6.2vw, 34px);
     line-height: 1.35;
     letter-spacing: clamp(0.5px, 0.3vw, 2px);
   }
+
   .event-content p {
     font-size: clamp(14px, 3.4vw, 20px);
     line-height: 1.5;
-    letter-spacing: clamp(0, 0.15vw, 1px);
+    letter-spacing: clamp(0px, 0.15vw, 1px);
     overflow-wrap: anywhere;
   }
+
   .line-1 {
     padding-bottom: clamp(1px, 0.3vw, 2px);
   }
+
   .line-2 {
     padding-bottom: clamp(5px, 1.5vw, 12px);
   }
+
   .line-3 {
     padding-bottom: clamp(16px, 4vw, 32px);
   }
+
   .line-4 {
     padding-bottom: clamp(8px, 2.5vw, 18px);
+  }
+}
+
+@media (max-width: 600px) {
+  .event-page {
+    width: 96%;
+    margin: clamp(84px, 12.25vw, 98px) auto clamp(24px, 5vw, 40px);
+  }
+
+  .event-background {
+    width: 100%;
+    height: auto;
+  }
+
+  .event-detail {
+    top: 4%;
+    bottom: 1.5%;
+    width: 92%;
+    padding: clamp(8px, 2.5vw, 16px);
+    border-width: clamp(1px, 0.2vw, 1px);
+  }
+
+  .event-title {
+    margin: clamp(8px, 2.5vw, 18px) 0 clamp(8px, 2vw, 14px);
+    padding: 0 clamp(10px, 3vw, 20px);
+    border-width: clamp(1px, 0.2vw, 1px);
+  }
+
+  .event-title h2 {
+    margin: clamp(8px, 2vw, 14px) 0;
+    font-size: clamp(20px, 5.8vw, 30px);
+    line-height: 1.35;
+    letter-spacing: clamp(0.5px, 0.3vw, 2px);
+  }
+
+  .event-content p {
+    font-size: clamp(5px, 3.7vw, 15px);
+    line-height: 1.5;
+    letter-spacing: clamp(0px, 0.15vw, 1px);
+    overflow-wrap: anywhere;
+  }
+
+  .line-1 {
+    padding-bottom: clamp(1px, 0.3vw, 2px);
+  }
+
+  .line-2 {
+    padding-bottom: clamp(3px, 1.3vw, 11px);
+  }
+
+  .line-3 {
+    padding-bottom: clamp(14px, 3.8vw, 30px);
+  }
+
+  .line-4 {
+    padding-bottom: clamp(4px, 2vw, 12px);
   }
 }
 
@@ -2711,8 +3635,8 @@ textarea {
     isolation: isolate;
     display: block;
     width: 96%;
-    margin: 0 auto 40px;
-    padding: 98px 0 28px;
+    margin: 0 auto clamp(24px, 5vw, 40px);
+    padding: clamp(84px, 12.25vw, 98px) 0 clamp(18px, 3.5vw, 28px);
     overflow: hidden;
   }
 
@@ -2727,32 +3651,33 @@ textarea {
   }
 
   .contact {
+    --error-space: clamp(58px, 8vw, 64px);
+    --error-gap: clamp(6px, 1vw, 8px);
     position: relative;
     inset: auto;
     width: 94%;
     margin: clamp(4px, 2.4vw, 12px) auto 0;
     padding: clamp(12px, 3.5vw, 24px);
     transform: none;
-    border-width: 3px;
+    border-width: clamp(2px, 0.4vw, 3px);
   }
 
   .contact-title {
-    margin: clamp(8px, 2vw, 16px) 0
-      clamp(16px, 3vw, 24px);
+    margin: clamp(8px, 2vw, 16px) 0 clamp(16px, 3vw, 24px);
     padding: 0 clamp(12px, 3vw, 22px);
-    border-width: 3px;
+    border-width: clamp(2px, 0.4vw, 3px);
   }
 
   .contact-form h2 {
-    margin: 6px;
+    margin: clamp(4px, 0.8vw, 6px);
     font-size: clamp(22px, 6vw, 34px);
     line-height: 1.4;
   }
 
-  /* PC版と同じ2列を維持 */
   .contact .form-row {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     gap: clamp(8px, 2.5vw, 18px);
     margin-top: clamp(18px, 3vw, 28px);
   }
@@ -2764,24 +3689,26 @@ textarea {
   }
 
   .contact .field {
+    position: relative;
     width: 100%;
     min-width: 0;
+    padding-bottom: var(--error-space);
   }
 
   .contact .label-row {
-    gap: 4px;
+    gap: clamp(3px, 0.5vw, 4px);
   }
 
   .contact label,
   .contact .address-title {
-    font-size: clamp(12px, 3.6vw, 19px);
+    font-size: clamp(14px, 3.8vw, 22px);
     line-height: 1.4;
   }
 
   .contact .required {
     flex-shrink: 0;
-    padding: 2px 4px;
-    font-size: clamp(9px, 2.5vw, 12px);
+    padding: clamp(2px, 0.3vw, 3px) clamp(3px, 0.5vw, 4px);
+    font-size: clamp(10px, 2.6vw, 18px);
   }
 
   .contact input,
@@ -2790,8 +3717,8 @@ textarea {
     width: 100%;
     min-width: 0;
     max-width: 100%;
-    padding: 6px 8px;
-    font-size: 16px;
+    padding: clamp(6px, 0.9vw, 7px) clamp(8px, 1.4vw, 11px);
+    font-size: clamp(16px, 2.2vw, 18px);
   }
 
   .contact input,
@@ -2800,8 +3727,14 @@ textarea {
   }
 
   .contact .full-group {
+    position: relative;
     width: 100%;
     margin: clamp(20px, 4vw, 32px) 0 0;
+  }
+
+  .contact .mail,
+  .contact .mail-r {
+    padding-bottom: var(--error-space);
   }
 
   .contact .mail {
@@ -2812,23 +3745,22 @@ textarea {
     margin-top: clamp(20px, 4vw, 30px);
   }
 
-  /* 住所欄の配置も維持 */
   .contact .address-group {
     width: 70%;
     min-width: 0;
-    margin: clamp(30px, 6vw, 48px) 0
-      clamp(20px, 4vw, 30px);
+    margin: clamp(30px, 6vw, 48px) 0 clamp(20px, 4vw, 30px);
   }
 
   .contact .zip-field {
-    padding-bottom: 20px;
-    margin-bottom: 28px;
+    position: relative;
+    padding-bottom: var(--error-space);
+    margin-bottom: clamp(20px, 3.5vw, 28px);
   }
 
   .contact .zip-row {
     display: flex;
-    gap: clamp(4px, 1.5vw, 10px);
     width: 100%;
+    gap: clamp(4px, 1.5vw, 10px);
   }
 
   .contact .zip-mark {
@@ -2845,9 +3777,9 @@ textarea {
   .contact .address-search {
     flex-shrink: 0;
     margin-left: 0;
-    padding: 7px clamp(6px, 2vw, 14px);
-    font-size: clamp(11px, 3vw, 15px);
-    border-radius: 8px;
+    padding: clamp(5px, 0.9vw, 7px) clamp(6px, 2vw, 14px);
+    font-size: clamp(14px, 3.4vw, 20px);
+    border-radius: clamp(6px, 1vw, 8px);
   }
 
   .contact .address-item {
@@ -2858,15 +3790,22 @@ textarea {
     margin-top: clamp(28px, 6vw, 44px);
   }
 
+  .contact .textarea-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: var(--error-space);
+  }
+
   .contact textarea {
+    display: block;
     height: clamp(160px, 42vw, 240px);
   }
 
   .contact .decision {
-    width: min(70%, 280px);
+    width: clamp(180px, 70%, 280px);
     height: clamp(42px, 11vw, 50px);
     margin-top: clamp(30px, 6vw, 44px);
-    padding: 0 20px;
+    padding: 0 clamp(14px, 2.5vw, 20px);
     font-size: clamp(16px, 4vw, 20px);
   }
 
@@ -2875,9 +3814,279 @@ textarea {
   }
 
   .contact .field .error-message,
-  .contact .full-group .error-message,
+  .contact .mail .error-message,
+  .contact .mail-r .error-message,
   .contact .zip-field .error-message,
   .contact .textarea-wrapper .error-message {
+    position: absolute;
+    top: calc(100% - var(--error-space) + var(--error-gap));
+    right: auto;
+    bottom: auto;
+    left: 0;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0;
+    padding: clamp(5px, 1vw, 8px) clamp(8px, 1.5vw, 12px);
     font-size: clamp(11px, 3vw, 13px);
+    line-height: 1.4;
+    transform: none;
+    z-index: 10;
+  }
+
+  .contact .zip-field .error-message {
+    left: 7%;
+    margin: 0;
+  }
+
+  .contact .error-message:empty {
+    display: none;
+  }
+
+  .contact .error-message:not(:empty)::before {
+    top: clamp(-10px, -1.25vw, -7px);
+    left: clamp(14px, 2.5vw, 20px);
+    border-left-width: clamp(7px, 1.25vw, 10px);
+    border-right-width: clamp(7px, 1.25vw, 10px);
+    border-bottom-width: clamp(7px, 1.25vw, 10px);
+  }
+
+  .contact .error-message:not(:empty)::after {
+    top: clamp(-7px, -0.875vw, -5px);
+    left: clamp(16px, 2.75vw, 22px);
+    border-left-width: clamp(6px, 1vw, 8px);
+    border-right-width: clamp(6px, 1vw, 8px);
+    border-bottom-width: clamp(6px, 1vw, 8px);
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-form {
+    position: relative;
+    isolation: isolate;
+    display: block;
+    width: 96%;
+    margin: 0 auto clamp(24px, 5vw, 40px);
+    padding: clamp(84px, 12.25vw, 98px) 0 clamp(18px, 3.5vw, 28px);
+    overflow: hidden;
+  }
+
+  .contact-background {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .contact {
+    --error-space: clamp(58px, 8vw, 64px);
+    --error-gap: clamp(6px, 1vw, 8px);
+    position: relative;
+    inset: auto;
+    width: 94%;
+    margin: clamp(4px, 2.4vw, 12px) auto 0;
+    padding: clamp(12px, 3.5vw, 24px);
+    transform: none;
+    border-width: clamp(1px, 0.2vw, 1px);
+  }
+
+  .contact-title {
+    margin: clamp(8px, 2vw, 16px) 0 clamp(16px, 3vw, 24px);
+    padding: 0 clamp(12px, 3vw, 22px);
+    border-width: clamp(1px, 0.2vw, 1px);
+  }
+
+  .contact-form h2 {
+    margin: clamp(4px, 0.8vw, 6px);
+    font-size: clamp(22px, 6vw, 34px);
+    line-height: 1.4;
+  }
+
+  .contact .form-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: clamp(8px, 2.5vw, 18px);
+    margin-top: clamp(18px, 3vw, 28px);
+  }
+
+  .contact .form-row .form-group {
+    flex: 1 1 0;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .contact .field {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: var(--error-space);
+  }
+
+  .contact .label-row {
+    gap: clamp(3px, 0.5vw, 4px);
+  }
+
+  .contact label,
+  .contact .address-title {
+    font-size: clamp(14px, 3.8vw, 22px);
+    line-height: 1.4;
+  }
+
+  .contact .required {
+    flex-shrink: 0;
+    padding: clamp(2px, 0.3vw, 3px) clamp(3px, 0.5vw, 4px);
+    font-size: clamp(12px, 2.8vw, 20px);
+  }
+
+  .contact input,
+  .contact select,
+  .contact textarea {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: clamp(6px, 0.9vw, 7px) clamp(8px, 1.4vw, 11px);
+    font-size: clamp(16px, 2.2vw, 18px);
+  }
+
+  .contact input,
+  .contact select {
+    height: clamp(40px, 11vw, 46px);
+  }
+
+  .contact .full-group {
+    position: relative;
+    width: 100%;
+    margin: clamp(20px, 4vw, 32px) 0 0;
+  }
+
+  .contact .mail,
+  .contact .mail-r {
+    padding-bottom: var(--error-space);
+  }
+
+  .contact .mail {
+    padding-top: 0;
+  }
+
+  .contact .tell-section {
+    margin-top: clamp(20px, 4vw, 30px);
+  }
+
+  .contact .address-group {
+    width: 70%;
+    min-width: 0;
+    margin: clamp(30px, 6vw, 48px) 0 clamp(20px, 4vw, 30px);
+  }
+
+  .contact .zip-field {
+    position: relative;
+    padding-bottom: var(--error-space);
+    margin-bottom: clamp(20px, 3.5vw, 28px);
+  }
+
+  .contact .zip-row {
+    display: flex;
+    width: 100%;
+    gap: clamp(4px, 1.5vw, 10px);
+  }
+
+  .contact .zip-mark {
+    flex-shrink: 0;
+    font-size: clamp(16px, 4vw, 22px);
+  }
+
+  .contact .zip-input {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
+
+  .contact .address-search {
+    flex-shrink: 0;
+    margin-left: 0;
+    padding: clamp(5px, 0.9vw, 7px) clamp(6px, 2vw, 14px);
+    font-size: clamp(14px, 3.4vw, 20px);
+    border-radius: clamp(6px, 1vw, 8px);
+  }
+
+  .contact .address-item {
+    margin: 0 0 clamp(18px, 4vw, 28px);
+  }
+
+  .contact .details {
+    margin-top: clamp(28px, 6vw, 44px);
+  }
+
+  .contact .textarea-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: var(--error-space);
+  }
+
+  .contact textarea {
+    display: block;
+    height: clamp(160px, 42vw, 240px);
+  }
+
+  .contact .decision {
+    width: clamp(180px, 70%, 280px);
+    height: clamp(42px, 11vw, 50px);
+    margin-top: clamp(30px, 6vw, 44px);
+    padding: 0 clamp(14px, 2.5vw, 20px);
+    font-size: clamp(16px, 4vw, 20px);
+  }
+
+  .contact .form-status {
+    font-size: clamp(12px, 3vw, 14px);
+  }
+
+  .contact .field .error-message,
+  .contact .mail .error-message,
+  .contact .mail-r .error-message,
+  .contact .zip-field .error-message,
+  .contact .textarea-wrapper .error-message {
+    position: absolute;
+    top: calc(100% - var(--error-space) + var(--error-gap));
+    right: auto;
+    bottom: auto;
+    left: 0;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0;
+    padding: clamp(5px, 1vw, 8px) clamp(8px, 1.5vw, 12px);
+    font-size: clamp(11px, 3vw, 13px);
+    line-height: 1.4;
+    transform: none;
+    z-index: 10;
+  }
+
+  .contact .zip-field .error-message {
+    left: 9%;
+    margin: 0;
+  }
+
+  .contact .error-message:empty {
+    display: none;
+  }
+
+  .contact .error-message:not(:empty)::before {
+    top: clamp(-10px, -1.25vw, -7px);
+    left: clamp(14px, 2.5vw, 20px);
+    border-left-width: clamp(7px, 1.25vw, 10px);
+    border-right-width: clamp(7px, 1.25vw, 10px);
+    border-bottom-width: clamp(7px, 1.25vw, 10px);
+  }
+
+  .contact .error-message:not(:empty)::after {
+    top: clamp(-7px, -0.875vw, -5px);
+    left: clamp(16px, 2.75vw, 22px);
+    border-left-width: clamp(6px, 1vw, 8px);
+    border-right-width: clamp(6px, 1vw, 8px);
+    border-bottom-width: clamp(6px, 1vw, 8px);
   }
 }
