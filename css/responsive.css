@@ -2600,6 +2600,11 @@
   display: none;
 }
 
+/* PCとスマホの両方で必要な改行は、PCでも消さない。 */
+.pc-br.res-br {
+  display: inline;
+}
+
 /* スマートフォン：スマホ用の改行へ切り替える。 */
 @media (max-width: 600px) {
   .pc-br {
