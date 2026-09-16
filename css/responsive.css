@@ -1731,6 +1731,58 @@
   }
 }
 
+/* ===== トップページ：背景と装飾枠を別レイヤーで表示 ===== */
+.greeting,
+.suiso,
+.book {
+  overflow: hidden;
+}
+
+.greeting-picture,
+.book-background-picture {
+  overflow: hidden;
+}
+
+/* 元画像の外周に含まれる枠を表示範囲の外へ逃がし、背景の縦横比を維持する。 */
+.greeting-image,
+.suiso-image,
+.book-background {
+  object-fit: cover;
+  object-position: center;
+  scale: 1.06;
+  transform-origin: center;
+}
+
+/* 背景とは独立して、セクション全体に装飾枠を重ねる。 */
+.section-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.greeting h4,
+.greet,
+.greet-content,
+.profile-button,
+.suiso-content,
+.suiso1,
+.suiso2,
+.suiso-button,
+.book h4,
+.book-list {
+  z-index: 2;
+}
+
+.book h4,
+.book-list {
+  position: relative;
+}
+
 @media (max-width: 600px) {
   .contact-form {
     position: relative;
@@ -2588,4 +2640,11 @@
     object-fit: fill;
     object-position: center top;
   }
+}
+
+/* 上の既存レスポンシブ指定より後で、背景画像の比率維持を最終確定する。 */
+.greeting-image,
+.suiso-image,
+.book-background {
+  object-fit: cover;
 }
