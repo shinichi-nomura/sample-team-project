@@ -2539,31 +2539,22 @@
   }
 }
 
-/* PC：PC用の改行を表示 */
-.greeting br.pc-br,
-.book-content p br.pc-br {
+/* PC・タブレット：PC用の改行だけを表示する。 */
+.pc-br {
   display: inline;
 }
 
-.greeting br.res-br,
-.book-content p br.res-br {
+.res-br {
   display: none;
 }
 
-.greeting br.pc-br.res-br,
-.book-content p br.pc-br.res-br {
-  display: inline;
-}
-
-/* 800px以下：レスポンシブ用の改行を表示 */
-@media (max-width: 800px) {
-  .greeting br.pc-br,
-  .book-content p br.pc-br {
+/* スマートフォン：スマホ用の改行へ切り替える。 */
+@media (max-width: 600px) {
+  .pc-br {
     display: none;
   }
 
-  .greeting br.res-br,
-  .book-content p br.res-br {
+  .res-br {
     display: inline;
   }
 }
