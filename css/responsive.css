@@ -2638,11 +2638,11 @@
     margin-top: var(--page-header-height);
   }
 
-  /* 枠付き背景の四辺を表示。文章量に応じて縦横比は変わる */
+  /* 下層ページの背景は比率を維持し、文章量に応じた領域全体を覆う。 */
   .message-background,
   .event-background,
   .contact-background {
-    object-fit: fill;
+    object-fit: cover;
     object-position: center top;
   }
 }
