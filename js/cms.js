@@ -68,32 +68,46 @@ async function loadNotices() {
 // 記事をHTMLへ表示
 // ========================================
 function renderItems(container, items) {
+
     // 「読み込み中...」を削除
     container.replaceChildren();
+
     // 記事が0件の場合
     if (items.length === 0) {
         const message = document.createElement("p");
-        message.textContent =
-            "現在、お知らせはありません。";
+        message.textContent = "現在、お知らせはありません。";
         container.appendChild(message);
         return;
     }
+
     // 記事を1件ずつ表示
     items.forEach((item) => {
-        // 日付とNEWを表示する1行
+
+        // article
+        const article = document.createElement("article");
+        article.className = "notice-item";
+
+
+        // =========================
+        // 日付とNEW
+        // =========================
         const dateLine = document.createElement("div");
         dateLine.className = "notice-date-line";
-        // 日付
-        const date =
-            document.createElement("time");
+
+        const date = document.createElement("time");
         date.className = "notice-date";
         date.textContent = formatDate(item.date);
+
         if (item.date) {
             date.dateTime = item.date;
         }
+
         dateLine.appendChild(date);
-        // 公開から指定日数以内ならNEWを表示
+
+
+        // NEW表示
         const displayDate = item.date;
+
         if (
             isNewPost(
                 displayDate,
@@ -103,28 +117,66 @@ function renderItems(container, items) {
             const newBadge = document.createElement("span");
             newBadge.className = "notice-new";
             newBadge.textContent = "NEW";
+
             dateLine.appendChild(newBadge);
         }
-        const article = document.createElement("article");
-        article.className = "notice-item";
+
+
+        // =========================
         // タイトル
+        // =========================
         const title = document.createElement("h4");
         title.className = "notice-title";
         title.textContent = item.title;
+
+
+        // =========================
         // 本文
+        // =========================
         const body = document.createElement("div");
         body.className = "notice-body";
-        // microCMSのリッチエディタで作成したHTMLを表示
+
         body.innerHTML = item.body ?? "";
+
+
+        // =========================
         // articleに追加
+        // =========================
         article.append(
             dateLine,
             title,
             body
         );
+
+
         // 表示場所へ追加
         container.appendChild(article);
     });
+}
+
+
+// ========================================
+// NEW表示期間の判定
+// ========================================
+function isNewPost(publishedAt, days) {
+
+    if (!publishedAt) {
+        return false;
+    }
+
+    const publishedTime = new Date(publishedAt).getTime();
+
+    if (Number.isNaN(publishedTime)) {
+        return false;
+    }
+
+    const elapsedTime = Date.now() - publishedTime;
+    const displayPeriod = days * 24 * 60 * 60 * 1000;
+
+    return (
+        elapsedTime >= 0 &&
+        elapsedTime < displayPeriod
+    );
 }
 // ========================================
 // NEW表示期間の判定

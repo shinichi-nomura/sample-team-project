@@ -912,6 +912,8 @@
         },
       });
     }
+    const bookMedia = gsap.matchMedia();
+    bookMedia.add("(min-width: 600.01px)", () => {
     bookItems.forEach((item) => {
       const content = item.querySelector(".book-content");
       //親の.book-imagesではなく画像本体を取得
@@ -977,6 +979,38 @@
           clearProps: "opacity,visibility",
         });
       }
+    });
+    });
+    bookMedia.add("(max-width: 600px)", () => {
+      bookItems.forEach((item) => {
+        const description = item.querySelector(".book-description-mobile");
+        const title = item.querySelector(".book-content h5");
+        const purchase = item.querySelector(".purchase");
+        const image = item.querySelector(".book-image, .book-image-2");
+        // タイトル・購入リンクは従来の横方向の表示を個別に適用する。
+        [title, purchase].filter(Boolean).forEach((element) => {
+          gsap.fromTo(element, { autoAlpha: 0, clipPath: "inset(0 100% 0 0)" }, {
+            autoAlpha: 1, clipPath: "inset(0 0% 0 0)", duration: 1.8,
+            ease: "power2.out", clearProps: "clipPath,opacity,visibility",
+            scrollTrigger: { trigger: element, start: "top 90%", once: true }
+          });
+        });
+        if (image) {
+          gsap.fromTo(image, { autoAlpha: 0, clipPath: "inset(-35% -35% -35% 135%)" }, {
+            autoAlpha: 1, clipPath: "inset(-35% -35% -35% -35%)", duration: 1.8,
+            ease: "power2.out", clearProps: "opacity,visibility",
+            scrollTrigger: { trigger: image, start: "top 85%", once: true }
+          });
+        }
+        // 紹介文だけを24px下から、元の位置へふわっと表示する。
+        if (description) {
+          gsap.fromTo(description, { autoAlpha: 0, y: 24 }, {
+            autoAlpha: 1, y: 0, duration: 1.2, ease: "power2.out",
+            clearProps: "transform,opacity,visibility",
+            scrollTrigger: { trigger: description, start: "top 90%", once: true }
+          });
+        }
+      });
     });
   }
 
