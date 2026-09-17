@@ -365,7 +365,8 @@
 
   .greet p {
     margin: clamp(2px, 0.67vw, 4px) 0 0;
-    font-size: clamp(20px, 4.2vw, 26px);
+    /* font-size: clamp(20px, 4.2vw, 26px); */
+    font-size: clamp(10px, 2.2vw, 20px);
     line-height: 1.4;
   }
 
