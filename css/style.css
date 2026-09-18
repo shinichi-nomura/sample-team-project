@@ -817,6 +817,50 @@ main p {
   margin-bottom: 0;
 }
 
+/*CMS記事のリンク*/
+.notice-link {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* 訪問済みでも白 */
+.notice-link:visited {
+  color: #fff;
+}
+
+/* クリック中も白 */
+.notice-link:active {
+  color: #fff;
+}
+
+/*CMS記事1件のホバー*/
+.notice-item {
+  margin: 0;
+  padding: clamp(8px, 1vw, 12px);
+  text-align: left;
+  border-radius: 6px;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* 記事全体にマウスを乗せた時 */
+.notice-item:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* 2件目以降 */
+.notice-item+.notice-item {
+  padding-top: clamp(8px, 1.2vw, 16px);
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+/* 最後の記事 */
+.notice-item:last-child {
+  padding-bottom: clamp(8px, 1vw, 12px);
+}
+
 /*==book==*/
 .book {
   position: relative;
@@ -1542,92 +1586,105 @@ small {
 }
 
 /*==event-page==*/
-.event-page {
-  position: relative;
+.detail-page {
   max-width: 1240px;
-  width: 100%;
-  margin: 0 auto clamp(40px, 5vw, 64px);
-  text-align: center;
-}
-
-.event-background {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.event-detail {
-  position: absolute;
-  top: clamp(6%, 8vw, 10%);
-  left: 50%;
-  bottom: 2%;
-  width: clamp(70%, 75vw, 75%);
-  transform: translateX(-50%);
-  background: rgba(240, 240, 240, 0.6);
-  border: 5px double black;
-  margin: 0 auto;
-  text-align: center;
-  padding: clamp(16px, 2vw, 28px) clamp(16px, 3vw, 36px);
+  width: 90%;
+  margin: 140px auto 80px;
 }
 
 .event-title {
-  display: inline-block;
-  margin: clamp(20px, 4.2vw, 40px) 0 clamp(12px, 2vw, 20px);
-  padding: 0 clamp(20px, 3vw, 36px);
-  background: rgba(240, 240, 240, 0.6);
-  border: 4px double black;
+  width: 100%;
+  text-align: center;
+  margin-bottom: clamp(56px, 7vw, 88px);
 }
 
 .event-title h2 {
-  color: black;
-  font-size: clamp(30px, 4vw, 48px);
-  letter-spacing: clamp(1px, 0.3vw, 4px);
-  font-weight: 500;
-  text-shadow: 1px 1px 1px white, -1px -1px 1px white,
-    -1px 1px 1px white, 1px -1px 1px white,
-    1px 0px 1px white, -1px -0px 1px white,
-    0px 1px 1px white, 0px -1px 1px white;
-}
-
-.event-content p {
-  color: black;
-  letter-spacing: clamp(1px, 0.2vw, 2px);
-  font-size: clamp(18px, 2.1vw, 26px);
   margin: 0;
-  line-height: clamp(28px, 3.4vw, 44px);
+  padding: 0;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: normal;
+  line-height: 1.4;
 }
 
-.line-1 {
-  padding-bottom: clamp(1px, 0.2vw, 3px);
+.detail-content {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto clamp(32px, 4vw, 56px);
+  padding:
+    clamp(24px, 4vw, 48px) clamp(20px, 4vw, 48px);
+  background-color: rgba(128, 128, 128, 0.85);
+  border-radius: clamp(6px, 1vw, 12px);
+  text-align: left;
 }
 
-.line-2 {
-  padding-bottom: clamp(12px, 2vw, 24px);
+.detail-title {
+  margin: 0 0 clamp(20px, 3vw, 32px);
+  padding: 0;
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.5;
+  text-align: center;
 }
 
-.line-3 {
-  padding-bottom: clamp(40px, 5vw, 60px);
+.detail-photo {
+  display: block;
+  width: auto;
+  /* 高さを基準に画像サイズを調整 */
+  height: clamp(200px, 30vw, 400px);
+  /* 横長画像が親要素から飛び出さない */
+  max-width: 100%;
+  margin: 0 auto clamp(20px, 3vw, 32px);
+  object-fit: contain;
 }
 
-.line-4 {
-  padding-bottom: clamp(18px, 4vw, 32px);
+.detail-date {
+  display: block;
+  margin: 0 0 clamp(16px, 2vw, 24px);
+  padding: 0;
+  font-size: clamp(14px, 1.5vw, 20px);
+  text-align: left;
 }
 
-/*背景画像は隠さない*/
-.event-page-animation-pending .event-detail,
-.event-page-animation-pending .event-title,
-.event-page-animation-pending .event-content>p {
-  opacity: 0;
-  visibility: hidden;
+.detail-body {
+  margin: 0;
+  padding: 0;
+  font-size: clamp(16px, 1.7vw, 22px);
+  line-height: 2;
+  text-align: left;
+  overflow-wrap: anywhere;
 }
 
-.event-detail,
-.event-title {
-  will-change: opacity;
+/* microCMSリッチエディタ内の段落 */
+.detail-body p {
+  margin: 0 0 clamp(16px, 2vw, 24px);
+  line-height: inherit;
 }
 
-.event-content>p {
-  will-change: opacity, transform;
+/* 本文内に画像を入れた場合 */
+.detail-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: clamp(16px, 2vw, 24px) auto;
+}
+
+/* 最後の要素の余白をなくす */
+.detail-body> :last-child {
+  margin-bottom: 0;
+}
+
+.detail-new {
+  display: block;
+  width: fit-content;
+  margin: 0 0 clamp(8px, 1vw, 12px);
+  padding: 2px 8px;
+  color: #fff;
+  background-color: #F30081;
+  border-radius: 999px;
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: bold;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
 /*==contact-page==*/
