@@ -7,7 +7,7 @@
     <link rel="icon" type="image/webp" href="../images/top-images/favicon.webp">
     <link rel="preconnect" href="https://use.typekit.net">
     <link rel="preconnect" href="https://p.typekit.net" crossorigin>
-    <title>event & latest page</title>
+    <title>event-page</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <script>
@@ -23,6 +23,7 @@
 </head>
 
 <body>
+    <div class="particles"></div>
     <div class="wrapper">
         <div id="top"></div>
 
@@ -66,52 +67,16 @@
                 </div>
             </div>
         </header>
-
-        <section class="event-page">
-            <img src="../images/more-images/Ebento.webp" class="event-background" width="2868" height="5798" />
-            <div class="event-detail">
-                <div class="event-title">
-                    <h2>イベント・近況報告</h2>
+        <main class="detail-page">
+                <div class="event-detail">
+                    <div class="event-title">
+                        <h2>近況報告</h2>
+                    </div>
+                    <article id="detail-content" class="detail-content">
+                        <p>読み込み中...</p>
+                    </article>
                 </div>
-                <div class="event-content">
-                    <p class="line-1">「義父との別れ」</p>
-                    <p class="line-2">2025 年3 月 5 日死去3 月 7 日火葬</p>
-                    <p class="line-1">「寒川神社参拝」</p>
-                    <p class="line-2">3 月 8 日</p>
-                    <p class="line-1">「ありがとうを伝えよう」</p>
-                    <p class="line-2">3 月 9 日</p>
-                    <p class="line-1">「震災から１５年」</p>
-                    <p class="line-2">3 月 11 日</p>
-                    <p class="line-1">「弥栄（いやさか）」</p>
-                    <p class="line-2">3 月 23 日</p>
-                    <p class="line-2">宇宙の金卵大鏡 369</p>
-                    <p class="line-3">令和 9 年 9 月 9 日納品</p>
-                    <p class="line-4">3 月 20日以降初めての動画<br>
-                        （斎名智子アワー）に繋がり植原戦士の<br>
-                        「金の卵が割れて、全身を金が流れ包むイメージ」<br>
-                        というメッセージから<br>
-                        『宇宙の金卵大鏡』製作依頼に繋がりました。
-                    </p>
-                    <p class="line-4">ルン・ルの会 植原先生が気になり、<br>
-                        検索すると日程表があり、 3/29 に新潟開催に参加しようと<br>
-                        2026 年 3 月 24 日、 28 日<br>
-                        2回電話をしましたが、繋がらず、<br>
-                        「GOD SEAL（ゴッド・シール）」<br>
-                        4 月 10 日（キミハ、ナニシニ地球ヘキタノ）を知り、<br>
-                        「似顔絵屋コハルビヨリ」<br>4 月 12日「丙午（ひのえうま）年を生きる」<br>
-                        4 月 13 日（月）東京に仕事があり、<br>
-                        実家に足を延ばしました。</p>
-                    <p class="line-4">
-                        以前購入した、土産神社の御守が<br>
-                        私のお迎えを待っていたかのように、<br>
-                        階段を上り、二階に上がるとすぐ目に留まって連れてきた。<br>
-                        『うま（馬・上手）くいく』。<br>
-                        ちゃんと、うまくいくようにお財布とぴったりの緑色で<br>
-                        驚きました。
-                    </p>
-                </div>
-            </div>
-        </section>
+        </main>
 
         <footer class="footer-animation-pending">
             <div class="footer-top">
@@ -161,6 +126,7 @@
         </footer>
         <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+        <script src="../js/latest-detail.js"></script>
         <script src="../js/main.js"></script>
     </div>
 </body>
