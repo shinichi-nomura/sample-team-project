@@ -1,8 +1,5 @@
 @charset "utf-8";
 
-/* ==================================================
- * 01. 共通設定・改行・装飾枠
- * ================================================== */
 .section-frame {
   position: absolute;
   inset: 0;
@@ -63,7 +60,7 @@
 }
 
 /* ==================================================
- * 02. ヘッダー・ナビゲーション
+ *  ヘッダー・ナビゲーション
  * ================================================== */
 @media (width < 1100px) {
   header {
@@ -292,7 +289,7 @@
 }
 
 /* ==================================================
- * 03. Hero
+ *  Hero
  * ================================================== */
 @media (max-width: 800px) {
   .hero {
@@ -392,7 +389,7 @@
 }
 
 /* ==================================================
- * 04. 挨拶
+ *  挨拶
  * ================================================== */
 .greeting,
 .greeting-picture {
@@ -520,7 +517,7 @@
 
 
 /* ==================================================
- * 05. 水素
+ *  水素
  * ================================================== */
 .suiso {
   position: relative;
@@ -813,7 +810,7 @@
 }
 
 /* ==================================================
- * 06. 個性心理學
+ *  個性心理學
  * ================================================== */
 @media (max-width: 800px) {
   .koseisinrigaku h3 {
@@ -856,7 +853,7 @@
 }
 
 /* ==================================================
- * 07. 八つのヒント
+ *  八つのヒント
  * ================================================== */
 @media (max-width: 800px) and (max-width: 600px) {
   .eightTips h3 {
@@ -979,7 +976,7 @@
 }
 
 /* ==================================================
- * 08. イベント・お知らせ一覧
+ *  イベント・お知らせ一覧
  * ================================================== */
 @media (max-width: 800px) {
   .events {
@@ -1142,7 +1139,7 @@
 }
 
 /* ==================================================
- * 09. 著書
+ *  著書
  * ================================================== */
 .book {
   overflow: hidden;
@@ -1600,7 +1597,7 @@
 }
 
 /* ==================================================
- * 10. フッター
+ *  フッター
  * ================================================== */
 @media (max-width: 800px) {
   .footer-left img {
@@ -1694,7 +1691,7 @@
 }
 
 /* ==================================================
- * 11. 初めての方・ペガサス
+ *  初めての方・ペガサス
  * ================================================== */
 @media (max-width: 1100px) {
 
@@ -2061,174 +2058,11 @@
 }
 
 /* ==================================================
- * 12. イベント詳細ページ
+ *  イベント詳細ページ
  * ================================================== */
 
-@media (max-width: 800px) {
-  .event-page {
-    width: 96%;
-    margin: clamp(84px, 12.25vw, 98px) auto clamp(24px, 5vw, 40px);
-  }
-
-  .event-background {
-    width: 100%;
-    height: auto;
-  }
-
-  .event-detail {
-    top: 4%;
-    bottom: 1.5%;
-    width: 92%;
-    padding: clamp(8px, 2.5vw, 16px);
-    border-width: clamp(2px, 0.4vw, 3px);
-  }
-
-  .event-title {
-    margin: clamp(8px, 2.5vw, 18px) 0 clamp(8px, 2vw, 14px);
-    padding: 0 clamp(10px, 3vw, 20px);
-    border-width: clamp(2px, 0.4vw, 3px);
-  }
-
-  .event-title h2 {
-    margin: clamp(8px, 2vw, 14px) 0;
-    font-size: clamp(24px, 6.2vw, 34px);
-    line-height: 1.35;
-    letter-spacing: clamp(0.5px, 0.3vw, 2px);
-  }
-
-  .event-content p {
-    font-size: clamp(14px, 3.4vw, 20px);
-    line-height: 1.5;
-    letter-spacing: clamp(0px, 0.15vw, 1px);
-    overflow-wrap: anywhere;
-  }
-
-  .line-1 {
-    padding-bottom: clamp(1px, 0.3vw, 2px);
-  }
-
-  .line-2 {
-    padding-bottom: clamp(5px, 1.5vw, 12px);
-  }
-
-  .line-3 {
-    padding-bottom: clamp(16px, 4vw, 32px);
-  }
-
-  .line-4 {
-    padding-bottom: clamp(8px, 2.5vw, 18px);
-  }
-}
-
-@media (max-width: 600px) {
-  .event-page {
-    width: 96%;
-    margin: clamp(84px, 12.25vw, 98px) auto clamp(24px, 5vw, 40px);
-  }
-
-  .event-background {
-    width: 100%;
-    height: auto;
-  }
-
-  .event-detail {
-    top: 4%;
-    bottom: 1.5%;
-    width: 92%;
-    padding: clamp(8px, 2.5vw, 16px);
-    border-width: clamp(1px, 0.2vw, 1px);
-  }
-
-  .event-title {
-    margin: clamp(8px, 2.5vw, 18px) 0 clamp(8px, 2vw, 14px);
-    padding: 0 clamp(10px, 3vw, 20px);
-    border-width: clamp(1px, 0.2vw, 1px);
-  }
-
-  .event-title h2 {
-    margin: clamp(8px, 2vw, 14px) 0;
-    font-size: clamp(20px, 5.8vw, 30px);
-    line-height: 1.35;
-    letter-spacing: clamp(0.5px, 0.3vw, 2px);
-  }
-
-  .event-content p {
-    font-size: clamp(5px, 3.7vw, 15px);
-    line-height: 1.5;
-    letter-spacing: clamp(0px, 0.15vw, 1px);
-    overflow-wrap: anywhere;
-  }
-
-  .line-1 {
-    padding-bottom: clamp(1px, 0.3vw, 2px);
-  }
-
-  .line-2 {
-    padding-bottom: clamp(3px, 1.3vw, 11px);
-  }
-
-  .line-3 {
-    padding-bottom: clamp(14px, 3.8vw, 30px);
-  }
-
-  .line-4 {
-    padding-bottom: clamp(4px, 2vw, 12px);
-  }
-}
-
-.event-content {
-  overflow-wrap: anywhere;
-}
-
-@media (max-width: 1100px) {
-  .event-page {
-    isolation: isolate;
-    padding: clamp(28px, 5vw, 56px) 0;
-  }
-
-  .event-background {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-  }
-
-  .event-background {
-    width: 100%;
-    height: 100%;
-    object-position: center;
-  }
-
-  .event-page {
-    margin-top: 110px;
-  }
-
-  .event-detail {
-    position: relative;
-    inset: auto;
-    transform: none;
-    width: 90%;
-    margin: 0 auto;
-    padding: clamp(16px, 3vw, 32px);
-  }
-
-  .event-content p {
-    font-size: clamp(16px, 2vw, 22px);
-    line-height: 1.8;
-  }
-
-  .event-page {
-    margin-top: var(--page-header-height);
-  }
-
-  .event-background {
-    object-fit: cover;
-    object-position: center top;
-  }
-}
-
-
 /* ==================================================
- * 13. お問い合わせ
+ *  お問い合わせ
  * ================================================== */
 @media (max-width: 1100px) {
   .contact-form {
@@ -2666,7 +2500,7 @@
     flex-direction: row;
     align-items: flex-start;
     gap: clamp(5px, 2vw, 10px);
-    margin: clamp(8px, 2vw, 14px) 0 clamp(-22px, -3vw, -12px);
+    margin: clamp(4px, 1vw, 10px) 0 clamp(-22px, -3vw, -12px);
   }
 
   .contact .form-row .form-group {
@@ -2700,44 +2534,39 @@
 
   .contact input,
   .contact select {
-    height: clamp(32px, 8vw, 40px);
-    padding:
-      clamp(4px, 1vw, 6px)
-      clamp(5px, 1.5vw, 8px);
+    height: clamp(28px, 7vw, 36px);
+    padding: clamp(4px, 1vw, 6px) clamp(5px, 1.5vw, 8px);
   }
 
   .contact .full-group {
     width: 100%;
-    margin-top: clamp(8px, 2vw, 14px);
+    margin-top: clamp(4px, 1vw, 10px);
     margin-bottom: clamp(-22px, -3vw, -12px);
   }
 
   .contact .tell-section {
     flex-direction: row;
     gap: clamp(5px, 2vw, 10px);
-    margin-top: clamp(20px, 4vw, 30px);
+    margin: clamp(20px, 4vw, 30px) 0 clamp(2px, 0.5vw, 4px);
   }
 
   .contact .address-group {
     width: 80%;
-    margin: clamp(-30px, -4vw, -18px) 0;
+    margin: clamp(-12px, -5.2vw, -20px) 0;
   }
 
   .contact .zip-field {
-    margin-bottom: clamp(-20px, -2.8vw, -10px);
+    margin-bottom: clamp(-16px, -2.4vw, -4px);
   }
-
 
   .contact .zip-row {
     flex-wrap: nowrap;
     gap: clamp(3px, 1vw, 6px);
   }
 
-
   .contact .zip-mark {
     font-size: clamp(13px, 3vw, 18px);
   }
-
 
   .contact .zip-input {
     flex: 1 1 auto;
@@ -2745,28 +2574,16 @@
     min-width: 0;
   }
 
-
   .contact .address-search {
     flex-shrink: 0;
-
     min-height: 32px;
-
-    padding:
-      clamp(3px, 1vw, 5px)
-      clamp(4px, 1.5vw, 8px);
-
+    padding: clamp(3px, 1vw, 5px) clamp(4px, 1.5vw, 8px);
     font-size: clamp(10px, 2.5vw, 13px);
   }
-
 
   .contact .zip-field .error-message {
     left: 9%;
   }
-
-
-  /* =========================
-     お問い合わせ内容
-  ========================= */
 
   .contact .details {
     margin-top: clamp(10px, 2.5vw, 18px);
@@ -2777,48 +2594,307 @@
     font-size: clamp(10px, 2.6vw, 14px);
   }
 
-
   .contact textarea {
-    height: clamp(80px, 22vw, 120px);
+    height: clamp(60px, 14vw, 100px);
   }
 
-
-  /* =========================
-     決定ボタン
-  ========================= */
 
   .contact .decision {
-    width: clamp(140px, 60%, 220px);
-
-    height: clamp(34px, 8vw, 42px);
-
-    margin-top: clamp(8px, 2vw, 14px);
-
-    font-size: clamp(12px, 2.8vw, 16px);
-
-    border-radius: clamp(10px, 3vw, 18px);
+    width: clamp(120px, 55%, 190px);
+    height: clamp(30px, 7vw, 36px);
+    margin-top: -20px;
+    font-size: clamp(11px, 2.5vw, 14px);
+    border-radius: clamp(8px, 2.5vw, 15px);
   }
-
 
   .contact .form-status {
     font-size: clamp(10px, 2.5vw, 12px);
   }
-
-
-  /* =========================
-     エラーメッセージ
-  ========================= */
 
   .contact .field .error-message,
   .contact .mail .error-message,
   .contact .mail-r .error-message,
   .contact .zip-field .error-message,
   .contact .textarea-wrapper .error-message {
-
-    padding:
-      clamp(3px, 1vw, 5px)
-      clamp(5px, 1.5vw, 8px);
-
+    padding: clamp(3px, 1vw, 5px) clamp(5px, 1.5vw, 8px);
     font-size: clamp(8px, 2vw, 10px);
+  }
+}
+
+@media (max-width: 500px) {
+  .header-inner {
+    padding-inline: clamp(10px, 3vw, 15px);
+  }
+
+  .header-logo {
+    width: min(72%, 320px);
+  }
+
+  .nav-menu {
+    padding-inline: clamp(16px, 4vw, 20px);
+  }
+
+  .hero {
+    margin-bottom: clamp(24px, 6vw, 30px);
+  }
+
+  .greeting {
+    padding-block: clamp(22px, 5.2vw, 26px);
+  }
+
+  .greeting h4 {
+    font-size: clamp(22px, 5vw, 25px);
+    white-space: normal;
+  }
+
+  .greet {
+    margin-block: clamp(18px, 4vw, 20px);
+  }
+
+  .greet p {
+    font-size: clamp(18px, 4vw, 20px);
+  }
+
+  .greeting .greet-content {
+    width: 90%;
+    font-size: clamp(12px, 2.6vw, 13px);
+    letter-spacing: clamp(0.1px, 0.1vw, 0.5px);
+    line-height: 1.9;
+  }
+
+  .profile-button {
+    width: clamp(130px, 30vw, 150px);
+    margin-top: clamp(18px, 4vw, 20px);
+  }
+
+  .suiso {
+    padding: clamp(22px, 5vw, 25px) 5%;
+    gap: clamp(14px, 3.2vw, 16px) clamp(12px, 2.8vw, 14px);
+  }
+
+  .suiso-content {
+    margin-top: clamp(16px, 4vw, 20px);
+  }
+
+  .suiso h3 {
+    font-size: clamp(22px, 5.4vw, 27px);
+  }
+
+  .suiso-content>p:not(.suiso-p) {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+
+  .suiso .suiso-content p.suiso-p {
+    font-size: clamp(13px, 3vw, 15px);
+    margin-top: clamp(32px, 8vw, 40px);
+    line-height: 1.9;
+  }
+
+  .suiso1,
+  .suiso2 {
+    width: 50%;
+    max-width: 110px;
+    top: -26px;
+  }
+
+  .suiso-button {
+    top: auto;
+    bottom: 18px;
+    width: clamp(124px, 38vw, 174px);
+  }
+
+  /* 個性心理學・八つのヒント */
+  .koseisinrigaku h3 {
+    font-size: clamp(24px, 7vw, 35px);
+  }
+
+  .koseisinrigaku p {
+    width: 92%;
+    font-size: clamp(10px, 2.6vw, 13px);
+  }
+
+  .eightTips h3 {
+    font-size: clamp(25px, 6vw, 30px);
+    margin-bottom: -18px;
+  }
+
+  .tips {
+    row-gap: clamp(12px, 2.8vw, 14px);
+  }
+
+  .tip p {
+    font-size: clamp(12px, 3vw, 15px);
+  }
+
+  /* 一覧：長いタイトルを折り返す */
+  .notice-title {
+    font-size: clamp(14px, 3.4vw, 17px);
+    overflow-wrap: anywhere;
+  }
+
+  .notice-body {
+    font-size: clamp(13px, 2.8vw, 14px);
+  }
+
+  /* 著書：600pxの並び順をそのまま継承 */
+  .book {
+    padding-inline: clamp(12px, 3vw, 15px);
+  }
+
+  .book h4 {
+    font-size: clamp(21px, 5vw, 25px);
+  }
+
+  .book .book-content h5 {
+    font-size: clamp(12px, 2.9vw, 15px);
+    line-height: 1.5;
+  }
+
+  .book .book-content p.book-description-mobile {
+    font-size: clamp(11px, 2.5vw, 13px);
+    line-height: 1.6;
+  }
+
+  .book .book-item:first-child {
+    column-gap: clamp(8px, 2.5vw, 12px);
+  }
+
+  .book .book-item:first-child .book-image {
+    width: clamp(110px, 26vw, 160px);
+    height: auto;
+  }
+
+  .book .book-item:nth-child(2) .book-images {
+    top: -72px;
+  }
+
+  .book .book-item:nth-child(2) .book-image-2 {
+    height: clamp(140px, 35vw, 175px);
+    margin-top: clamp(16px, 3.2vw, 20px);
+  }
+
+  .book .book-item:nth-child(2) .book-description-mobile {
+    margin-top: clamp(35px, 9vw, 48px);
+  }
+
+  .book .purchase {
+    width: clamp(125px, 35vw, 170px);
+    font-size: clamp(12px, 2.6vw, 14px);
+    margin-top: clamp(-10px, -1.2vw, -4px);
+  }
+
+  /* 下層ページ：既存の配置・画像比率を継承 */
+  .first-greet-image {
+    width: clamp(60px, 17vw, 85px);
+  }
+
+  .first-greet .name {
+    font-size: clamp(8px, 2.4vw, 12px);
+    top: 11%;
+  }
+
+  .first-greet .title-1 {
+    top: 14%;
+  }
+
+  .first-greet .title-2 {
+    top: 17.5%;
+  }
+
+  .first-greet .title-3 {
+    top: 20.5%;
+  }
+
+  .first-greet .title-4 {
+    top: 24.5%;
+  }
+
+
+  .message p {
+    font-size: clamp(8px, 2.4vw, 12px);
+  }
+
+  .message-1 {
+    top: 32%;
+  }
+
+  .message-2 {
+    top: 54%;
+  }
+
+  .message-3 {
+    top: 65%;
+  }
+
+  .message-4 {
+    top: 79.5%;
+  }
+
+  .pegasus-title-1,
+  .pegasus-title-2,
+  .pegasus-title-3 {
+    font-size: clamp(24px, 7.2vw, 36px);
+  }
+
+  .pegasus-content-1,
+  .pegasus-content-2 {
+    font-size: clamp(11px, 2.9vw, 20px);
+  }
+
+  /* お問い合わせ：入力文字16pxと既存のエラー領域を維持 */
+  .contact {
+     --error-space: clamp(40px, 8vw, 50px);
+    width: 90%;
+    padding-inline: clamp(8px, 2vw, 10px);
+  }
+
+  .contact-form h2 {
+    font-size: clamp(18px, 4.4vw, 20px);
+    margin-bottom: clamp(-10px, -1.2vw, -4px);
+  }
+
+  .contact .form-row {
+    margin-top: clamp(2px, 0.8vw, 6px);
+    margin-bottom: clamp(-26px, -4vw, -16px);
+  }
+
+  .contactform .form-group {
+    margin-top: clamp(-20px, -4.6vw, -23px);
+  }
+
+  .contact .full-group {
+    margin-top: clamp(2px, 0.8vw, 6px);
+    margin-bottom: clamp(-26px, -4vw, -16px);
+  }
+
+  .contact .tell-section {
+    margin-top: clamp(14px, 3vw, 20px);
+    margin-bottom: 0;
+  }
+
+  .contact .address-group {
+    width: 94%;
+  }
+
+  .contact .address-item {
+    margin-bottom: clamp(8px, 1.8vw, 14px);
+  }
+
+  .contact .zip-row {
+    gap: clamp(3px, 0.8vw, 4px);
+  }
+
+  .contact #prefecture {
+    font-size: clamp(11px, 2.4vw, 14px);
+  }
+
+  .contact textarea {
+    height: clamp(54px, 10vw, 80px);
+  }
+
+  /* フッター */
+  .sns-box {
+    width: clamp(32px, 8vw, 40px);
+    height: clamp(32px, 8vw, 40px);
   }
 }
