@@ -718,8 +718,11 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     padding: clamp(25.2px, 4.6667vw, 28px) 6%;
-    gap:
-      clamp(18px, 3.3333vw, 20px) clamp(14.4px, 2.6667vw, 16px);
+    gap: clamp(18px, 3.3333vw, 20px) clamp(14.4px, 2.6667vw, 16px);
+    height: auto;
+    min-height: 0;
+    aspect-ratio: auto;
+    padding-bottom: clamp(16px, 3vw, 18px);
   }
 
   .suiso-image {
@@ -780,7 +783,9 @@
     bottom: auto;
     width: 72%;
     max-width: 125px;
-    top: -54px;
+    top: auto;
+    margin-top: -54px;
+    align-self: start;
   }
 
   .suiso1 {
@@ -800,11 +805,11 @@
   .suiso-button {
     position: relative;
     top: auto;
-    bottom: 60%;
     left: 50%;
     grid-column: 1 / -1;
     grid-row: 3;
     width: clamp(145px, 45vw, 215px);
+    margin-top: clamp(-180px, -32vw, -130px);
     transform: translateX(-50%);
   }
 }
@@ -820,10 +825,17 @@
     text-align: center;
   }
 
-  .koseisinrigaku p {
-    bottom: 6%;
+  .koseisinrigaku .kosei-p1 {
+    bottom: 9%;
     margin: 0;
     font-size: clamp(12px, 3vw, 20px);
+    text-align: center;
+  }
+
+  .koseisinrigaku .kosei-p2 {
+    bottom: 5%;
+    margin: 0;
+    font-size: clamp(6px, 2.4vw, 14px);
     text-align: center;
   }
 }
@@ -832,20 +844,27 @@
   .koseisinrigaku h3 {
     top: 42%;
     width: 90%;
-    font-size: clamp(22px, 8vw, 40px);
+    font-size: clamp(18px, 7.6vw, 36px);
     text-align: center;
   }
 
-  .koseisinrigaku p {
-    bottom: 8%;
+  .koseisinrigaku .kosei-p1 {
+    bottom: 9%;
     margin: 0;
     font-size: clamp(10px, 2.8vw, 18px);
+    text-align: center;
+  }
+
+  .koseisinrigaku .kosei-p2 {
+    bottom: 5%;
+    margin: 0;
+    font-size: clamp(4px, 2.2vw, 12px);
     text-align: center;
   }
 }
 
 @media (max-width: 1100px) {
-  .koseisinrigaku p {
+  .koseisinrigaku .kosei-p1 {
     white-space: normal;
     width: 90%;
     line-height: 1.5;
@@ -1725,33 +1744,33 @@
 
   .first-greet-image {
     position: absolute;
-    top: 2%;
+    top: 3%;
     left: 50%;
-    z-index: 2;
-    width: clamp(110px, 14.5vw, 175px);
+    right: auto;
+    display: block;
+    width: clamp(90px, 13vw, 140px);
     height: auto;
     margin: 0;
     transform: translateX(-50%);
   }
 
-  .name {
+  .first-greet .name {
     position: absolute;
-    top: 10.5%;
+    top: 7.5%;
     left: 50%;
-    z-index: 2;
-    display: block;
+    right: auto;
+    width: max-content;
     margin: 0;
-    padding: clamp(1px, 0.3vw, 3px) clamp(8px, 1.2vw, 14px);
-    font-size: clamp(15px, 1.7vw, 20px);
-    line-height: 1.4;
     transform: translateX(-50%);
+    text-align: center;
+    z-index: 5;
   }
 
   .first-greet h2,
   .first-greet h3 {
     position: absolute;
     left: 50%;
-    z-index: 2;
+    z-index: 4;
     width: 92%;
     margin: 0;
     line-height: 1.3;
@@ -1942,11 +1961,12 @@
 
   .first-greet-image {
     width: clamp(75px, 17vw, 140px);
-    top: 1%;
   }
 
-  .name {
+  .first-greet .name {
+    top: 7%;
     font-size: clamp(11px, 2.3vw, 18px);
+    z-index: 5;
   }
 
   .title-1 {
@@ -2000,32 +2020,38 @@
 @media (max-width: 600px) {
 
   .first-greet-image {
-    width: clamp(60px, 18vw, 120px);
+    top: 2%;
+    left: 50%;
+    width: clamp(74px, 24vw, 104px);
+    transform: translateX(-50%);
   }
 
-  .name {
-    font-size: clamp(8px, 2.8vw, 13px);
-    top: 12.5%;
+  .first-greet .name {
+    top: 11.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(11px, 3vw, 15px);
+    z-index: 5;
   }
 
   .title-1 {
     font-size: clamp(9px, 3.7vw, 22px);
-    top: 16%;
+    top: 16.5%;
   }
 
   .title-2 {
     font-size: clamp(8px, 3.3vw, 18px);
-    top: 19%;
+    top: 19.5%;
   }
 
   .title-3 {
     font-size: clamp(11px, 4.3vw, 26px);
-    top: 21.5%;
+    top: 22%;
   }
 
   .title-4 {
     font-size: clamp(9px, 3.7vw, 22px);
-    top: 25.5%;
+    top: 26%;
   }
 
   .message-frame {
@@ -2056,10 +2082,6 @@
     display: none;
   }
 }
-
-/* ==================================================
- *  イベント詳細ページ
- * ================================================== */
 
 /* ==================================================
  *  お問い合わせ
@@ -2464,7 +2486,7 @@
     width: clamp(160px, 60%, 250px);
     height: clamp(38px, 6vw, 46px);
     font-size: clamp(14px, 2.5vw, 18px);
-    margin-top: clamp(8px, 1.5vw, 16px);
+    margin-top: clamp(12px, 2vw, 20px);
   }
 
   .contact .field .error-message,
@@ -2670,6 +2692,7 @@
   .suiso {
     padding: clamp(22px, 5vw, 25px) 5%;
     gap: clamp(14px, 3.2vw, 16px) clamp(12px, 2.8vw, 14px);
+    padding-bottom: clamp(16px, 3vw, 18px);
   }
 
   .suiso-content {
@@ -2694,23 +2717,46 @@
   .suiso2 {
     width: 50%;
     max-width: 110px;
-    top: -26px;
+    top: clamp(-16px, -3.2vw, -6px);
   }
 
   .suiso-button {
     top: auto;
     bottom: 18px;
     width: clamp(124px, 38vw, 174px);
+    margin-top: clamp(-110px, -20vw, -80px);
   }
 
   /* 個性心理學・八つのヒント */
   .koseisinrigaku h3 {
-    font-size: clamp(24px, 7vw, 35px);
+    top: 42%;
+    left: 50%;
+    width: 90%;
+    transform: translateX(-50%);
+    font-size: clamp(14px, 7.2vw, 32px);
+    text-align: center;
   }
 
-  .koseisinrigaku p {
+  .koseisinrigaku .kosei-p1 {
+    left: 50%;
+    bottom: 9%;
     width: 92%;
+    margin: 0;
+    transform: translateX(-50%);
     font-size: clamp(10px, 2.6vw, 13px);
+    text-align: center;
+    white-space: normal;
+  }
+
+  .koseisinrigaku .kosei-p2 {
+    left: 50%;
+    bottom: 5%;
+    width: 92%;
+    margin: 0;
+    transform: translateX(-50%);
+    font-size: clamp(5px, 1.7vw, 8px);
+    text-align: center;
+    white-space: normal;
   }
 
   .eightTips h3 {
@@ -2780,7 +2826,7 @@
   .book .purchase {
     width: clamp(125px, 35vw, 170px);
     font-size: clamp(12px, 2.6vw, 14px);
-    margin-top: clamp(-10px, -1.2vw, -4px);
+    margin: clamp(-10px, -1.2vw, -4px) 0 clamp(1px, 0.5vw, 2px);
   }
 
   /* 下層ページ：既存の配置・画像比率を継承 */
@@ -2790,23 +2836,23 @@
 
   .first-greet .name {
     font-size: clamp(8px, 2.4vw, 12px);
-    top: 11%;
+    top: 11.5%;
   }
 
   .first-greet .title-1 {
-    top: 14%;
+    top: 15.5%;
   }
 
   .first-greet .title-2 {
-    top: 17.5%;
+    top: 19%;
   }
 
   .first-greet .title-3 {
-    top: 20.5%;
+    top: 22%;
   }
 
   .first-greet .title-4 {
-    top: 24.5%;
+    top: 26%;
   }
 
 
@@ -2841,34 +2887,44 @@
     font-size: clamp(11px, 2.9vw, 20px);
   }
 
-  /* お問い合わせ：入力文字16pxと既存のエラー領域を維持 */
+  /* お問い合わせ*/
   .contact {
-     --error-space: clamp(40px, 8vw, 50px);
+    --error-space: clamp(38px, 8vw, 44px);
     width: 90%;
     padding-inline: clamp(8px, 2vw, 10px);
+    bottom: 1%;
+  }
+
+  .contact-title {
+    margin-top: clamp(18px, 5vw, 26px);
   }
 
   .contact-form h2 {
     font-size: clamp(18px, 4.4vw, 20px);
-    margin-bottom: clamp(-10px, -1.2vw, -4px);
+    margin-bottom: clamp(4px, 1.2vw, 6px);
   }
 
   .contact .form-row {
-    margin-top: clamp(2px, 0.8vw, 6px);
-    margin-bottom: clamp(-26px, -4vw, -16px);
-  }
-
-  .contactform .form-group {
-    margin-top: clamp(-20px, -4.6vw, -23px);
+    margin-top: 0;
+    margin-bottom: clamp(-8px, -1.6vw, -2px);
   }
 
   .contact .full-group {
-    margin-top: clamp(2px, 0.8vw, 6px);
-    margin-bottom: clamp(-26px, -4vw, -16px);
+    margin-top: 0;
+    margin-bottom: clamp(-12px, -2vw, -6px);
+  }
+
+  .contact .company-group {
+    margin-top: clamp(6px, 1.5vw, 10px);
+  }
+
+  .contact .error-message {
+    font-size: clamp(8px, 2vw, 10px);
+    line-height: 1.25;
   }
 
   .contact .tell-section {
-    margin-top: clamp(14px, 3vw, 20px);
+    margin-top: clamp(10px, 2.5vw, 16px);
     margin-bottom: 0;
   }
 
@@ -2876,20 +2932,25 @@
     width: 94%;
   }
 
+  .contact .zip-field {
+    margin-bottom: clamp(-4px, -0.5vw, -1px);
+  }
+
   .contact .address-item {
-    margin-bottom: clamp(8px, 1.8vw, 14px);
-  }
-
-  .contact .zip-row {
-    gap: clamp(3px, 0.8vw, 4px);
-  }
-
-  .contact #prefecture {
-    font-size: clamp(11px, 2.4vw, 14px);
+    margin-bottom: clamp(8px, 2vw, 12px);
   }
 
   .contact textarea {
-    height: clamp(54px, 10vw, 80px);
+    height: clamp(40px, 8vw, 55px);
+    min-height: 40px;
+  }
+
+  .contact .decision {
+    width: clamp(105px, 48%, 165px);
+    height: clamp(26px, 6vw, 32px);
+    margin-top: -20px;
+    font-size: clamp(10px, 2.2vw, 12px);
+    border-radius: clamp(7px, 2vw, 12px);
   }
 
   /* フッター */
