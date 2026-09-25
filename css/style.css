@@ -68,7 +68,7 @@ html.wf-loading body {
 .greet p,
 .greet-content,
 .suiso p,
-.koseisinrigaku p,
+.koseisinrigaku .kosei-p1,
 .tip p,
 .event-contents p,
 .latest-contents p,
@@ -586,7 +586,7 @@ main p {
   position: absolute;
   width: clamp(140px, 22vw, 295px);
   height: auto;
-  bottom: 12%;
+  bottom: 2%;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -598,6 +598,15 @@ main p {
   width: 96%;
   margin: 0 auto clamp(40px, 5vw, 64px);
   max-width: 1240px;
+}
+
+.koseisinrigaku-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .koseisinrigaku-image {
@@ -623,7 +632,7 @@ main p {
   margin: 0;
 }
 
-.koseisinrigaku p {
+.koseisinrigaku .kosei-p1 {
   letter-spacing: clamp(0.5px, 0.15vw, 2px);
   position: absolute;
   bottom: 6%;
@@ -634,6 +643,22 @@ main p {
   text-shadow: 1px 1px 1px black, -1px -1px 1px black,
     -1px 1px 1px black, 1px -1px 1px black,
     1px 0px 1px black, -1px -0px 1px black,
+    0px 1px 1px black, 0px -1px 1px black;
+}
+
+.koseisinrigaku .kosei-p2 {
+  letter-spacing: clamp(0.5px, 0.15vw, 2px);
+  position: absolute;
+  bottom: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  white-space: nowrap;
+  margin: 0;
+  text-shadow:
+    1px 1px 1px black, -1px -1px 1px black,
+    -1px 1px 1px black, 1px -1px 1px black,
+    1px 0px 1px black, -1px 0px 1px black,
     0px 1px 1px black, 0px -1px 1px black;
 }
 
@@ -2038,7 +2063,7 @@ textarea {
   padding: 0 clamp(60px, 12vw, 176px);
   border-radius: clamp(16px, 1.3vw, 32px);
   cursor: pointer;
-  margin-top: clamp(40px, 5vw, 64px);
+  margin-top: clamp(90px, 27vw, 100px);
   box-shadow: 10px 5px 5px gray;
   transition:
     transform 0.1s ease,
