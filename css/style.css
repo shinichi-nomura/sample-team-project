@@ -102,7 +102,6 @@ small {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-
   background: radial-gradient(circle,
       var(--c1) 0%,
       var(--c2) 15%,
@@ -188,8 +187,8 @@ textarea {
 }
 
 body.menu-open {
-  overflow: hidden;
-  touch-action: none;
+  overflow: auto;
+  touch-action: auto;
 }
 
 .wrapper {
@@ -652,7 +651,6 @@ main p {
   bottom: 7%;
   left: 50%;
   transform: translateX(-50%);
-
   white-space: nowrap;
   margin: 0;
   text-shadow:
@@ -664,59 +662,85 @@ main p {
 
 /*==eightTips==*/
 .eightTips {
+  position: relative;
+  isolation: isolate;
   max-width: 1240px;
   width: 96%;
-  padding-bottom: clamp(40px, 5vw, 64px);
   margin: 0 auto clamp(40px, 5vw, 64px);
+  padding: 0;
   overflow: hidden;
 }
 
-.eightTips h3 {
-  margin: 0 0 clamp(-55px, -4vw, -30px);
-  text-align: center;
-  font-size: clamp(24px, 2.9vw, 36px);
-  font-weight: normal;
-}
-
-.tips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
-}
-
-.tip {
-  position: relative;
-  width: 25%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 0 0 24%;
-  will-change: transform, opacity;
-}
-
-.tip:nth-child(-n + 4) {
-  margin-bottom: clamp(-116px, -7.6vw, -56px);
-}
-
-.tip img {
-  width: 140%;
-  height: auto;
+.eightTips-background {
   display: block;
-  margin: 0 auto;
+  width: 100%;
+  height: auto;
 }
 
-.tip p {
-  text-align: center;
-  color: black;
-  text-shadow: 1px 1px 0 white;
-  font-size: clamp(14px, 1.9vw, 24px);
+.eightTips-link .eightTips-item {
   position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 3;
+  display: block;
+  left: var(--tip-x);
+  top: var(--tip-y);
+  width: 14.2%;
+  height: auto;
+  margin: 0;
+  transform: translate(-50%, -50%);
+}
+
+.eightTips-link {
+  display: block;
+  text-decoration: none;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.eightTips-link .eightTips-item {
+  transition: filter 0.3s ease;
+}
+
+.eightTips-link:hover .eightTips-item {
+  filter: brightness(0.7);
+}
+
+.eightTips-item--1 {
+  --tip-x: 49.7%;
+  --tip-y: 27.6%;
+}
+
+.eightTips-item--2 {
+  --tip-x: 63.7%;
+  --tip-y: 33.3%;
+}
+
+.eightTips-item--3 {
+  --tip-x: 69%;
+  --tip-y: 53.3%;
+}
+
+.eightTips-item--4 {
+  --tip-x: 63%;
+  --tip-y: 72.5%;
+}
+
+.eightTips-item--5 {
+  --tip-x: 49.5%;
+  --tip-y: 80%;
+}
+
+.eightTips-item--6 {
+  --tip-x: 36%;
+  --tip-y: 72.5%;
+}
+
+.eightTips-item--7 {
+  --tip-x: 30%;
+  --tip-y: 53.3%;
+}
+
+.eightTips-item--8 {
+  --tip-x: 35.7%;
+  --tip-y: 33.3%;
 }
 
 /*==event,latest==*/
@@ -1043,8 +1067,7 @@ main p {
   display: inline-block;
   box-sizing: border-box;
   margin-top: clamp(24px, 4vw, 50px);
-  padding:
-    clamp(8px, 1vw, 12px) clamp(20px, 3vw, 40px);
+  padding: clamp(8px, 1vw, 12px) clamp(20px, 3vw, 40px);
   color: #fff;
   background: transparent;
   border: 1px solid #fff;
@@ -1228,16 +1251,6 @@ small {
   z-index: 2;
 }
 
-.footer-animation-pending .footer-top-image,
-.footer-animation-pending .footer-right p,
-.footer-animation-pending .footer-bottom,
-.footer-animation-pending .copyright-content,
-.footer-animation-pending .sns-box,
-.footer-animation-pending .privacy-policy {
-  opacity: 0;
-  visibility: hidden;
-}
-
 .footer-top-image,
 .footer-right p,
 .footer-bottom {
@@ -1259,131 +1272,116 @@ small {
   position: relative;
   max-width: 1240px;
   width: 100%;
-  margin: 0 auto clamp(20px, 2.5vw, 32px);
+  margin: var(--page-header-height, 96px) auto 32px;
+  padding-top: clamp(20px, 4vw, 48px);
   text-align: center;
 }
 
-.message-background {
-  width: 100%;
-  height: auto;
-  display: block;
+.first-greet .first-profile {
+  position: relative;
+  margin: 0 auto 20px;
 }
 
 .first-greet-image {
+  position: relative;
+  display: block;
+  width: clamp(85px, 16vw, 200px);
   height: auto;
-  position: absolute;
-  top: 4.4%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(110px, 11vw, 260px);
-  height: auto;
-  filter: drop-shadow(0 0 clamp(6px, 0.8vw, 10px) rgba(255, 255, 255, 1));
+  margin: 0 auto;
+  filter: drop-shadow(0 0 8px white);
 }
 
-.name {
-  position: absolute;
-  top: 11%;
-  left: 50%;
-  text-align: center;
-  transform: translateX(-50%);
-  font-size: clamp(16px, 2vw, 26px);
-  display: inline-block;
-  text-shadow:
-    0.5px 0px 0.5px black,
-    -0.5px 0px 0.5px black,
-    0px 0.5px 0.5px black,
-    0px -0.5px 0.5px black;
-  background: #F30081;
-  padding: clamp(2px, 0.3vw, 3px) clamp(10px, 1.3vw, 16px);
-  border-radius: clamp(14px, 2vw, 24px);
+.first-greet .name {
+  position: relative;
+  width: max-content;
+  margin: -8px auto 0;
+  padding: 2px 12px;
+  border-radius: 24px;
+  background: #f30081;
+  color: white;
+  font-size: clamp(12px, 2vw, 24px);
 }
 
 .first-greet h2,
 .first-greet h3 {
-  position: absolute;
-  left: 50%;
-  color: #F30081;
-  text-shadow:
-    1px 0px 1px white,
-    -1px 0px 1px white,
-    0px 1px 1px white,
-    0px -1px 1px white,
-    6px 6px 8px #F30081;
+  position: relative;
+  width: 94%;
+  margin: 8px auto;
+  color: #f30081;
+  text-shadow: 1px 1px 2px white;
+  line-height: 1.5;
   font-weight: 500;
-  margin: 0 0 clamp(1px, 0.2vw, 2px);
-  text-align: center;
-  transform: translateX(-50%);
-  width: 80%;
 }
 
-.title-1 {
-  top: 14.8%;
-  font-size: clamp(26px, 4vw, 48px);
+.first-greet .title-1,
+.first-greet .title-2,
+.first-greet .title-4 {
+  font-size: clamp(16px, 3.1vw, 38px);
 }
 
-.title-2 {
-  top: 17.4%;
-  font-size: clamp(26px, 4vw, 48px);
+.first-greet .title-3 {
+  font-size: clamp(22px, 4vw, 48px);
 }
 
-.title-3 {
-  top: 19.6%;
-  font-size: clamp(34px, 5.3vw, 66px);
+.first-greet .message {
+  position: relative;
+  isolation: isolate;
+  width: 96%;
+  margin: clamp(24px, 4vw, 48px) auto 0;
+  padding: clamp(24px, 5vw, 62px) 7%;
+  min-height: 0;
+  aspect-ratio: 1;
+  background: #171020;
 }
 
-.title-4 {
-  top: 23.2%;
-  font-size: clamp(26px, 4vw, 48px);
-}
-
-.message-frame {
-  max-width: 1240px;
-  margin: clamp(6px, 0.85vw, 10px) auto 0;
-  display: block;
+/* contain：背景全体を表示し、縦横比を維持する */
+.first-greet .message-background {
   position: absolute;
-  top: 26.2%;
-  left: 50%;
-  width: 90%;
-  height: auto;
-  transform: translateX(-50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  z-index: -2;
+  pointer-events: none;
 }
 
-.message p {
-  max-width: 1240px;
-  margin: 0 auto;
+/* 文字の読みやすさのための半透明の下地 */
+.first-greet .message::before {
+  content: '';
   position: absolute;
-  left: 50%;
-  width: 88%;
-  transform: translateX(-50%);
-  color: black;
-  letter-spacing: clamp(0.5px, 0.16vw, 2px);
-  line-height: clamp(28px, 4vw, 50px);
-  font-size: clamp(18px, 2.7vw, 34px);
-  text-shadow: 2px 2px 2px white,
-    -2px -2px 2px white,
-    -2px 2px 2px white,
-    2px -2px 2px white,
-    2px 0px 2px white,
-    -2px 0px 2px white,
-    0px 2px 2px white,
-    0px -2px 2px white,
-    4px 4px 6px black;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.38);
+  z-index: -1;
+  pointer-events: none;
 }
 
-.message-1 {
-  top: 32.5%;
+.first-greet .message-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 1;
 }
 
-.message-2 {
-  top: 53.5%;
+.first-greet .message p {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  font-size: clamp(12px, 1.65vw, 20px);
+  line-height: 1.9;
+  letter-spacing: 0;
+  color: white;
+  text-shadow: 0 1px 3px black;
+  overflow-wrap: anywhere;
+  z-index: 2;
 }
 
-.message-3 {
-  top: 66%;
-}
-
-.message-4 {
-  top: 81%;
+.first-greet .message p+p {
+  margin-top: 1.5em;
 }
 
 /*JS実行前の一瞬の表示を防ぐ,背景画像は隠さない*/
@@ -1636,8 +1634,7 @@ small {
   width: 90%;
   max-width: 1100px;
   margin: 0 auto clamp(32px, 4vw, 56px);
-  padding:
-    clamp(24px, 4vw, 48px) clamp(20px, 4vw, 48px);
+  padding: clamp(24px, 4vw, 48px) clamp(20px, 4vw, 48px);
   background-color: rgba(128, 128, 128, 0.85);
   border-radius: clamp(6px, 1vw, 12px);
   text-align: left;
@@ -1654,9 +1651,7 @@ small {
 .detail-photo {
   display: block;
   width: auto;
-  /* 高さを基準に画像サイズを調整 */
   height: clamp(200px, 30vw, 400px);
-  /* 横長画像が親要素から飛び出さない */
   max-width: 100%;
   margin: 0 auto clamp(20px, 3vw, 32px);
   object-fit: contain;
@@ -2076,17 +2071,7 @@ textarea {
 }
 
 /*背景画像は隠さない*/
-.contact-page-animation-pending .contact,
-.contact-page-animation-pending .contact-title,
-.contact-page-animation-pending .contact>.form-row,
-.contact-page-animation-pending .contact>.full-group,
-.contact-page-animation-pending .contact>.address-group,
-.contact-page-animation-pending .contact>.details,
-.contact-page-animation-pending .contact>.decision-button {
-  opacity: 0;
-  visibility: hidden;
-}
-
+/* お問い合わせは初期状態から表示 */
 .contact,
 .contact-title {
   will-change: opacity;

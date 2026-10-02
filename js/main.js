@@ -73,8 +73,25 @@
   }
 
   // タブレットの回転・ウィンドウ幅変更後にスクロール禁止を残さない。
-  const compactNavigation = window.matchMedia("(max-width: 1100px)");
+  const compactNavigation = window.matchMedia("(width < 1100px)");
   compactNavigation.addEventListener("change", closeMenu);
+
+  // メニュー外をタップしたら閉じる（背景の操作は妨げない）。
+  document.addEventListener('click', (event) => {
+    if (!navMenu.classList.contains('active')) return;
+    if (!(event.target instanceof Node)) return;
+    if (!navMenu.contains(event.target) && !hamburger.contains(event.target)) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && navMenu.classList.contains('active')) {
+      closeMenu();
+      hamburger.focus();
+    }
+  });
+
 
   hamburger.addEventListener("click", () => {
     const isOpen = navMenu.classList.toggle("active");
@@ -281,7 +298,7 @@
         .then(() => {
           window.setTimeout(moveToTarget, 100);
         })
-        .catch(() => {});
+        .catch(() => { });
     }
     //#bookより上にあるCMSの読み込み後に再調整
     if (targetId === "book") {
@@ -322,13 +339,34 @@
       console.error("GSAPが読み込まれていません。");
       return;
     }
+    // この2か所は他セクションの初期化と独立して開始する。
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      const restoreVisible = (root, selector, error) => {
+        console.error('アニメーションを通常表示へ切り替えました。', error);
+        const section = document.querySelector(root);
+        if (!section) return;
+        const targets = section.querySelectorAll(selector);
+        // エラー時に途中のTweenが再び非表示へ戻さないよう停止する。
+        gsap.killTweensOf(targets);
+        gsap.set(targets, { clearProps: 'opacity,visibility,transform' });
+        section.classList.remove('footer-animation-pending', 'contact-page-animation-pending');
+      };
+      try {
+        initContactPageAnimation();
+      } catch (error) {
+        restoreVisible('.contact-form', '.contact, .contact-title, .contact > .form-row, .contact > .full-group, .contact > .address-group, .contact > .details, .contact > .decision-button', error);
+      }
+      initFooterAnimation().catch(error => {
+        restoreVisible('footer', '.footer-top-image, .footer-right p, .footer-bottom, .copyright-content, .sns-box, .sns-icon, .privacy-policy', error);
+      });
+    }
     // Heroアニメーション
     initHeroAnimation();
-    //eighttipsアニメーション
-    initEightTipsAnimation();
     // ScrollTriggerを使用するアニメーション
     if (typeof ScrollTrigger !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
+      initEightTipsAnimation();
       // Greetingアニメーション
       initGreetingAnimation();
       //suisoアニメーション
@@ -348,9 +386,9 @@
       //eventPageアニメーション
       initEventPageAnimation();
       //contactアニメーション
-      initContactPageAnimation();
+      // お問い合わせは先に初期化済み
       //footerアニメーション
-      initFooterAnimation();
+      // フッターは先に初期化済み
       requestAnimationFrame(() => {
         ScrollTrigger.refresh();
       });
@@ -398,7 +436,7 @@
     await Promise.all(
       images.map((image) => {
         if (typeof image.decode === "function") {
-          return image.decode().catch(() => {});
+          return image.decode().catch(() => { });
         }
         if (image.complete) {
           return Promise.resolve();
@@ -772,87 +810,76 @@
     );
   }
 
-  //八つのヒントアニメーション
+  //一郎堂ときめき部アニメーション
   function initEightTipsAnimation() {
-    const section = document.querySelector(".eightTips");
-    if (!section) return;
-    const tips = gsap.utils.toArray(section.querySelectorAll(".tip"));
-    if (tips.length < 8) return;
-    //HTML上の並びtips[0] tips[1] tips[2] tips[3] tips[4] tips[5] tips[6] tips[7]
-    //グループ1 一番左下段,二番目左上段.三番目左下段,四番目左上段
-    const group1 = [tips[4], tips[1], tips[6], tips[3]];
-    //グループ2 一番左上段,二番目左下段,三番目左上段,四番目左下段
-    const group2 = [tips[0], tips[5], tips[2], tips[7]];
-    //左右の開始位置,数値を大きくするとより遠くから登場
-    const moveDistance = Math.max(200, section.clientWidth * 0.25);
-    // 全Tipを最初は非表示
-    gsap.set(tips, {
+    const section = document.querySelector('.eightTips');
+    if (!section || section.dataset.tipsAnimationReady === 'true') return;
+    const items = Array.from({ length: 8 }, (_, i) =>
+      section.querySelector('.eightTips-item--' + (i + 1))
+    );
+    if (items.some(item => !item)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // CSSの現在の座標を使用。CSS側で位置を変えても追従します。
+    const positions = items.map(item => {
+      const style = getComputedStyle(item);
+      return {
+        x: parseFloat(style.getPropertyValue('--tip-x')),
+        y: parseFloat(style.getPropertyValue('--tip-y')),
+      };
+    });
+    if (positions.some(pos => !Number.isFinite(pos.x) || !Number.isFinite(pos.y))) return;
+    section.dataset.tipsAnimationReady = 'true';
+    // 背景内の中央の円の中心。必要に応じて微調整してください。
+    const center = { x: 49.7, y: 55.3 };
+    const cleanUp = () => {
+      gsap.set(items, {
+        clearProps: 'left,top,transform,transformOrigin,opacity,visibility',
+      });
+      section.removeEventListener('focusin', revealOnFocus);
+    };
+    gsap.set(items, {
+      left: center.x + '%',
+      top: center.y + '%',
+      x: 0,
+      y: 0,
+      xPercent: -50,
+      yPercent: -50,
+      scale: 0.02,
+      rotation: 0,
       autoAlpha: 0,
-      scale: 0.92,
+      transformOrigin: '50% 50%',
     });
-    // グループ1は左側に配置
-    gsap.set(group1, {
-      x: -moveDistance,
-    });
-    // グループ2は右側に配置
-    gsap.set(group2, {
-      x: moveDistance,
-    });
-    //通常のGSAPタイムライン,スクロール量とは連動ない
     const timeline = gsap.timeline({
-      paused: true,
-      defaults: {
-        duration: 2.4,
-        ease: "power3.out",
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 75%',
+        toggleActions: 'play none none none',
+        once: true,
       },
+      onComplete: cleanUp,
     });
-    //グループ1を左から表示
-    timeline.to(
-      group1,
-      {
-        autoAlpha: 1,
-        x: 0,
-        scale: 1,
-        stagger: {
-          each: 0.25,
-          from: "start",
-        },
-      },
-      0,
-    );
-    //グループ2を右から表示,右端のTipから順番に登場
-    timeline.to(
-      group2,
-      {
-        autoAlpha: 1,
-        x: 0,
-        scale: 1,
-        stagger: {
-          each: 0.25,
-          from: "end",
-        },
-      },
-      0.15,
-    );
-    //アニメーション完了後、GSAPが付けたtransformを削除
-    timeline.set(tips, {
-      clearProps: "transform,opacity,visibility",
+    // 全8枚が同時に1つ前の番号の場所へ（1は8の場所）
+    timeline.to(items, {
+      left: i => positions[(i + 7) % 8].x + '%',
+      top: i => positions[(i + 7) % 8].y + '%',
+      autoAlpha: 1,
+      scale: 1,
+      duration: 1.5,
+      ease: 'power2.out',
     });
-    //セクションが画面に入ったことだけ検知,アニメーション自体はスクロール量に連動しない
-    const observer = new IntersectionObserver(
-      (entries, currentObserver) => {
-        const entry = entries[0];
-        if (!entry.isIntersecting) return;
-        timeline.play();
-        // 一度だけ実行
-        currentObserver.disconnect();
-      },
-      {
-        threshold: 0.2,
-        rootMargin: "0px 0px -10% 0px",
-      },
-    );
-    observer.observe(section);
+    // 少し間を置き、定位置へ
+    timeline.to(items, {
+      left: i => positions[i].x + '%',
+      top: i => positions[i].y + '%',
+      duration: 1.8,
+      ease: 'power2.inOut',
+    }, '+=0.15');
+    // キーボードでリンクに移動した場合はすぐ最終状態を表示
+    function revealOnFocus() {
+      timeline.progress(1);
+      if (timeline.scrollTrigger) timeline.scrollTrigger.kill();
+    }
+    section.addEventListener('focusin', revealOnFocus);
   }
 
   //イベント近況報告アニメーション
@@ -914,72 +941,72 @@
     }
     const bookMedia = gsap.matchMedia();
     bookMedia.add("(min-width: 600.01px)", () => {
-    bookItems.forEach((item) => {
-      const content = item.querySelector(".book-content");
-      //親の.book-imagesではなく画像本体を取得
-      const image = item.querySelector(".book-image, .book-image-2");
-      //文章は左側から表示
-      if (content) {
-        gsap.set(content, {
-          autoAlpha: 0,
-          clipPath: "inset(0 100% 0 0)",
+      bookItems.forEach((item) => {
+        const content = item.querySelector(".book-content");
+        //親の.book-imagesではなく画像本体を取得
+        const image = item.querySelector(".book-image, .book-image-2");
+        //文章は左側から表示
+        if (content) {
+          gsap.set(content, {
+            autoAlpha: 0,
+            clipPath: "inset(0 100% 0 0)",
+          });
+        }
+        //画像は右側から表示,上下左右をマイナス値で広げ拡大・移動した画像や影が途中で切れないようにする
+        if (image) {
+          gsap.set(image, {
+            autoAlpha: 0,
+            clipPath: "inset(-35% -35% -35% 135%)",
+          });
+        }
+        const itemTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: item,
+            start: "top 80%",
+            once: true,
+            // markers: true
+          },
         });
-      }
-      //画像は右側から表示,上下左右をマイナス値で広げ拡大・移動した画像や影が途中で切れないようにする
-      if (image) {
-        gsap.set(image, {
-          autoAlpha: 0,
-          clipPath: "inset(-35% -35% -35% 135%)",
-        });
-      }
-      const itemTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: item,
-          start: "top 80%",
-          once: true,
-          // markers: true
-        },
+        //文章全体を左から表示
+        if (content) {
+          itemTimeline.to(
+            content,
+            {
+              autoAlpha: 1,
+              clipPath: "inset(0 0% 0 0)",
+              duration: 1.8,
+              ease: "power2.out",
+            },
+            0,
+          );
+        }
+        //画像全体を右から表示
+        if (image) {
+          itemTimeline.to(
+            image,
+            {
+              autoAlpha: 1,
+              //最終状態にも上下左右の余裕を残す
+              clipPath: "inset(-35% -35% -35% -35%)",
+              duration: 1.8,
+              ease: "power2.out",
+            },
+            0,
+          );
+        }
+        //文章側だけclip-pathを削除
+        if (content) {
+          itemTimeline.set(content, {
+            clearProps: "clipPath,opacity,visibility",
+          });
+        }
+        //画像側はclip-pathを削除しない,削除時のカクつきを防ぐ
+        if (image) {
+          itemTimeline.set(image, {
+            clearProps: "opacity,visibility",
+          });
+        }
       });
-      //文章全体を左から表示
-      if (content) {
-        itemTimeline.to(
-          content,
-          {
-            autoAlpha: 1,
-            clipPath: "inset(0 0% 0 0)",
-            duration: 1.8,
-            ease: "power2.out",
-          },
-          0,
-        );
-      }
-      //画像全体を右から表示
-      if (image) {
-        itemTimeline.to(
-          image,
-          {
-            autoAlpha: 1,
-            //最終状態にも上下左右の余裕を残す
-            clipPath: "inset(-35% -35% -35% -35%)",
-            duration: 1.8,
-            ease: "power2.out",
-          },
-          0,
-        );
-      }
-      //文章側だけclip-pathを削除
-      if (content) {
-        itemTimeline.set(content, {
-          clearProps: "clipPath,opacity,visibility",
-        });
-      }
-      //画像側はclip-pathを削除しない,削除時のカクつきを防ぐ
-      if (image) {
-        itemTimeline.set(image, {
-          clearProps: "opacity,visibility",
-        });
-      }
-    });
     });
     bookMedia.add("(max-width: 600px)", () => {
       bookItems.forEach((item) => {
@@ -1033,26 +1060,18 @@
     const snsBoxes = gsap.utils.toArray(footer.querySelectorAll(".sns-box"));
     const snsIcons = gsap.utils.toArray(footer.querySelectorAll(".sns-icon"));
     const privacy = footer.querySelector(".privacy-policy");
-    //SNS画像の読み込み完了を待つ
-    await Promise.all(
-      snsIcons.map((icon) => {
-        if (typeof icon.decode === "function") {
-          return icon.decode().catch(() => {});
-        }
-        if (icon.complete) {
-          return Promise.resolve();
-        }
-        return new Promise((resolve) => {
-          icon.addEventListener("load", resolve, {
-            once: true,
-          });
-
-          icon.addEventListener("error", resolve, {
-            once: true,
-          });
+    // 読み込みが遅くても、最大1.5秒で表示処理へ進む。
+    await Promise.race([
+      Promise.all(snsIcons.map(icon => {
+        if (icon.complete) return Promise.resolve();
+        if (typeof icon.decode === 'function') return icon.decode().catch(() => { });
+        return new Promise(resolve => {
+          icon.addEventListener('load', resolve, { once: true });
+          icon.addEventListener('error', resolve, { once: true });
         });
-      }),
-    );
+      })),
+      new Promise(resolve => window.setTimeout(resolve, 1500)),
+    ]);
     //footer-top本体は隠さない
     if (footerTop) {
       gsap.set(footerTop, {
@@ -1349,7 +1368,7 @@
     await Promise.all(
       loadingImages.map((image) => {
         if (typeof image.decode === "function") {
-          return image.decode().catch(() => {});
+          return image.decode().catch(() => { });
         }
         if (image.complete) {
           return Promise.resolve();
@@ -1539,157 +1558,6 @@
     );
   }
 
-  //eventPageアニメーション
-  function initEventPageAnimation() {
-    const section = document.querySelector(".event-page");
-    if (!section) return;
-    //二重実行を防止
-    if (section.dataset.eventPageAnimationInitialized === "true") {
-      return;
-    }
-    section.dataset.eventPageAnimationInitialized = "true";
-    const eventDetail = section.querySelector(".event-detail");
-    const eventTitle = section.querySelector(".event-title");
-    //.event-content直下のpをHTMLに書かれている順番で取得
-    const paragraphs = gsap.utils.toArray(
-      section.querySelectorAll(".event-content > p"),
-    );
-    /*HTMLの並び順でグループを作る
-     * 0・1   義父との別れ
-     * 2・3   寒川神社参拝
-     * 4・5   ありがとうを伝えよう
-     * 6・7   震災から15年
-     * 8・9   弥栄
-     * 10     宇宙の金卵大鏡369
-     * 11     令和9年9月9日納品
-     * 12     3月20日以降の文章
-     * 13     ルン・ルの会の文章
-     * 14     御守の文章*/
-    const paragraphGroups = [
-      [paragraphs[0], paragraphs[1]],
-      [paragraphs[2], paragraphs[3]],
-      [paragraphs[4], paragraphs[5]],
-      [paragraphs[6], paragraphs[7]],
-      [paragraphs[8], paragraphs[9]],
-      [paragraphs[10]],
-      [paragraphs[11]],
-      [paragraphs[12]],
-      [paragraphs[13]],
-      [paragraphs[14]],
-    ].map((group) => {
-      return group.filter(Boolean);
-    });
-    //event-detailは座標を変更せず透明にする,CSSでtranslateX(-50%)を使っているためx・yはGSAPで設定しない
-    if (eventDetail) {
-      gsap.set(eventDetail, {
-        autoAlpha: 0,
-      });
-    }
-    //event-titleも座標を変更せず透明にする
-    if (eventTitle) {
-      gsap.set(eventTitle, {
-        autoAlpha: 0,
-      });
-    }
-    //各段落を36px下へ移動して透明にする
-    gsap.set(paragraphs, {
-      autoAlpha: 0,
-      y: 36,
-    });
-    //GSAPの初期状態を設定してからCSS待機用classを解除
-    section.classList.remove("event-page-animation-pending");
-    //ページ表示直後のイントロ
-    const introTimeline = gsap.timeline();
-    //1. event-detailを早めに表示
-    if (eventDetail) {
-      introTimeline.to(eventDetail, {
-        autoAlpha: 1,
-        duration: 0.9,
-        ease: "sine.out",
-      });
-    }
-    //2. event-detail表示直後にタイトル表示
-    if (eventTitle) {
-      introTimeline.to(
-        eventTitle,
-        {
-          autoAlpha: 1,
-          duration: 1,
-          ease: "sine.out",
-        },
-        ">+=0.1",
-      );
-    }
-    //イントロ完了後に各文章のScrollTriggerを有効にする
-    introTimeline.eventCallback("onComplete", () => {
-      if (typeof ScrollTrigger === "undefined") {
-        gsap.set(paragraphs, {
-          autoAlpha: 1,
-          y: 0,
-        });
-        return;
-      }
-      //最初から画面内にある3グループ
-      const firstVisibleGroups = paragraphGroups.slice(0, 3);
-      //4グループ目以降
-      const remainingGroups = paragraphGroups.slice(3);
-      //最初の3グループを上から順番に表示
-      if (firstVisibleGroups.length > 0 && firstVisibleGroups[0].length > 0) {
-        const firstGroupsTimeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: firstVisibleGroups[0][0],
-            start: "top 90%",
-            once: true,
-            invalidateOnRefresh: true,
-            // markers: true
-          },
-        });
-        //タイトル表示後、少し待つ
-        firstGroupsTimeline.to(
-          {},
-          {
-            duration: 0.3,
-          },
-        );
-        firstVisibleGroups.forEach((group, index) => {
-          if (group.length === 0) return;
-          firstGroupsTimeline.to(
-            group,
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: 1.2,
-              ease: "power2.out",
-            },
-            //2グループ目以降は、前のグループと少し重ねる
-            index === 0 ? ">" : ">-0.4",
-          );
-        });
-      }
-      //4グループ目以降はそれぞれの位置で表示
-      remainingGroups.forEach((group) => {
-        if (group.length === 0) return;
-        const triggerElement = group[0];
-        gsap.to(group, {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: triggerElement,
-            start: "top 85%",
-            once: true,
-            invalidateOnRefresh: true,
-            // markers: true
-          },
-        });
-      });
-      requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
-      });
-    });
-  }
-
   //お問い合わせアニメーション
   function initContactPageAnimation() {
     const section = document.querySelector(".contact-form");
@@ -1855,7 +1723,6 @@
         ].filter(Boolean),
       ),
     ];
-
     const emptyMessages = {
       lastName: "苗字を入力してください。",
       firstName: "お名前を入力してください。",
@@ -1875,7 +1742,6 @@
     const optionalPhoneIds = new Set(["contact-tell", "contact-phone"]);
     // 最後に住所検索へ成功した郵便番号
     let lastSearchedPostalCode = "";
-
     //郵便番号を半角数字だけにする
     function normalizePostalCode(value) {
       return (
@@ -1899,7 +1765,6 @@
       );
       return wrapper?.querySelector(".error-message") ?? null;
     }
-
     // エラーを表示
     function showFieldError(field, message) {
       const errorElement = getErrorElement(field);
@@ -1909,7 +1774,6 @@
         errorElement.textContent = message;
       }
     }
-
     // エラーを解除
     function clearFieldError(field) {
       const errorElement = getErrorElement(field);
@@ -1919,7 +1783,6 @@
         errorElement.textContent = "";
       }
     }
-
     //入力欄1項目を検証
     function validateField(field) {
       const value = field.value.trim();
@@ -1928,7 +1791,6 @@
         clearFieldError(field);
         return true;
       }
-
       //必須項目の空欄チェック
       //郵便番号は必須項目ではないが、住所検索ボタンからvalidateField()を呼び出したときはここで検証
       if (value === "") {
@@ -1938,7 +1800,6 @@
         );
         return false;
       }
-
       //ふりがな
       if (field.id === "lastName-check" || field.id === "firstName-check") {
         if (!hiraganaPattern.test(value)) {
@@ -1946,7 +1807,6 @@
           return false;
         }
       }
-
       //メールアドレス
       if (field.id === "email") {
         if (!field.validity.valid) {
@@ -1954,7 +1814,6 @@
           return false;
         }
       }
-
       //確認用メールアドレス
       if (field.id === "email-check") {
         const originalEmail = emailInput.value.trim();
@@ -1973,7 +1832,6 @@
           return false;
         }
       }
-
       //電話番号・携帯電話番号
       if (optionalPhoneIds.has(field.id)) {
         if (!phonePattern.test(value)) {
@@ -1981,7 +1839,6 @@
           return false;
         }
       }
-
       //郵便番号
       if (field.id === "contact-address") {
         const postalCode = normalizePostalCode(field.value);
@@ -2044,15 +1901,12 @@
       if (!emailCheckInput) {
         return;
       }
-
       const wasValidated = emailCheckInput.dataset.hasValidated === "true";
       const hasError = emailCheckInput.classList.contains("input-error");
-
       if (wasValidated || hasError) {
         validateField(emailCheckInput);
       }
     });
-
     //検索によって自動入力された住所を消す
     function clearSearchedAddress() {
       if (prefectureSelect) {
@@ -2067,7 +1921,6 @@
     //郵便番号を変更したとき
     postalCodeInput?.addEventListener("input", () => {
       const currentPostalCode = normalizePostalCode(postalCodeInput.value);
-
       //最後に検索した郵便番号から変更されたら検索結果を消す
       if (
         lastSearchedPostalCode !== "" &&
@@ -2093,7 +1946,6 @@
         postalCodeInput.focus();
         return;
       }
-
       const postalCode = normalizePostalCode(postalCodeInput.value);
       try {
         const response = await fetch(
@@ -2102,7 +1954,6 @@
         if (!response.ok) {
           throw new Error(`HTTP error: ${response.status}`);
         }
-
         const data = await response.json();
         if (!data.results) {
           clearSearchedAddress();
