@@ -1,62 +1,73 @@
 "use strict";
 {
   const initialPageHash = window.location.hash;
-  // 通常遷移か再読み込みかを判定
-  const navigationEntry = performance.getEntriesByType("navigation")[0];
-  const isReload = navigationEntry?.type === "reload";
-  const isSectionHash =
-    initialPageHash === "#about" || initialPageHash === "#book";
-  //#aboutまたは#bookで再読み込みした場合はHeroへ戻す
-  if (isReload && isSectionHash) {
-    //ブラウザによる以前のスクロール位置復元を停止
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
-    // URLを#topへ変更 replaceStateなので、この時点では自動移動しない
-    history.replaceState(
-      null,
-      "",
-      window.location.pathname + window.location.search + "#top",
-    );
-    const moveToHero = () => {
-      const html = document.documentElement;
-      const previousBehavior = html.style.scrollBehavior;
-      html.style.scrollBehavior = "auto";
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "auto",
-      });
-      requestAnimationFrame(() => {
-        html.style.scrollBehavior = previousBehavior;
+  const isHistoryNavigation = performance.getEntriesByType('navigation')[0]?.type === 'back_forward';
+  if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
+  // ハッシュ付きのアクセスは再読み込み時も対象セクションを優先。
+  if (!isHistoryNavigation && (initialPageHash === '#about' || initialPageHash === '#book')) {
+    document.documentElement.classList.add('initial-anchor-moving');
+  }
 
-        if ("scrollRestoration" in history) {
-          history.scrollRestoration = "auto";
-        }
-      });
+
+  // ヒント詳細へ移動する前に、現在の履歴エントリーへ位置を保存。
+  let anchorFixCancelled = false;
+  const hintsSection = document.querySelector('.eightTips');
+  if (hintsSection) {
+    if (!hintsSection.id) hintsSection.id = 'eightTips';
+    hintsSection.addEventListener('click', event => {
+      const link = event.target.closest('a[href]');
+      if (!link || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || (link.target && link.target !== '_self')) return;
+      anchorFixCancelled = true;
+      history.replaceState({
+        ...history.state,
+        hintsReturnOffset: hintsSection.getBoundingClientRect().top,
+        pageReturnY: null,
+      }, '', '#' + hintsSection.id);
+    });
+  }
+  // ヒント以外への通常遷移では、古いヒント復元情報を引き継がない。
+  document.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+    if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self') || hintsSection?.contains(link)) return;
+    const destination = new URL(link.href, location.href);
+    if (!['http:', 'https:', 'file:'].includes(destination.protocol)) return;
+    const normalize = path => path.replace(/index\.html$/, '');
+    if (destination.origin === location.origin && normalize(destination.pathname) === normalize(location.pathname) && destination.search === location.search) return;
+    const state = { ...history.state, pageReturnY: window.scrollY };
+    delete state.hintsReturnOffset;
+    const current = new URL(location.href);
+    if (hintsSection && current.hash === '#' + hintsSection.id) current.hash = '';
+    history.replaceState(state, '', current.href);
+    anchorFixCancelled = true;
+  });
+  window.addEventListener('pagehide', () => { anchorFixCancelled = true; });
+  window.addEventListener('pageshow', event => {
+    if (!hintsSection || !(event.persisted || isHistoryNavigation)) return;
+    const offset = history.state?.hintsReturnOffset;
+    const restoreHints = Number.isFinite(offset) && location.hash === '#' + hintsSection.id;
+    const pageY = history.state?.pageReturnY;
+    if (!restoreHints && !Number.isFinite(pageY)) return;
+    anchorFixCancelled = true;
+    document.documentElement.classList.remove('initial-anchor-moving');
+    let cancelled = false;
+    const restore = () => {
+      if (cancelled) return;
+      window.scrollTo({ top: Math.max(0, restoreHints ? scrollY + hintsSection.getBoundingClientRect().top - offset : pageY), behavior: 'instant' });
     };
-    //すぐにページ上部へ戻す
-    moveToHero();
-    //ブラウザのスクロール位置復元より後にも実行
-    window.addEventListener(
-      "load",
-      () => {
-        window.setTimeout(moveToHero, 50);
-      },
-      { once: true },
-    );
-    window.addEventListener(
-      "pageshow",
-      () => {
-        window.setTimeout(moveToHero, 100);
-      },
-      { once: true },
-    );
-  }
-  //再読み込みではなく、別ページから#about・#bookへ来た場合
-  if (!isReload && isSectionHash) {
-    document.documentElement.classList.add("initial-anchor-moving");
-  }
+    const stop = () => {
+      cancelled = true;
+      observer.disconnect();
+      ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(type => window.removeEventListener(type, stop));
+    };
+    const observer = new ResizeObserver(restore);
+    observer.observe(document.body);
+    ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(type => window.addEventListener(type, stop, { passive: true }));
+    requestAnimationFrame(() => { restore(); requestAnimationFrame(restore); });
+    if (document.fonts) document.fonts.ready.then(restore);
+    // 読み込み直後のレイアウト変化だけ補正。ユーザー操作時は即解除。
+    setTimeout(stop, 3000);
+  });
 
   //==hamburger-menu==
   const hamburger = document.querySelector(".hamburger-menu");
@@ -111,7 +122,7 @@
       //現在表示しているページとリンク先が同じか判定
       const isSamePage =
         url.origin === window.location.origin &&
-        url.pathname === window.location.pathname &&
+        url.pathname.replace(/index\.html$/, '') === window.location.pathname.replace(/index\.html$/, '') &&
         url.search === window.location.search;
       //別ページへのリンクは通常どおり遷移
       if (!isSamePage) {
@@ -165,7 +176,7 @@
       const url = new URL(logoLink.getAttribute("href"), window.location.href);
       const isSamePage =
         url.origin === window.location.origin &&
-        url.pathname === window.location.pathname &&
+        url.pathname.replace(/index\.html$/, '') === window.location.pathname.replace(/index\.html$/, '') &&
         url.search === window.location.search;
       //別ページのトップへ移動する場合は通常のページ遷移を行う
       if (!isSamePage) {
@@ -238,6 +249,8 @@
   }
 
   function initInitialAnchorFix() {
+    // 戻る・進むは保存されたスクロール位置を優先する。
+    if (isHistoryNavigation) return;
     const hash = window.location.hash;
     if (hash !== "#about" && hash !== "#book") {
       return;
@@ -247,7 +260,7 @@
     if (!target) return;
     const moveToTarget = () => {
       //ユーザーが別のアンカーを押した場合は、古い初回位置補正を実行しない
-      if (window.location.hash !== hash) {
+      if (anchorFixCancelled || window.location.hash !== hash) {
         return;
       }
       if (typeof ScrollTrigger !== "undefined") {
@@ -255,6 +268,7 @@
       }
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
+          if (anchorFixCancelled || window.location.hash !== hash) return;
           const header = document.querySelector("header");
           const headerHeight = header
             ? Math.ceil(header.getBoundingClientRect().height)
@@ -291,7 +305,9 @@
       window.addEventListener("load", moveAfterBrowser, { once: true });
     }
     //ブラウザの戻る・進むにも対応
-    window.addEventListener("pageshow", moveAfterBrowser, { once: true });
+    window.addEventListener("pageshow", event => {
+      if (!event.persisted) moveAfterBrowser();
+    }, { once: true });
     //Webフォント適用後の位置変化を補正
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready
@@ -335,6 +351,8 @@
 
   // GSAPアニメーション
   function initAnimations() {
+    // GSAPの読み込み・初期化の成否にかかわらずアンカーを補正する。
+    initInitialAnchorFix();
     if (typeof gsap === "undefined") {
       console.error("GSAPが読み込まれていません。");
       return;
@@ -395,8 +413,7 @@
     } else {
       console.error("ScrollTriggerが読み込まれていません。");
     }
-    //全アニメーション設定後にアンカー位置を修正
-    initInitialAnchorFix();
+
   }
   // HTML読み込み後に実行
   if (document.readyState === "loading") {

@@ -1284,6 +1284,245 @@ small {
   position: relative;
   z-index: 3;
 }
+/*==hinto1==*/
+.mizu {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  /* 固定ヘッダーの高さ＋タイトル上の余白 */
+  padding: calc(var(--page-header-height, 96px) + 40px) 24px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.mizu h2 {
+  width: 100%;
+  margin: 0 0 32px;
+  font-size: 28px;
+  line-height: 1.5;
+}
+
+.mizu p {
+  width: 100%;
+  margin: 0 0 12px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.mizu > img {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  margin: 28px auto 0;
+}
+
+.mizu .suiso-button {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 32px auto 0;
+  padding: 12px 32px;
+  border: 1px solid black;
+  border-radius: 8px;
+  color: black;
+  background: white;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+}
+
+.mizu ~ footer {
+  margin-inline: auto;
+}
+
+/*==hinto2==*/
+.oem {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  /* 固定ヘッダーの高さ＋タイトル上の余白 */
+  padding: calc(var(--page-header-height, 96px) + 40px) 24px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.oem h2 {
+  width: 100%;
+  margin: 0 0 24px;
+  font-size: 28px;
+  line-height: 1.5;
+}
+
+.oem p {
+  width: 100%;
+  margin: 0 0 12px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.oem > img {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  margin: 28px auto 0;
+}
+
+.oem ~ footer {
+  margin-inline: auto;
+}
+
+/*==hinto3==*/
+.ryuujin {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  /* 固定ヘッダーの高さ＋タイトル上の余白 */
+  padding: calc(var(--page-header-height, 96px) + 40px) 24px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ryuujin h2 {
+  width: 100%;
+  margin: 0 0 32px;
+  font-size: 28px;
+  line-height: 1.5;
+}
+
+.ryuujin p {
+  width: 100%;
+  margin: 0 0 16px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.ryuujin > a {
+  display: block;
+  width: fit-content;
+  max-width: 800px;
+  max-width: min(100%, 800px);
+  margin: 0 auto 24px;
+  color: white;
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+
+.ryuujin ~ footer {
+  margin-inline: auto;
+}
+
+/*==hinto4==*/
+.syugoryuu {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  /* 固定ヘッダーの高さ＋タイトル上の余白 */
+  padding: calc(var(--page-header-height, 96px) + 40px) 24px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.syugoryuu h2 {
+  width: 100%;
+  margin: 0 0 32px;
+  font-size: 28px;
+  line-height: 1.5;
+}
+
+.syugoryuu > p {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 16px;
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.syugoryuu > img {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  margin: 28px auto 0;
+}
+
+.syugoryuu > img + p {
+  margin-top: 16px;
+}
+
+.syugoryuu ~ footer {
+  margin-inline: auto;
+}
+
+/*==hinto5==*/
+.ryuukon {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  /* 固定ヘッダーの高さ＋タイトル上の余白 */
+  padding: calc(var(--page-header-height, 96px) + 40px) 24px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ryuukon h2 {
+  width: 100%;
+  margin: 0 0 32px;
+  font-size: 28px;
+  line-height: 1.5;
+}
+
+.ryuukon > p {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 28px;
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: center;
+  /* HTMLに書いた改行をそのまま表示 */
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.ryuukon > img {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  margin: 28px auto 0;
+}
+
+.ryuukon ~ footer {
+  margin-inline: auto;
+}
 
 /*==first-page==*/
 .first-greet {
@@ -1303,7 +1542,7 @@ small {
 .first-greet-image {
   position: relative;
   display: block;
-  width: clamp(85px, 16vw, 200px);
+  width: clamp(95px, 18vw, 220px);
   height: auto;
   margin: 0 auto;
   filter: drop-shadow(0 0 8px white);
@@ -1313,12 +1552,12 @@ small {
 .first-greet .name {
   position: relative;
   width: max-content;
-  margin: -8px auto 0;
+  margin: -52px auto 0;
   padding: 2px 12px;
   border-radius: 24px;
   background: #f30081;
   color: white;
-  font-size: clamp(12px, 2vw, 24px);
+  font-size: clamp(13px, 2.2vw, 26px);
   z-index: 4;
 }
 
@@ -1386,7 +1625,7 @@ small {
   position: relative;
   width: 100%;
   margin: 0;
-  font-size: clamp(12px, 1.65vw, 20px);
+  font-size: clamp(13px, 1.8vw, 22px);
   line-height: 1.9;
   letter-spacing: 0;
   color: white;
@@ -1423,6 +1662,14 @@ small {
 .message-content {
   will-change: opacity, transform;
 }
+
+.pc-message {
+    display: block;
+  }
+
+  .res-message {
+    display: none;
+  }
 
 /*==mirror==*/
 .mirror {
