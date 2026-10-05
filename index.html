@@ -22,23 +22,6 @@
     })(document);
   </script>
 </head>
-<script>
-  if ("scrollRestoration" in history) {
-    history.scrollRestoration = "manual";
-  }
-
-  window.addEventListener("pageshow", function () {
-    const root = document.documentElement;
-    const originalBehavior = root.style.scrollBehavior;
-
-    root.style.scrollBehavior = "auto";
-    window.scrollTo(0, 0);
-
-    requestAnimationFrame(function () {
-      root.style.scrollBehavior = originalBehavior;
-    });
-  });
-</script>
 
 <body>
   <div class="particles"></div>
@@ -173,7 +156,7 @@
         <img src="images/top-images/hintohaikei.webp" class="eightTips-background" alt="" width="1530" height="1020">
         <div class="eightTips-items">
           <a href="pages/hinto1.html" class="eightTips-link">
-            <img src="images/top-images/hinto1.webp" class="eightTips-item eightTips-item--1" alt="瑞(瑞、血液、リンパ)"
+            <img src="images/top-images/hinto1.webp" class="eightTips-item eightTips-item--1" alt="瑞(水、血液、リンパ)"
               width="1254" height="1254">
           </a>
           <a href="pages/hinto2.html" class="eightTips-link">
