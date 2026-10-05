@@ -1856,7 +1856,7 @@
   }
 
   .res-messasge {
-    display: inline;
+    display: block;
   }
 
   .first-greet {
@@ -1956,7 +1956,7 @@
   }
 
   .res-messasge {
-    display: inline;
+    display: block;
   }
 
   .first-greet {
