@@ -1855,8 +1855,8 @@
     display: none;
   }
 
-  .res-messasge {
-    display: inline;
+  .res-message {
+    display: block;
   }
 
   .first-greet {
@@ -1955,8 +1955,8 @@
     display: none;
   }
 
-  .res-messasge {
-    display: inline;
+  .res-message {
+    display: block;
   }
 
   .first-greet {
