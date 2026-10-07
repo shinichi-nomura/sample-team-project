@@ -897,6 +897,110 @@
       if (timeline.scrollTrigger) timeline.scrollTrigger.kill();
     }
     section.addEventListener('focusin', revealOnFocus);
+
+    let transition = null;
+    let stage = null;
+    let navigationTimer = null;
+    const resetTransition = () => {
+      window.clearTimeout(navigationTimer);
+      transition?.kill();
+      stage?.remove();
+      transition = null;
+      stage = null;
+      section.classList.remove('tips-navigating');
+      section.removeAttribute('aria-busy');
+    };
+    // 戻る操作でページが復元された場合も、丸を通常表示に戻す。
+    window.addEventListener('pagehide', resetTransition);
+    window.addEventListener('pageshow', event => {
+      if (event.persisted) resetTransition();
+    });
+    section.addEventListener('click', event => {
+      const link = event.target instanceof Element
+        ? event.target.closest('.eightTips-link') : null;
+      if (!link || event.defaultPrevented || event.button !== 0 ||
+          event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
+          link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+      if (stage) {
+        event.preventDefault();
+        return;
+      }
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const selectedIndex = items.findIndex(item => link.contains(item));
+      if (selectedIndex < 0) return;
+      // 登場演出の途中でクリックされても、定位置から周回を始める。
+      revealOnFocus();
+      const bounds = section.getBoundingClientRect();
+      const rects = items.map(item => item.getBoundingClientRect());
+      if (!bounds.width || !bounds.height || rects.some(rect => !rect.width)) return;
+      event.preventDefault();
+      const destination = link.href;
+      const navigate = () => window.location.assign(destination);
+      // 演出が途中で止まってもリンク先へ進める。
+      navigationTimer = window.setTimeout(navigate, 2400);
+      try {
+        stage = document.createElement('div');
+        stage.className = 'tips-transition';
+        stage.setAttribute('aria-hidden', 'true');
+        ['wheel', 'touchmove'].forEach(type => {
+          stage.addEventListener(type, e => e.preventDefault(), { passive: false });
+        });
+        const clones = items.map((item, i) => {
+          const clone = item.cloneNode(false);
+          clone.removeAttribute('style');
+          clone.removeAttribute('id');
+          clone.className = 'tips-transition-image';
+          clone.alt = '';
+          clone.style.width = rects[i].width + 'px';
+          stage.appendChild(clone);
+          return clone;
+        });
+        document.body.appendChild(stage);
+        section.classList.add('tips-navigating');
+        section.setAttribute('aria-busy', 'true');
+        const cx = bounds.left + bounds.width * center.x / 100;
+        const cy = bounds.top + bounds.height * center.y / 100;
+        const offsets = rects.map(rect => ({
+          x: (rect.left + rect.width / 2 - cx) / bounds.width,
+          y: (rect.top + rect.height / 2 - cy) / bounds.height,
+        }));
+        const orbit = { angle: 0 };
+        const renderOrbit = () => {
+          const cos = Math.cos(orbit.angle);
+          const sin = Math.sin(orbit.angle);
+          clones.forEach((clone, i) => {
+            const offset = offsets[i];
+            gsap.set(clone, {
+              x: cx + (offset.x * cos - offset.y * sin) * bounds.width,
+              y: cy + (offset.x * sin + offset.y * cos) * bounds.height,
+            });
+          });
+        };
+        gsap.set(clones, { xPercent: -50, yPercent: -50 });
+        renderOrbit();
+        const selected = clones[selectedIndex];
+        selected.style.zIndex = '1';
+        transition = gsap.timeline({ onComplete: navigate });
+        // 文字の向きは保ち、8枚の配置を2周させる。
+        transition.to(orbit, {
+          angle: Math.PI * 4, duration: 0.7, ease: 'power1.inOut',
+          onUpdate: renderOrbit,
+        });
+        transition.to(clones.filter((_, i) => i !== selectedIndex), {
+          opacity: 0, duration: 0.25,
+        });
+        transition.to(stage, { backgroundColor: '#000', duration: 0.6 }, '<');
+        transition.to(selected, {
+          x: window.innerWidth / 2,
+          y: window.innerHeight / 2,
+          scale: Math.hypot(window.innerWidth, window.innerHeight) / rects[selectedIndex].width * 1.2,
+          duration: 0.6, ease: 'power3.in',
+        }, '<');
+      } catch (error) {
+        resetTransition();
+        navigate();
+      }
+    });
   }
 
   //イベント近況報告アニメーション

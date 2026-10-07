@@ -714,6 +714,29 @@ main p {
   filter: brightness(0.7);
 }
 
+.eightTips.tips-navigating .eightTips-item {
+  visibility: hidden;
+}
+
+.tips-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  overflow: hidden;
+  touch-action: none;
+  cursor: wait;
+}
+
+.tips-transition-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  height: auto;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
 .eightTips-item--1 {
   --tip-x: 49.7%;
   --tip-y: 27.6%;
