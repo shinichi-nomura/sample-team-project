@@ -737,6 +737,10 @@ main p {
   will-change: transform, opacity;
 }
 
+.tips-transition-selected {
+  will-change: transform, filter;
+}
+
 .eightTips-item--1 {
   --tip-x: 49.7%;
   --tip-y: 27.6%;
