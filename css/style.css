@@ -1285,6 +1285,7 @@ small {
   z-index: 3;
 }
 /*==hinto1==*/
+.hint-detail,
 .mizu {
   position: relative;
   box-sizing: border-box;
@@ -1299,6 +1300,7 @@ small {
   text-align: center;
 }
 
+.hint-detail h2,
 .mizu h2 {
   width: 100%;
   margin: 0 0 32px;
@@ -1306,6 +1308,7 @@ small {
   line-height: 1.5;
 }
 
+.hint-detail p,
 .mizu p {
   width: 100%;
   margin: 0 0 12px;
@@ -1313,6 +1316,7 @@ small {
   line-height: 1.8;
 }
 
+.hint-detail > img,
 .mizu > img {
   display: block;
   width: 100%;
@@ -1337,6 +1341,7 @@ small {
   text-decoration: none;
 }
 
+.hint-detail ~ footer,
 .mizu ~ footer {
   margin-inline: auto;
 }
@@ -2347,4 +2352,14 @@ textarea {
 .contact>.details,
 .contact>.decision-button {
   will-change: opacity, transform;
+}
+.privacy-content {
+  max-width: 848px;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.privacy-content a {
+  color: inherit;
+  text-decoration: underline;
 }
