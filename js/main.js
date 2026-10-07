@@ -958,44 +958,34 @@
         document.body.appendChild(stage);
         section.classList.add('tips-navigating');
         section.setAttribute('aria-busy', 'true');
-        const cx = bounds.left + bounds.width * center.x / 100;
-        const cy = bounds.top + bounds.height * center.y / 100;
-        const offsets = rects.map(rect => ({
-          x: (rect.left + rect.width / 2 - cx) / bounds.width,
-          y: (rect.top + rect.height / 2 - cy) / bounds.height,
-        }));
-        const orbit = { angle: 0 };
-        const renderOrbit = () => {
-          const cos = Math.cos(orbit.angle);
-          const sin = Math.sin(orbit.angle);
-          clones.forEach((clone, i) => {
-            const offset = offsets[i];
-            gsap.set(clone, {
-              x: cx + (offset.x * cos - offset.y * sin) * bounds.width,
-              y: cy + (offset.x * sin + offset.y * cos) * bounds.height,
-            });
-          });
-        };
-        gsap.set(clones, { xPercent: -50, yPercent: -50 });
-        renderOrbit();
+        gsap.set(clones, {
+          x: i => rects[i].left + rects[i].width / 2,
+          y: i => rects[i].top + rects[i].height / 2,
+          xPercent: -50,
+          yPercent: -50,
+        });
         const selected = clones[selectedIndex];
+        selected.classList.add('tips-transition-selected');
         selected.style.zIndex = '1';
+        gsap.set(selected, {
+          filter: 'drop-shadow(0px 0px 0px rgba(255, 218, 150, 0))',
+        });
         transition = gsap.timeline({ onComplete: navigate });
-        // 文字の向きは保ち、8枚の配置を2周させる。
-        transition.to(orbit, {
-          angle: Math.PI * 4, duration: 0.7, ease: 'power1.inOut',
-          onUpdate: renderOrbit,
-        });
-        transition.to(clones.filter((_, i) => i !== selectedIndex), {
-          opacity: 0, duration: 0.25,
-        });
-        transition.to(stage, { backgroundColor: '#000', duration: 0.6 }, '<');
+        // 選んだ丸を柔らかく光らせ、少しだけ手前へ浮かせる。
         transition.to(selected, {
-          x: window.innerWidth / 2,
-          y: window.innerHeight / 2,
-          scale: Math.hypot(window.innerWidth, window.innerHeight) / rects[selectedIndex].width * 1.2,
-          duration: 0.6, ease: 'power3.in',
-        }, '<');
+          scale: 1.16,
+          y: '-=' + Math.min(16, rects[selectedIndex].width * 0.08),
+          filter: 'drop-shadow(0px 0px 14px rgba(255, 218, 150, 0.85))',
+          duration: 0.7,
+          ease: 'power2.out',
+        }, 0);
+        transition.to(clones.filter((_, i) => i !== selectedIndex), {
+          opacity: 0.25, duration: 0.7, ease: 'sine.out',
+        }, 0);
+        transition.to(stage, {
+          backgroundColor: 'rgba(0, 0, 0, 0.65)',
+          duration: 0.7, ease: 'sine.out',
+        }, 0);
       } catch (error) {
         resetTransition();
         navigate();
