@@ -1361,6 +1361,16 @@ small {
   max-width: 800px;
 }
 
+.hint6-art-gallery > .hint6-art-caption {
+  grid-column: 1;
+  margin: 0;
+  font-size: clamp(12px, 2.4vw, 18px);
+}
+
+.hint6-art-gallery > .hint6-art-caption-right {
+  grid-column: 2;
+}
+
 .hint6-art-image {
   position: relative;
   aspect-ratio: 393 / 1086;
