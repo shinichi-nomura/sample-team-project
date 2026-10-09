@@ -1367,6 +1367,22 @@ small {
   text-decoration: underline;
 }
 
+.hint8-service-links {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 32px;
+  text-align: left;
+}
+
+.hint8-service-links > p {
+  margin-bottom: 24px;
+}
+
+.hint8-service-links a {
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+}
+
 .hint6-art-gallery {
   display: grid;
   grid-template-columns: minmax(0, 393fr) minmax(0, 443fr);
