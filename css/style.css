@@ -1371,6 +1371,32 @@ small {
   grid-column: 2;
 }
 
+.hint-detail > .hint6-art-message {
+  max-width: 800px;
+  margin: 28px 0 0;
+  text-align: left;
+}
+
+.hint-detail > .hint6-message-image {
+  max-width: 646px;
+}
+
+.hint6-poem {
+  width: 100%;
+  max-width: 646px;
+  margin-top: 36px;
+  text-align: center;
+}
+
+.hint6-poem > p {
+  margin: 0 0 20px;
+  font-size: clamp(16px, 2.4vw, 18px);
+}
+
+.hint6-poem > p:last-child {
+  margin: 32px 0 0;
+}
+
 .hint6-art-image {
   position: relative;
   aspect-ratio: 393 / 1086;
