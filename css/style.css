@@ -1354,19 +1354,37 @@ small {
 
 .hint6-art-gallery {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 393fr) minmax(0, 443fr);
   align-items: start;
   gap: clamp(12px, 3vw, 32px);
   width: 100%;
   max-width: 800px;
 }
 
-.hint6-art-gallery > img {
+.hint6-art-image {
+  position: relative;
+  aspect-ratio: 393 / 1086;
+  overflow: hidden;
+}
+
+.hint6-art-image:nth-child(2) {
+  aspect-ratio: 443 / 1086;
+}
+
+.hint6-art-image > img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 443 / 1091;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 右画像の上端にある5pxの黒帯だけを表示範囲から外す。 */
+.hint6-art-image:nth-child(2) > img {
+  top: calc(-100% * 5 / 1086);
+  bottom: auto;
+  height: calc(100% * 1091 / 1086);
 }
 
 .mizu .suiso-button {
