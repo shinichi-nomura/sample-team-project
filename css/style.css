@@ -1352,6 +1352,21 @@ small {
   margin: 28px auto 0;
 }
 
+.hint7-description {
+  width: 100%;
+  max-width: 800px;
+  text-align: left;
+}
+
+.hint7-description > p {
+  margin-bottom: 24px;
+}
+
+.hint7-description a {
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+}
+
 .hint6-art-gallery {
   display: grid;
   grid-template-columns: minmax(0, 393fr) minmax(0, 443fr);
