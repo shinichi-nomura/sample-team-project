@@ -1365,6 +1365,8 @@ small {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 443 / 1091;
+  object-fit: contain;
 }
 
 .mizu .suiso-button {
