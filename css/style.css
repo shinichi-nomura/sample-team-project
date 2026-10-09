@@ -1397,6 +1397,15 @@ small {
   margin: 32px 0 0;
 }
 
+.hint-detail > .hint6-blue-artwork {
+  max-width: 677px;
+  margin-top: 48px;
+}
+
+.hint6-poem-naruko > p {
+  line-height: 2.4;
+}
+
 .hint6-art-image {
   position: relative;
   aspect-ratio: 393 / 1086;
