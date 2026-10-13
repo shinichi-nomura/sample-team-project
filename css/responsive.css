@@ -1,5 +1,13 @@
 @charset "utf-8";
 
+.pc-br {
+  display: inline;
+}
+
+.res-br {
+  display: none;
+}
+
 .section-frame {
   position: absolute;
   inset: 0;
@@ -15,18 +23,6 @@
   html {
     scroll-padding-top: 110px;
   }
-}
-
-.pc-br {
-  display: inline;
-}
-
-.res-br {
-  display: none;
-}
-
-.pc-br.res-br {
-  display: inline;
 }
 
 @media (max-width: 600px) {
@@ -429,12 +425,29 @@
     font-size: clamp(30px, 2.75vw, 36px);
   }
 
+  .greeting .pc-greet-content {
+    display: block;
+  }
+
+  .greeting .res-greet-content {
+    display: none;
+  }
+
   .greeting .greet-content {
     font-size: clamp(18px, 1.65vw, 21px);
   }
 }
 
 @media (max-width: 600px) {
+
+  .greeting .pc-greet-content {
+    display: none;
+  }
+
+  .greeting .res-greet-content {
+    display: block;
+  }
+
   .greeting {
     width: 96%;
     isolation: isolate;
@@ -455,6 +468,14 @@
     width: 100%;
     height: 100%;
     filter: brightness(0.65);
+  }
+
+  .greeting .pc-greet-content {
+    display: none;
+  }
+
+  .greeting .res-greet-content {
+    display: block;
   }
 
   /* 中央配置する要素の共通設定 */
@@ -1760,6 +1781,14 @@
     display: none;
   }
 
+  .first-greet .pc-message {
+    display: block;
+  }
+
+  .first-greet .res-message {
+    display: none;
+  }
+
   .first-greet {
     width: 100%;
     padding-top: clamp(20px, 4vw, 48px);
@@ -1851,11 +1880,11 @@
     display: inline;
   }
 
-  .pc-message {
+  .first-greet .pc-message {
     display: none;
   }
 
-  .res-message {
+  .first-greet .res-message {
     display: block;
   }
 
@@ -1951,11 +1980,11 @@
     display: inline;
   }
 
-  .pc-message {
+  .first-greet .pc-message {
     display: none;
   }
 
-  .res-message {
+  .first-greet .res-message {
     display: block;
   }
 
@@ -2174,11 +2203,6 @@
   .pegasus-content-1,
   .pegasus-content-2 {
     font-size: clamp(8px, 4vw, 18px);
-  }
-
-  .pegasus-content-1 br,
-  .pegasus-content-2 br {
-    display: none;
   }
 }
 
@@ -2776,6 +2800,14 @@
     font-size: clamp(18px, 4vw, 20px);
   }
 
+  .greeting .pc-greet-content {
+    display: none;
+  }
+
+  .greeting .res-greet-content {
+    display: block;
+  }
+
   .greeting .greet-content {
     width: 90%;
     font-size: clamp(12px, 2.6vw, 13px);
@@ -3023,14 +3055,12 @@
   }
 }
 
-/* responsive.css の最後に配置 */
 @media (max-width: 500px) {
 
   .contact {
     --error-space: clamp(19px, 5vw, 25px);
   }
 
-  /* フォームの内容から高さを決め、背景をその高さに合わせる */
   .contact-form {
     height: auto;
     min-height: 0;
@@ -3100,7 +3130,6 @@
     margin-bottom: 12px;
   }
 
-  /* 必須 */
   .contact .required {
     font-size: clamp(9px, 2.4vw, 12px);
   }
@@ -3131,9 +3160,6 @@
     min-height: 40px;
     white-space: nowrap;
   }
-
-  
-  
 
   .contact input,
   .contact select,

@@ -415,6 +415,15 @@ main p {
 }
 
 /*==greeting==*/
+
+.greeting .pc-greet-content {
+  display: block;
+}
+
+.greeting .res-greet-content {
+  display: none;
+}
+
 .greeting {
   position: relative;
   width: 96%;
@@ -1311,6 +1320,7 @@ small {
   position: relative;
   z-index: 3;
 }
+
 /*==hinto1==*/
 .hint-detail,
 .mizu {
@@ -1327,24 +1337,29 @@ small {
   text-align: center;
 }
 
-.hint-detail h2,
 .mizu h2 {
   width: 100%;
-  margin: 0 0 32px;
+  margin: 0 0 64px;
+  font-size: 32px;
+  font-weight: normal;
+}
+
+.mizu h3 {
+  width: 100%;
+  margin: 32px 0;
   font-size: 28px;
-  line-height: 1.5;
+  font-weight: normal;
 }
 
 .hint-detail p,
 .mizu p {
   width: 100%;
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   font-size: 18px;
-  line-height: 1.8;
 }
 
-.hint-detail > img,
-.mizu > img {
+.hint-detail>img,
+.mizu>img {
   display: block;
   width: 100%;
   max-width: 800px;
@@ -1358,7 +1373,7 @@ small {
   text-align: left;
 }
 
-.hint7-description > p {
+.hint7-description>p {
   margin-bottom: 24px;
 }
 
@@ -1374,7 +1389,7 @@ small {
   text-align: left;
 }
 
-.hint8-service-links > p {
+.hint8-service-links>p {
   margin-bottom: 24px;
 }
 
@@ -1392,23 +1407,23 @@ small {
   max-width: 800px;
 }
 
-.hint6-art-gallery > .hint6-art-caption {
+.hint6-art-gallery>.hint6-art-caption {
   grid-column: 1;
   margin: 0;
   font-size: clamp(12px, 2.4vw, 18px);
 }
 
-.hint6-art-gallery > .hint6-art-caption-right {
+.hint6-art-gallery>.hint6-art-caption-right {
   grid-column: 2;
 }
 
-.hint-detail > .hint6-art-message {
+.hint-detail>.hint6-art-message {
   max-width: 800px;
   margin: 28px 0 0;
   text-align: left;
 }
 
-.hint-detail > .hint6-message-image {
+.hint-detail>.hint6-message-image {
   max-width: 646px;
 }
 
@@ -1419,21 +1434,21 @@ small {
   text-align: center;
 }
 
-.hint6-poem > p {
+.hint6-poem>p {
   margin: 0 0 20px;
   font-size: clamp(16px, 2.4vw, 18px);
 }
 
-.hint6-poem > p:last-child {
+.hint6-poem>p:last-child {
   margin: 32px 0 0;
 }
 
-.hint-detail > .hint6-blue-artwork {
+.hint-detail>.hint6-blue-artwork {
   max-width: 677px;
   margin-top: 48px;
 }
 
-.hint6-poem-naruko > p {
+.hint6-poem-naruko>p {
   line-height: 2.4;
 }
 
@@ -1447,7 +1462,7 @@ small {
   aspect-ratio: 443 / 1086;
 }
 
-.hint6-art-image > img {
+.hint6-art-image>img {
   position: absolute;
   inset: 0;
   display: block;
@@ -1457,7 +1472,7 @@ small {
 }
 
 /* 右画像の上端にある5pxの黒帯だけを表示範囲から外す。 */
-.hint6-art-image:nth-child(2) > img {
+.hint6-art-image:nth-child(2)>img {
   top: calc(-100% * 5 / 1086);
   bottom: auto;
   height: calc(100% * 1091 / 1086);
@@ -1490,8 +1505,8 @@ small {
   text-decoration: none;
 }
 
-.hint-detail ~ footer,
-.mizu ~ footer {
+.hint-detail~footer,
+.mizu~footer {
   margin-inline: auto;
 }
 
@@ -1524,7 +1539,7 @@ small {
   line-height: 1.8;
 }
 
-.oem > img {
+.oem>img {
   display: block;
   width: 100%;
   max-width: 800px;
@@ -1532,7 +1547,7 @@ small {
   margin: 28px auto 0;
 }
 
-.oem ~ footer {
+.oem~footer {
   margin-inline: auto;
 }
 
@@ -1565,7 +1580,7 @@ small {
   line-height: 1.8;
 }
 
-.ryuujin > a {
+.ryuujin>a {
   display: block;
   width: fit-content;
   max-width: 800px;
@@ -1580,7 +1595,7 @@ small {
   overflow-wrap: anywhere;
 }
 
-.ryuujin ~ footer {
+.ryuujin~footer {
   margin-inline: auto;
 }
 
@@ -1606,7 +1621,7 @@ small {
   line-height: 1.5;
 }
 
-.syugoryuu > p {
+.syugoryuu>p {
   width: 100%;
   max-width: 800px;
   margin: 0 auto 16px;
@@ -1616,7 +1631,7 @@ small {
   overflow-wrap: anywhere;
 }
 
-.syugoryuu > img {
+.syugoryuu>img {
   display: block;
   width: 100%;
   max-width: 800px;
@@ -1624,11 +1639,11 @@ small {
   margin: 28px auto 0;
 }
 
-.syugoryuu > img + p {
+.syugoryuu>img+p {
   margin-top: 16px;
 }
 
-.syugoryuu ~ footer {
+.syugoryuu~footer {
   margin-inline: auto;
 }
 
@@ -1654,7 +1669,7 @@ small {
   line-height: 1.5;
 }
 
-.ryuukon > p {
+.ryuukon>p {
   width: 100%;
   max-width: 800px;
   margin: 0 auto 28px;
@@ -1666,7 +1681,7 @@ small {
   overflow-wrap: anywhere;
 }
 
-.ryuukon > img {
+.ryuukon>img {
   display: block;
   width: 100%;
   max-width: 800px;
@@ -1674,7 +1689,7 @@ small {
   margin: 28px auto 0;
 }
 
-.ryuukon ~ footer {
+.ryuukon~footer {
   margin-inline: auto;
 }
 
@@ -1737,6 +1752,14 @@ small {
 .first-greet .title-3 {
   font-size: clamp(22px, 4vw, 48px);
   z-index: 4;
+}
+
+.first-greet .pc-message {
+  display: block;
+}
+
+.first-greet .res-message {
+  display: none;
 }
 
 .first-greet .message {
@@ -1817,13 +1840,13 @@ small {
   will-change: opacity, transform;
 }
 
-.pc-message {
-    display: block;
-  }
+.first-greet .pc-message {
+  display: block;
+}
 
-  .res-message {
-    display: none;
-  }
+.first-greet .res-message {
+  display: none;
+}
 
 /*==mirror==*/
 .mirror {
@@ -2502,6 +2525,7 @@ textarea {
 .contact>.decision-button {
   will-change: opacity, transform;
 }
+
 .privacy-content {
   max-width: 848px;
   align-items: flex-start;
