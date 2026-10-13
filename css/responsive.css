@@ -2726,6 +2726,10 @@
     font-size: clamp(10px, 2.5vw, 13px);
   }
 
+  .contact #prefecture {
+    font-size: 14px;
+  }
+
   .contact .zip-field .error-message {
     left: 9%;
   }
@@ -3159,6 +3163,10 @@
     width: clamp(100px, 26vw, 130px);
     min-height: 40px;
     white-space: nowrap;
+  }
+
+  .contact #prefecture {
+    font-size: 12px;
   }
 
   .contact input,
