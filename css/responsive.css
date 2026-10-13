@@ -2204,11 +2204,6 @@
   .pegasus-content-2 {
     font-size: clamp(8px, 4vw, 18px);
   }
-
-  .pegasus-content-1 br,
-  .pegasus-content-2 br {
-    display: none;
-  }
 }
 
 /* ==================================================
