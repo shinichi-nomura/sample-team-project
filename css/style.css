@@ -1463,6 +1463,17 @@ small {
   height: calc(100% * 1091 / 1086);
 }
 
+.mizu .mizu-related-link {
+  margin: 32px 0 0;
+  font-size: 16px;
+}
+
+.mizu-related-link a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .mizu .suiso-button {
   display: block;
   width: fit-content;
