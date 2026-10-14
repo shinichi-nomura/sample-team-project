@@ -1622,6 +1622,33 @@ small {
   height: auto;
 }
 
+.oem-secondary {
+  margin-top: 80px;
+}
+
+.oem-secondary .oem-copy h3 {
+  font-size: clamp(28px, 2.5vw, 36px);
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .oem-secondary .oem-copy {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .oem-secondary .oem-main-image {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .oem-secondary {
+    margin-top: 48px;
+  }
+}
+
 .oem-details {
   display: flex;
   flex-direction: column;
