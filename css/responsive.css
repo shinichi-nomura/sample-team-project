@@ -3202,3 +3202,231 @@
     border-radius: clamp(16px, 5vw, 24px);
   }
 }
+/* Smartphone reading layout. Desktop and tablet styles remain unchanged. */
+@media (max-width: 600px) {
+  .hero {
+    width: calc(100% - 24px);
+    aspect-ratio: 1;
+    height: auto;
+    margin: calc(var(--page-header-height, 84px) + 12px) auto 32px;
+    --hero-radius: 24px;
+  }
+  /* Keep the opening artwork readable without waiting for an animation. */
+  .hero-images > .hero-image { display: none; }
+  .hero-images > .hero-image:first-child { display: block; }
+  .hero .hero-image-file {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+  .hero .hero-frame-picture, .hero .logo-content { display: none; }
+
+  .greeting, .suiso, .book {
+    box-sizing: border-box;
+    width: calc(100% - 32px);
+    margin: 0 auto 40px;
+    padding: 28px 20px;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: auto;
+    border: 1px solid #3b2a43;
+    border-radius: 24px;
+    background: linear-gradient(145deg, #201229, #0e0d17);
+    overflow: hidden;
+  }
+  .greeting .greeting-picture, .greeting .section-frame,
+  .suiso .suiso-image, .suiso .section-frame,
+  .book .book-background-picture, .book .section-frame { display: none; }
+  .greeting h4, .greeting .greet, .greeting .greet-content,
+  .greeting .profile-button {
+    position: relative;
+    inset: auto;
+    transform: none !important;
+    width: 100%;
+    margin: 0 auto 24px;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .greeting h4, .book h4 { font-size: 24px; text-align: center; letter-spacing: 0.06em; }
+  .greeting .greet { text-align: center; }
+  .greeting .greet-image { width: 112px; height: auto; }
+  .greeting .greet p { font-size: 18px; margin: 8px 0 0; }
+  .greeting .pc-greet-content { display: none; }
+  .greeting .res-greet-content {
+    display: block;
+    font-size: 16px;
+    line-height: 1.95;
+    letter-spacing: 0;
+    text-align: left;
+  }
+  .greeting .greet-content br { display: none; }
+  .greeting .greeting-char { opacity: 1 !important; transform: none !important; }
+  .greeting .profile-button { max-width: 210px; margin: 24px auto 0; }
+  .profile-button img { width: 100%; height: auto; }
+
+  .suiso { text-align: center; }
+  .suiso .suiso-content {
+    position: relative; inset: auto; transform: none !important;
+    width: 100%; opacity: 1 !important; visibility: visible !important;
+  }
+  .suiso .suiso-content h3 { font-size: 24px; line-height: 1.5; margin: 0 0 20px; }
+  .suiso .suiso-content > p:not(.suiso-p) { font-size: 16px; line-height: 1.8; margin: 0; }
+  .suiso .suiso-content p.suiso-p {
+    width: 100%; margin: 24px 0; font-size: 16px;
+    line-height: 1.9; white-space: normal; text-align: left; text-shadow: none;
+  }
+  .suiso .suiso-p br { display: none; }
+  .suiso .suiso1, .suiso .suiso2 {
+    position: relative; inset: auto; display: inline-block;
+    width: 32%; height: auto; margin: 8px 5% 24px;
+    transform: none !important; opacity: 1 !important; visibility: visible !important;
+  }
+  .suiso .suiso-button {
+    position: relative; inset: auto; transform: none !important;
+    width: 210px; max-width: 100%; margin: 0 auto;
+    opacity: 1 !important; visibility: visible !important;
+  }
+  .suiso-button img { width: 100%; height: auto; }
+  .koseisinrigaku { width: calc(100% - 32px); margin: 0 auto 40px; }
+  .koseisinrigaku .kosei-p1, .koseisinrigaku .kosei-p2 {
+    position: relative; inset: auto; transform: none !important;
+    white-space: normal; font-size: 12px; line-height: 1.7;
+    text-align: center; margin: 8px 0; letter-spacing: 0;
+  }
+
+  .eightTips {
+    width: calc(100% - 32px); margin: 0 auto 48px;
+    padding: 0; height: auto; aspect-ratio: auto;
+  }
+  .eightTips-background { display: none; }
+  .mobile-tips-heading[hidden] { display: block; font-size: 24px; margin: 0 0 24px; text-align: center; }
+  .eightTips-items { position: relative; inset: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .eightTips .eightTips-link {
+    position: relative; inset: auto; width: auto; height: auto;
+    padding: 12px 8px 16px; border: 1px solid #3b2a43;
+    border-radius: 20px; background: #17111e; color: #fff;
+    line-height: 1.6; text-align: center;
+  }
+  .eightTips-link .eightTips-item {
+    position: relative; inset: auto !important;
+    width: 100%; height: auto; margin: 0 auto 12px;
+    transform: none !important; opacity: 1 !important; visibility: visible !important;
+  }
+  .mobile-tip-label[hidden] { display: block; font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
+  .events { width: calc(100% - 32px); flex-direction: column; gap: 24px; margin: 0 auto 40px; padding: 0; }
+  .event, .latest { width: 100%; }
+  .event h3, .latest h3 { font-size: 24px; margin-bottom: 16px; }
+  .event-contents, .latest-contents { box-sizing: border-box; width: 100%; padding: 24px; background: #1c1523; border: 1px solid #3b2a43; border-radius: 20px; }
+  .notice-body, .notice-title { font-size: 16px; line-height: 1.8; }
+  .book .book-list { gap: 40px; }
+  .book .book-item { display: flex; flex-direction: column; gap: 24px; margin: 24px 0 0; }
+  .book .book-item .book-images, .book .book-item .book-content {
+    width: 100%; margin: 0; transform: none !important;
+    clip-path: none !important; opacity: 1 !important; visibility: visible !important;
+  }
+  .book .book-item .book-images img { width: auto; max-width: 80%; height: 260px; margin: 0 auto; transform: none !important; }
+  .book .book-content h5 { font-size: 20px; line-height: 1.6; margin: 0 0 16px; }
+  .book .book-content p { font-size: 16px; line-height: 1.9; text-align: left; letter-spacing: 0; }
+  .book .book-description-mobile br { display: none; }
+  .book .book-content .purchase { display: block; padding: 14px 18px; margin: 24px 0 0; border-radius: 14px; text-align: center; font-size: 16px; }
+
+  /* Profile: artwork and prose have independent, content-driven heights. */
+  .first-greet { box-sizing: border-box; padding: 24px 16px 0; margin-bottom: 40px; }
+  .first-greet .first-greet-image { width: 140px; }
+  .first-greet .name { margin: -20px auto 20px; font-size: 16px; }
+  .first-greet .title-1, .first-greet .title-2, .first-greet .title-4 { font-size: 18px; line-height: 1.7; margin: 8px auto; }
+  .first-greet .title-3 { font-size: 24px; line-height: 1.5; }
+  .first-greet .message {
+    box-sizing: border-box; width: 100%; height: auto; min-height: 0; aspect-ratio: auto;
+    margin: 28px auto 0; padding: 0; border: 1px solid #3b2a43;
+    border-radius: 24px; background: #171020; overflow: hidden;
+  }
+  .first-greet .message::before, .first-greet .message-frame { display: none; }
+  .first-greet .message .message-background {
+    position: relative; inset: auto; display: block;
+    width: 100%; height: auto; object-fit: contain; filter: none;
+  }
+  .first-greet .message .pc-message { display: none; }
+  .first-greet .message .res-message { display: block; padding: 24px 20px; }
+  .first-greet .message .message-content {
+    position: relative; inset: auto; width: 100%; margin: 0;
+    font-size: 16px; line-height: 1.95; text-align: left; text-shadow: none;
+    transform: none !important; opacity: 1 !important; visibility: visible !important;
+  }
+  .first-greet .message .message-content + .message-content { margin-top: 24px; }
+  .first-greet .message .res-br { display: none; }
+  .first-greet .first-greet-image, .first-greet .name, .first-greet h2, .first-greet h3 {
+    transform: none !important; opacity: 1 !important; visibility: visible !important;
+  }
+
+  /* Shared reading rhythm for the eight detail pages. */
+  .hint-detail, .mizu, .oem, .ryuujin, .syugoryuu, .ryuukon {
+    padding-left: 20px; padding-right: 20px; padding-bottom: 40px;
+  }
+  .hint-detail > h2, .mizu > h2, .oem > h2, .ryuujin > h2, .syugoryuu > h2, .ryuukon > h2 {
+    font-size: 24px; line-height: 1.6; margin-bottom: 28px;
+  }
+  .hint-detail p, .mizu p, .oem p, .ryuujin p, .syugoryuu > p, .ryuukon > p {
+    font-size: 16px; line-height: 1.9; overflow-wrap: anywhere;
+  }
+  .hint7-description > p { margin-bottom: 24px; }
+  .hint8-service { padding: 24px 18px; border-radius: 20px; }
+  .hint8-service h3 { font-size: 24px; }
+  .hint-detail a, .mizu a, .oem a, .ryuujin a, .syugoryuu a, .ryuukon a {
+    display: inline-block; box-sizing: border-box; max-width: 100%;
+    padding: 12px 14px; margin-top: 8px; border: 1px solid #65506b;
+    border-radius: 12px; background: #211629; color: #ecd7f5;
+    font-size: 15px; line-height: 1.7; overflow-wrap: anywhere;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  .hint8-service .hint8-service-url { margin-bottom: 24px; }
+  .hint8-service-url a { width: 100%; }
+  .oem .oem-copy p { font-size: 16px; line-height: 1.9; }
+  .oem-copy h3 { font-size: 30px; }
+  .oem-secondary .oem-copy h3 { font-size: 26px; }
+  a:focus-visible, button:focus-visible { outline: 3px solid #ffb6df; outline-offset: 4px; }
+}
+
+@media (max-width: 600px) {
+  .particle { display: none; }
+  .greeting .greet .greet-image {
+    position: static; display: block; width: 112px; height: auto;
+    margin: 0 auto; transform: none !important;
+  }
+  .suiso .suiso1, .suiso .suiso2 { min-width: 72px; }
+  .book .book-item:first-child, .book .book-item:nth-child(2) {
+    display: flex; flex-direction: column; align-items: stretch;
+    gap: 24px; margin: 24px 0 0; grid-template-columns: none;
+  }
+  .book .book-item .book-content, .book .book-item .book-images {
+    position: relative; inset: auto; grid-column: auto; grid-row: auto;
+    width: 100%; max-width: none; margin: 0;
+  }
+  .book .book-item .book-content h5 {
+    position: relative; inset: auto; width: 100%; max-width: none;
+    transform: none !important; text-align: left;
+  }
+}
+@media (max-width: 600px) {
+  .book .book-list .book-item .book-images,
+  .book .book-list .book-item .book-content {
+    position: relative; inset: auto; display: block;
+    width: 100%; height: auto; margin: 0;
+    grid-column: auto; grid-row: auto;
+  }
+  .book .book-list .book-item .book-images img {
+    width: auto; height: 260px; max-width: 100%; margin: 0 auto;
+  }
+  .book .book-list .book-item .book-content h5 {
+    width: 100%; margin: 0 0 16px; padding: 0;
+    text-align: left; font-size: 20px; line-height: 1.6;
+  }
+  .book .book-list .book-item .book-content p.book-description-mobile {
+    width: 100%; margin: 0; font-size: 16px; line-height: 1.9;
+  }
+  .book .book-list .book-item .purchase {
+    position: relative; inset: auto; width: 100%; height: auto;
+    box-sizing: border-box; margin: 24px 0 0; padding: 14px 18px;
+    transform: none; font-size: 16px; line-height: 1.5;
+  }
+}
