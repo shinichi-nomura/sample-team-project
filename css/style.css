@@ -1657,6 +1657,14 @@ small {
   overflow-wrap: anywhere;
 }
 
+.ryuujin .hinto3-ashina-photo {
+  display: block;
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  margin: 24px auto 0;
+}
+
 .ryuujin .hinto3-ashina-link {
   margin-top: 24px;
   overflow-wrap: anywhere;
