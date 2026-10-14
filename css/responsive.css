@@ -3211,15 +3211,6 @@
     margin: calc(var(--page-header-height, 84px) + 12px) auto 32px;
     --hero-radius: 24px;
   }
-  /* Keep the opening artwork readable without waiting for an animation. */
-  .hero-images > .hero-image { display: none; }
-  .hero-images > .hero-image:first-child { display: block; }
-  .hero .hero-image-file {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
-  }
-  .hero .hero-frame-picture, .hero .logo-content { display: none; }
 
   .greeting, .suiso, .book {
     box-sizing: border-box;
