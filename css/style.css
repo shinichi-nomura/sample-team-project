@@ -1657,6 +1657,11 @@ small {
   overflow-wrap: anywhere;
 }
 
+.ryuujin .hinto3-ashina-link {
+  margin-top: 24px;
+  overflow-wrap: anywhere;
+}
+
 .ryuujin~footer {
   margin-inline: auto;
 }
