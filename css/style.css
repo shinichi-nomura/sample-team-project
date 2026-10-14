@@ -1620,6 +1620,21 @@ small {
   line-height: 1.5;
 }
 
+.hinto3-photos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(8px, 2vw, 20px);
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto 24px;
+}
+
+.hinto3-photos img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .ryuujin p {
   width: 100%;
   margin: 0 0 16px;
