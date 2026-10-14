@@ -836,6 +836,30 @@
     );
     if (items.some(item => !item)) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Mobile cards use their own reveal animation; the desktop circle stays unchanged.
+    if (window.matchMedia('(max-width: 600px)').matches) {
+      const media = gsap.matchMedia();
+      media.add('(max-width: 600px) and (prefers-reduced-motion: no-preference)', () => {
+        const cards = Array.from(section.querySelectorAll('.eightTips-link'));
+        const heading = section.querySelector('.mobile-tips-heading');
+        const animations = [];
+        if (heading) animations.push(gsap.fromTo(heading,
+          { autoAlpha: 0, y: 14 },
+          { autoAlpha: 1, y: 0, duration: 0.75, ease: 'power2.out',
+            scrollTrigger: { trigger: heading, start: 'top 90%', once: true } }));
+        for (let i = 0; i < cards.length; i += 2) {
+          animations.push(gsap.fromTo(cards.slice(i, i + 2),
+            { autoAlpha: 0, y: 28, scale: 0.96 },
+            { autoAlpha: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.12,
+              ease: 'power2.out',
+              scrollTrigger: { trigger: cards[i], start: 'top 92%', once: true } }));
+        }
+        const revealOnFocus = () => animations.forEach(animation => animation.progress(1));
+        section.addEventListener('focusin', revealOnFocus);
+        return () => section.removeEventListener('focusin', revealOnFocus);
+      });
+      return;
+    }
     // CSSの現在の座標を使用。CSS側で位置を変えても追従します。
     const positions = items.map(item => {
       const style = getComputedStyle(item);
