@@ -3442,3 +3442,9 @@
     top: -5.263%;
   }
 }
+
+@media (max-width: 600px) {
+  .eightTips.tips-navigating .eightTips-link .eightTips-item {
+    visibility: hidden !important;
+  }
+}
