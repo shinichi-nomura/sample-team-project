@@ -3423,23 +3423,15 @@
 }
 
 @media (max-width: 600px) {
-  /* Display the original PC banner's title area without redrawing its lettering. */
+  /* Show the supplied mobile logo in full at its original aspect ratio. */
   .mobile-tips-heading[hidden] {
-    position: relative;
     width: 100%;
-    aspect-ratio: 800 / 190;
-    overflow: hidden;
-    border-radius: 12px;
-    background: #03182b;
     margin-bottom: 24px;
   }
   .mobile-tips-heading img {
-    position: absolute;
-    width: 191.25%;
-    max-width: none;
+    display: block;
+    width: 100%;
     height: auto;
-    left: -40%;
-    top: -5.263%;
   }
 }
 
