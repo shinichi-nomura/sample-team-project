@@ -3257,7 +3257,7 @@
 
 /* Smartphone reading layout. Desktop and tablet styles remain unchanged. */
 @media (max-width: 600px) {
-  .hero {
+
     .hero {
       width: calc(100% - 24px);
       aspect-ratio: 1;
@@ -3265,7 +3265,7 @@
       margin: var(--page-header-height) auto 32px;
       --hero-radius: 24px;
     }
-  }
+  
 
   .suiso,
   .book {
