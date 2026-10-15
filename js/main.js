@@ -858,6 +858,7 @@
         section.addEventListener('focusin', revealOnFocus);
         return () => section.removeEventListener('focusin', revealOnFocus);
       });
+      initEightTipsNavigation(section, items, () => section.dispatchEvent(new Event('focusin')));
       return;
     }
     // CSSの現在の座標を使用。CSS側で位置を変えても追従します。
@@ -922,6 +923,11 @@
     }
     section.addEventListener('focusin', revealOnFocus);
 
+    initEightTipsNavigation(section, items, revealOnFocus);
+  }
+
+  // Share the glowing lift-and-navigate effect across desktop and mobile.
+  function initEightTipsNavigation(section, items, revealOnFocus) {
     let transition = null;
     let stage = null;
     let navigationTimer = null;
