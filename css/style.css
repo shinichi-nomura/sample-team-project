@@ -1436,13 +1436,61 @@ small {
   text-align: left;
 }
 
-.hint8-service-links>p {
-  margin-bottom: 24px;
+.hint8-service {
+  padding: clamp(24px, 4vw, 40px);
+  border: 1px solid #383838;
+  border-radius: 16px;
+  background: #101010;
+}
+
+.hint8-service + .hint8-service {
+  margin-top: 32px;
+}
+
+.hint8-service h3 {
+  margin: 0 0 24px;
+  padding-left: 16px;
+  border-left: 3px solid #e3c589;
+  color: #e3c589;
+  font-size: 28px;
+  line-height: 1.5;
+}
+
+.hint8-service p {
+  margin: 0 0 20px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+.hint8-service p:last-child {
+  margin-bottom: 0;
+}
+
+.hint8-service .hint8-service-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.hint8-service .hint8-service-url {
+  margin-bottom: 28px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.hint8-service .hint8-inline-emoji {
+  display: inline-block;
+  width: auto;
+  height: 1.25em;
+  margin-left: 0.15em;
+  vertical-align: -0.2em;
 }
 
 .hint8-service-links a {
+  color: #a8d8f0;
   overflow-wrap: anywhere;
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .hint6-art-gallery {
@@ -1586,12 +1634,104 @@ small {
   line-height: 1.8;
 }
 
-.oem>img {
+.oem-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 24px;
+}
+
+.oem-copy {
+  text-align: left;
+}
+
+.oem-copy h3 {
+  margin: 0 0 32px;
+  font-size: clamp(32px, 3.6vw, 48px);
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+.oem .oem-copy p {
+  margin-bottom: 20px;
+  line-height: 2;
+}
+
+.oem-copy p:last-child {
+  margin-bottom: 0;
+}
+
+.oem-main-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.oem-secondary {
+  margin-top: 80px;
+}
+
+.oem-secondary .oem-copy h3 {
+  font-size: clamp(28px, 2.5vw, 36px);
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .oem-secondary .oem-copy {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .oem-secondary .oem-main-image {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .oem-secondary {
+    margin-top: 48px;
+  }
+}
+
+.oem-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+  width: 100%;
+  margin-top: 80px;
+}
+
+.oem-details img {
   display: block;
   width: 100%;
   max-width: 800px;
   height: auto;
-  margin: 28px auto 0;
+}
+
+.oem-details img:last-child {
+  max-width: 703px;
+}
+
+@media (max-width: 767px) {
+  .oem-intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    max-width: 560px;
+  }
+
+  .oem-copy h3 {
+    margin-bottom: 24px;
+  }
+
+  .oem-details {
+    gap: 40px;
+    margin-top: 48px;
+  }
 }
 
 .oem~footer {
@@ -1620,6 +1760,21 @@ small {
   line-height: 1.5;
 }
 
+.hinto3-photos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(8px, 2vw, 20px);
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto 24px;
+}
+
+.hinto3-photos img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .ryuujin p {
   width: 100%;
   margin: 0 0 16px;
@@ -1639,6 +1794,19 @@ small {
   text-align: center;
   text-decoration: underline;
   text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+
+.ryuujin .hinto3-ashina-photo {
+  display: block;
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  margin: 48px auto 0;
+}
+
+.ryuujin .hinto3-ashina-link {
+  margin-top: 24px;
   overflow-wrap: anywhere;
 }
 
