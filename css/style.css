@@ -1369,8 +1369,7 @@ small {
 }
 
 /*==hinto1==*/
-.hint-detail,
-.mizu {
+.hint-detail {
   position: relative;
   box-sizing: border-box;
   width: 100%;
@@ -1443,7 +1442,7 @@ small {
   background: #101010;
 }
 
-.hint8-service + .hint8-service {
+.hint8-service+.hint8-service {
   margin-top: 32px;
 }
 
@@ -1869,39 +1868,69 @@ small {
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
-  /* 固定ヘッダーの高さ＋タイトル上の余白 */
   padding: calc(var(--page-header-height, 96px) + 40px) 24px 60px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
 }
 
+/* ページタイトル */
 .ryuukon h2 {
-  width: 100%;
-  margin: 0 0 32px;
+  margin: 0 0 48px;
   font-size: 28px;
-  line-height: 1.5;
+  text-align: center;
 }
 
-.ryuukon>p {
+/* 画像左・文章右 */
+.ryuukon-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+/* 左側の画像 */
+.ryuukon-item>img {
+  display: block;
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto 28px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* 右側の説明 */
+.ryuukon-text {
+  width: 100%;
+  min-width: 0;
+  text-align: left;
+}
+
+.ryuukon-text h3 {
+  margin-bottom: 24px;
+  font-size: 24px;
+}
+
+/* 説明文 */
+.ryuukon-text p {
+  margin: 0;
   font-size: 18px;
-  line-height: 1.8;
-  text-align: center;
-  /* HTMLに書いた改行をそのまま表示 */
+  line-height: 1.9;
   white-space: pre-line;
   overflow-wrap: anywhere;
 }
 
-.ryuukon>img {
+.ryuukon-images {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto 60px;
+}
+
+.ryuukon-images img {
   display: block;
   width: 100%;
-  max-width: 800px;
   height: auto;
-  margin: 28px auto 0;
+  object-fit: contain;
 }
 
 .ryuukon~footer {
