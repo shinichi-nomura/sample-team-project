@@ -611,7 +611,17 @@ main p {
   height: auto;
   display: block;
   position: relative;
-  margin: 0px auto;
+  margin: 0 auto;
+  filter: brightness(1);
+  transition: filter 0.3s ease;
+}
+
+.koseisinrigaku-link:hover .koseisinrigaku-image {
+  filter: brightness(0.75);
+}
+
+.koseisinrigaku-link:focus-visible .koseisinrigaku-image {
+  filter: brightness(0.75);
 }
 
 .koseisinrigaku h3 {
