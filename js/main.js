@@ -3,6 +3,31 @@
   const initialPageHash = window.location.hash;
   const isHistoryNavigation = performance.getEntriesByType('navigation')[0]?.type === 'back_forward';
   if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
+
+  // First.htmlへの通常遷移は先頭へ。戻る・再読み込み・本文アンカーは対象外。
+  const isFirstPageEntry = /\/first\.html$/i.test(location.pathname)
+    && performance.getEntriesByType('navigation')[0]?.type === 'navigate'
+    && (!initialPageHash || initialPageHash === '#top');
+  if (isFirstPageEntry) {
+    let userHasInteracted = false;
+    const stopTopCorrection = () => { userHasInteracted = true; };
+    const inputEvents = ['wheel', 'touchstart', 'pointerdown', 'keydown'];
+    inputEvents.forEach(type => window.addEventListener(type, stopTopCorrection, { passive: true }));
+    const showFirstPageTop = event => {
+      if (event?.persisted || userHasInteracted) return;
+      if (location.hash && location.hash !== '#top') return;
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    };
+    showFirstPageTop();
+    window.addEventListener('pageshow', event => {
+      showFirstPageTop(event);
+      requestAnimationFrame(() => {
+        showFirstPageTop(event);
+        inputEvents.forEach(type => window.removeEventListener(type, stopTopCorrection));
+      });
+    }, { once: true });
+  }
+
   // ハッシュ付きのアクセスは再読み込み時も対象セクションを優先。
   if (!isHistoryNavigation && (initialPageHash === '#about' || initialPageHash === '#book')) {
     document.documentElement.classList.add('initial-anchor-moving');
@@ -605,6 +630,7 @@
   function initGreetingAnimation() {
     const greeting = document.querySelector(".greeting");
     if (!greeting) return;
+    const isMobile = window.matchMedia("(max-width: 600px)").matches;
     const heading = greeting.querySelector("h4");
     const profile = greeting.querySelector(".greet");
     const content = greeting.querySelector(".greet-content");
@@ -615,7 +641,7 @@
     //見出しの中央配置を維持
     gsap.set(heading, {
       autoAlpha: 1,
-      xPercent: -50,
+      xPercent: isMobile ? 0 : -50,
       x: 0,
     });
     //見出し各文字の初期状態
@@ -630,7 +656,7 @@
     //本文の初期状態、中央配置は維持する
     gsap.set(content, {
       autoAlpha: 1,
-      xPercent: -50,
+      xPercent: isMobile ? 0 : -50,
       x: 0,
       y: 0,
     });
@@ -644,7 +670,7 @@
     if (button) {
       gsap.set(button, {
         autoAlpha: 0,
-        xPercent: -50,
+        xPercent: isMobile ? 0 : -50,
         x: 0,
         y: 60,
       });
@@ -709,6 +735,7 @@
   function initSuisoAnimation() {
     const suiso = document.querySelector(".suiso");
     if (!suiso) return;
+    const isMobile = window.matchMedia("(max-width: 600px)").matches;
     const content = suiso.querySelector(".suiso-content");
     const heading = suiso.querySelector("h3");
     // .suiso-p以外のpをすべて取得
@@ -777,7 +804,7 @@
     if (button) {
       gsap.set(button, {
         autoAlpha: 0,
-        xPercent: -50,
+        xPercent: isMobile ? 0 : -50,
         x: 0,
         y: 60,
       });
@@ -845,14 +872,18 @@
         const animations = [];
         if (heading) animations.push(gsap.fromTo(heading,
           { autoAlpha: 0, y: 14 },
-          { autoAlpha: 1, y: 0, duration: 0.75, ease: 'power2.out',
-            scrollTrigger: { trigger: heading, start: 'top 90%', once: true } }));
+          {
+            autoAlpha: 1, y: 0, duration: 0.75, ease: 'power2.out',
+            scrollTrigger: { trigger: heading, start: 'top 90%', once: true }
+          }));
         for (let i = 0; i < cards.length; i += 2) {
           animations.push(gsap.fromTo(cards.slice(i, i + 2),
             { autoAlpha: 0, y: 28, scale: 0.96 },
-            { autoAlpha: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.12,
+            {
+              autoAlpha: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.12,
               ease: 'power2.out',
-              scrollTrigger: { trigger: cards[i], start: 'top 92%', once: true } }));
+              scrollTrigger: { trigger: cards[i], start: 'top 92%', once: true }
+            }));
         }
         const revealOnFocus = () => animations.forEach(animation => animation.progress(1));
         section.addEventListener('focusin', revealOnFocus);
@@ -949,8 +980,8 @@
       const link = event.target instanceof Element
         ? event.target.closest('.eightTips-link') : null;
       if (!link || event.defaultPrevented || event.button !== 0 ||
-          event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
-          link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+        event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
+        link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
       if (stage) {
         event.preventDefault();
         return;
