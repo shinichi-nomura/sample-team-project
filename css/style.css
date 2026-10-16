@@ -295,6 +295,8 @@ nav a:hover {
   --hero-radius: 72px;
   position: relative;
   width: 100%;
+  max-width: none;
+  box-sizing: border-box;
   aspect-ratio: 1200 / 750;
   overflow: hidden;
   border-radius: var(--hero-radius);
@@ -1305,7 +1307,7 @@ small {
 .hint-detail p,
 .mizu p {
   width: 100%;
-  margin: 0 0 clamp(6px, 1vw, 8px);
+  margin: 0 0 clamp(4px, 0.8vw, 6px);;
   font-size: clamp(16px, 1.8vw, 18px);
 }
 
@@ -1319,7 +1321,7 @@ small {
 }
 
 .mizu .mizu-related-link {
-  margin: 32px 0px 0px;
+  margin: 16px 0px 32px;
   font-size: 16px;
 }
 
@@ -1807,7 +1809,7 @@ small {
 .first-greet .name {
   position: relative;
   width: max-content;
-  margin: -52px auto 0px;
+  margin: -60px auto 0px;
   padding: clamp(2px, 0.3vw, 4px) clamp(8px, 1vw, 12px);
   border-radius: clamp(12px, 2vw, 24px);
   background: rgb(243, 0, 129);
