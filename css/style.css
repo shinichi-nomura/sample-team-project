@@ -2600,10 +2600,38 @@ textarea {
   will-change: opacity, transform;
 }
 
+/*== privacy.html ==*/
 .privacy-content {
   max-width: 848px;
+  width: 100%;
   align-items: flex-start;
   text-align: left;
+}
+
+.privacy-content h2 {
+  font-weight: normal;
+  font-size: clamp(26px, 3vw, 36px);
+  line-height: 1.4;
+}
+
+.privacy-content h3 {
+  font-weight: normal;
+  font-size: clamp(21px, 2.4vw, 28px);
+  line-height: 1.5;
+  margin-top: clamp(36px, 4.8vw, 58px);
+}
+
+.privacy-content p {
+  font-weight: normal;
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.9;
+  margin-top: clamp(-20px, -1.6vw, -12px);
+  overflow-wrap: anywhere;
+}
+
+.privacy-content a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .privacy-content a {
