@@ -1,8 +1,5 @@
 'use strict';
 
-const SERVICE_ID = "tokimeki-jinja";
-const API_KEY = "oDjBTh4RaD6rT7ZXi2W717XBHx2Xrj3yQWfe";
-const ENDPOINT = "posts";
 
 // NEWを表示する日数
 const NEW_DISPLAY_DAYS = 7;
@@ -15,14 +12,7 @@ async function loadNotices() {
         return;
     }
     try {
-        const response = await fetch(
-            `https://${SERVICE_ID}.microcms.io/api/v1/${ENDPOINT}?limit=100&orders=-date`,
-            {
-                headers: {
-                    "X-MICROCMS-API-KEY": API_KEY
-                }
-            }
-        );
+        const response = await fetch('pages/cms-feed.php');
         if (!response.ok) {
             throw new Error(
                 `microCMS API error: ${response.status}`
@@ -107,12 +97,12 @@ function renderItems(container, items, type) {
         // イベント
         if (type === "event") {
             link.href =
-                `pages/event-detail.html?id=${item.id}`;
+                `pages/event-detail.html?id=${encodeURIComponent(item.id)}`;
         }
         // 近況報告
         if (type === "latest") {
             link.href =
-                `pages/latest-detail.html?id=${item.id}`;
+                `pages/latest-detail.html?id=${encodeURIComponent(item.id)}`;
         }
         // タイトル
         const title = document.createElement("h4");
@@ -125,10 +115,8 @@ function renderItems(container, items, type) {
         body.className =
             "notice-body";
         // microCMSのHTMLから文字だけ取得
-        const temp = document.createElement("div");
-        temp.innerHTML =
-            item.body ?? "";
-        const text = temp.textContent ?? "";
+        const safeBody = window.safeArticle(item.body);
+        const text = safeBody.textContent ?? '';
         // TOPページは100文字まで
         body.textContent =
             text.length > 80

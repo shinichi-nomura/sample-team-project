@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require_once __DIR__ . '/site-security.php';
 
 // PHP 8.2以上。受信先は訪問者の入力から決めない。
 const CONTACT_TO = 'info@mizu-tokimeki.com';
@@ -59,7 +60,7 @@ function contact_message(array $data): string {
 }
 
 // 1つのロック付きファイルで同時実行も制限。本文・メール・生IPは保存しない。
-function contact_rate_limit(string $path, string $ip, int $now): bool {
+function contact_rate_limit(string $path, string $ip, int $now, int $maxPerIp = 5, int $interval = 60, int $maxGlobal = 100): bool {
     $file = fopen($path, 'c+');
     if (!$file || !flock($file, LOCK_EX)) throw new RuntimeException('rate storage');
     try {
@@ -73,7 +74,7 @@ function contact_rate_limit(string $path, string $ip, int $now): bool {
         $key = hash('sha256', $ip);
         $times = $state[$key] ?? [];
         $total = array_sum(array_map('count', $state));
-        if (count($times) >= 5 || $total >= 100 || ($times && $now - end($times) < 60)) return false;
+        if (count($times) >= $maxPerIp || $total >= $maxGlobal || ($times && $now - end($times) < $interval)) return false;
         $state[$key][] = $now;
         $json = json_encode($state, JSON_THROW_ON_ERROR);
         rewind($file);
@@ -96,6 +97,13 @@ function handle_contact(): void {
     if (($_SERVER['HTTP_X_CONTACT_REQUEST'] ?? '') !== '1') reply(403, ['message'=>'お問い合わせページから操作してください。']);
     if ($method === 'POST' && ($_SERVER['HTTP_ORIGIN'] ?? '') !== CONTACT_ORIGIN) reply(403, ['message'=>'お問い合わせページから送信してください。']);
     if ((int)($_SERVER['CONTENT_LENGTH'] ?? 0) > 65536) reply(413, ['message'=>'入力が長すぎます。']);
+    $dir = sys_get_temp_dir() . '/tokimeki-contact-' . hash('sha256', __DIR__);
+    if (!is_dir($dir) && !mkdir($dir, 0700, true) && !is_dir($dir)) throw new RuntimeException('rate directory');
+    // トークン発行や失敗リクエストも制限し、メール制限とは別に管理する。
+    if (!contact_rate_limit($dir . '/requests.json', $_SERVER['REMOTE_ADDR'] ?? 'unknown', time(), 120, 0, 3000)) {
+        header('Retry-After: 3600'); reply(429, ['message'=>'アクセスが集中しています。時間をおいてお試しください。']);
+    }
+    $config = site_config();
     ini_set('session.use_strict_mode', '1');
     session_name('tokimeki_contact');
     session_set_cookie_params(['lifetime'=>0,'path'=>'/pages/','secure'=>true,'httponly'=>true,'samesite'=>'Strict']);
@@ -105,7 +113,7 @@ function handle_contact(): void {
             $_SESSION['token'] = bin2hex(random_bytes(32));
             $_SESSION['issued'] = time();
         }
-        reply(200, ['token'=>$_SESSION['token']]);
+        reply(200, ['token'=>$_SESSION['token'], 'siteKey'=>$config['turnstile_site']]);
     }
     $token = $_POST['token'] ?? '';
     if (!is_string($token) || !isset($_SESSION['token']) || !hash_equals($_SESSION['token'], $token) || time() - ($_SESSION['issued'] ?? 0) > 3600) {
@@ -115,8 +123,9 @@ function handle_contact(): void {
     if (($_SESSION['delivered'] ?? '') === $token) reply(200, ['ok'=>true]);
     try { $data = validate_contact($_POST); }
     catch (InvalidArgumentException $e) { reply(422, ['message'=>$e->getMessage()]); }
-    $dir = sys_get_temp_dir() . '/tokimeki-contact-' . hash('sha256', __DIR__);
-    if (!is_dir($dir) && !mkdir($dir, 0700, true) && !is_dir($dir)) throw new RuntimeException('rate directory');
+    if (!verify_turnstile($_POST['cf-turnstile-response'] ?? '', $config['turnstile_secret'])) {
+        reply(422, ['message'=>'自動投稿防止の確認をやり直してください。']);
+    }
     if (!contact_rate_limit($dir . '/rate.json', $_SERVER['REMOTE_ADDR'] ?? 'unknown', time())) {
         header('Retry-After: 3600'); reply(429, ['message'=>'送信回数の上限です。時間をおいてお試しください。']);
     }

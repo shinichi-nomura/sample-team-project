@@ -234,6 +234,11 @@
                         <p class="error-message"></p>
                     </div>
                 </div>
+                <div class="contact-verification">
+                    <div id="contact-challenge"></div>
+                    <p id="contact-security-status" role="status"></p>
+                    <button type="button" id="contact-security-retry" hidden>確認を再試行</button>
+                </div>
                 <div class="contact-consent">
                     <label><input type="checkbox" name="privacy" value="agree"> <a href="privacy.html" target="_blank" rel="noopener">個人情報の取り扱い</a>を確認し、同意します。</label>
                 </div>
@@ -295,6 +300,7 @@
         <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
         <script src="../js/main.js"></script>
+        <script src="../js/contact-security.js"></script>
     </div>
 </body>
 
