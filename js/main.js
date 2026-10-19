@@ -1,6 +1,13 @@
 "use strict";
 {
   const initialPageHash = window.location.hash;
+  // 古いホームURLも、再読み込みせず整理する。本文アンカーとクエリは保持。
+  const cleanUrl = new URL(location.href);
+  if (['http:', 'https:'].includes(cleanUrl.protocol)) {
+    cleanUrl.pathname = cleanUrl.pathname.replace(/index\.html$/, '');
+  }
+  if (cleanUrl.hash === '#top') cleanUrl.hash = '';
+  if (cleanUrl.href !== location.href) history.replaceState(history.state, '', cleanUrl.href);
   const isHistoryNavigation = performance.getEntriesByType('navigation')[0]?.type === 'back_forward';
   if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
 
@@ -154,7 +161,7 @@
         return;
       }
       //同じページへのリンクで#指定がない場合
-      if (!url.hash) {
+      if (!url.hash || url.hash === "#top") {
         event.preventDefault();
         document.documentElement.classList.remove("initial-anchor-moving");
         document.documentElement.style.scrollBehavior = "";
@@ -209,10 +216,11 @@
       }
       //同じページ内の場合はページを再読み込みせず、最上部へスムーズに移動
       event.preventDefault();
+      anchorFixCancelled = true;
       document.documentElement.classList.remove("initial-anchor-moving");
       document.documentElement.style.scrollBehavior = "";
-      //URLを#topへ更新する
-      history.replaceState(null, "", url.pathname + url.search + "#top");
+      // 先頭へ戻る際は、本文アンカーもURLから取り除く。
+      history.replaceState(null, "", url.pathname + url.search);
       window.scrollTo({
         top: 0,
         left: 0,
