@@ -22,6 +22,10 @@ jobs:
           persist-credentials: false
       - name: Test deployment safeguards
         run: python3 -m unittest discover -s tests -p 'test_deploy.py'
+      - name: Test contact handler without sending mail
+        run: |
+          php -l pages/contact-send.php
+          php tests/contact_test.php
       - name: Upload public files using FTPS
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}

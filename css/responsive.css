@@ -3425,3 +3425,23 @@
   }
 
 }
+/* お問い合わせの同意欄と送信中表示 */
+.contact .contact-consent {
+  width: 100%;
+  margin-top: 24px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.contact .contact-consent label { display: block; }
+.contact .contact-consent input[type="checkbox"] {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin: 0 6px 0 0;
+  vertical-align: middle;
+  appearance: auto;
+}
+.contact .contact-consent a { text-decoration: underline; }
+.contact .decision:disabled { cursor: wait; opacity: 0.65; }
+.contact .decision { margin-top: 32px; }

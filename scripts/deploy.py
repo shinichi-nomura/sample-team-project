@@ -26,7 +26,7 @@ def public_files(root):
             raise ValueError('Symbolic links cannot be published')
         if any(part.startswith('.') for part in relative.parts):
             continue
-        if path.is_file() and path.suffix.lower() in EXTENSIONS:
+        if path.is_file() and (path.suffix.lower() in EXTENSIONS or relative == Path('pages/contact-send.php')):
             if any(c in relative.as_posix() for c in '\r\n'):
                 raise ValueError('Unsafe filename')
             result.append(relative)
@@ -51,7 +51,8 @@ def upload(ftp, root, paths):
                 ftp.mkd(part)
                 ftp.cwd(part)
         # Complete the upload before replacing the publicly visible file.
-        temporary = '.' + relative.name + '.deploy-tmp'
+        temporary = ('.contact-send.deploy-tmp.php' if relative == Path('pages/contact-send.php')
+                     else '.' + relative.name + '.deploy-tmp')
         with (root / relative).open('rb') as source:
             ftp.storbinary('STOR ' + temporary, source, blocksize=262144)
         ftp.rename(temporary, relative.name)

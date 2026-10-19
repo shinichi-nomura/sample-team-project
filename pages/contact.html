@@ -64,7 +64,7 @@
 
         <section class="contact-form contact-page-animation-pending">
             <img src="../images/more-images/Otoiawase.webp" class="contact-background" width="2880" height="6364" />
-            <form class="contact" id="contactForm" novalidate>
+            <form class="contact" id="contactForm" action="contact-send.php" method="post" novalidate>
                 <div class="contact-title">
                     <h2>お問い合わせ</h2>
                 </div>
@@ -75,7 +75,7 @@
                                 <label for="lastName">苗字</label>
                                 <span class="required">必須</span>
                             </div>
-                            <input required type="text" id="lastName" name="lastName">
+                            <input required type="text" id="lastName" name="lastName" maxlength="100">
                             <p class="error-message"></p>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                                 <label for="firstName">お名前</label>
                                 <span class="required">必須</span>
                             </div>
-                            <input required type="text" id="firstName" name="firstName">
+                            <input required type="text" id="firstName" name="firstName" maxlength="100">
                             <p class="error-message"></p>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                                 <label for="lastName-check">みょうじ</label>
                                 <span class="required">必須</span>
                             </div>
-                            <input required type="text" id="lastName-check" name="lastName-kana">
+                            <input required type="text" id="lastName-check" name="lastName-kana" maxlength="100">
                             <p class="error-message"></p>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                                 <label for="firstName-check">おなまえ</label>
                                 <span class="required">必須</span>
                             </div>
-                            <input required type="text" id="firstName-check" name="firstName-kana">
+                            <input required type="text" id="firstName-check" name="firstName-kana" maxlength="100">
                             <p class="error-message"></p>
                         </div>
                     </div>
@@ -117,7 +117,7 @@
                         <label for="email">メールアドレス</label>
                         <span class="required">必須</span>
                     </div>
-                    <input required type="email" id="email" name="email">
+                    <input required type="email" id="email" name="email" maxlength="254">
                     <p class="error-message"></p>
                 </div>
                 <div class="form-group mail-r full-group">
@@ -125,18 +125,18 @@
                         <label for="email-check">メールアドレス(確認)</label>
                         <span class="required">必須</span>
                     </div>
-                    <input required type="email" id="email-check" name="email-check">
+                    <input required type="email" id="email-check" name="email-check" maxlength="254">
                     <p class="error-message"></p>
                 </div>
                 <div class="form-group company-group full-group">
                     <label for="company">会社名</label>
-                    <input type="text" id="company" name="company" autocomplete="organization">
+                    <input type="text" id="company" name="company" maxlength="200" autocomplete="organization">
                 </div>
                 <div class="form-row tell-section">
                     <div class="form-group">
                         <div class="field">
                             <label for="contact-tell">電話番号</label>
-                            <input type="tel" id="contact-tell" name="tel" inputmode="tel">
+                            <input type="tel" id="contact-tell" name="tel" maxlength="40" inputmode="tel">
                             <p class="error-message"></p>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                     <div class="form-group">
                         <div class="field">
                             <label for="contact-phone">携帯電話番号</label>
-                            <input type="tel" id="contact-phone" name="phone" inputmode="tel">
+                            <input type="tel" id="contact-phone" name="phone" maxlength="40" inputmode="tel">
                             <p class="error-message"></p>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                     <div class="zip-field">
                         <div class="zip-row">
                             <span class="zip-mark">〒</span>
-                            <input type="text" id="contact-address" name="postalCode" class="zip-input"
+                            <input type="text" id="contact-address" name="postalCode" maxlength="20" class="zip-input"
                                 inputmode="numeric">
                             <button type="button" class="address-search">
                                 住所検索
@@ -217,11 +217,11 @@
                     </div>
                     <div class="address-item">
                         <label for="municipality">市区町村番地</label>
-                        <input type="text" id="municipality" name="municipality">
+                        <input type="text" id="municipality" name="municipality" maxlength="300">
                     </div>
                     <div class="address-item">
                         <label for="building">建物・部屋名</label>
-                        <input type="text" id="building" name="building">
+                        <input type="text" id="building" name="building" maxlength="300">
                     </div>
                 </div>
                 <div class="form-group details">
@@ -230,12 +230,17 @@
                         <span class="required">必須</span>
                     </div>
                     <div class="textarea-wrapper">
-                        <textarea required id="contact-details" name="details"></textarea>
+                        <textarea required id="contact-details" name="details" maxlength="5000"></textarea>
                         <p class="error-message"></p>
                     </div>
                 </div>
+                <div class="contact-consent">
+                    <label><input type="checkbox" name="privacy" value="agree"> <a href="privacy.html" target="_blank" rel="noopener">個人情報の取り扱い</a>を確認し、同意します。</label>
+                </div>
+                <div hidden aria-hidden="true"><label>Webサイト<input name="website" tabindex="-1" autocomplete="off"></label></div>
+                <noscript>送信にはJavaScriptを有効にしてください。または info@mizu-tokimeki.com へ直接ご連絡ください。</noscript>
                 <div class="decision-button">
-                    <button type="submit" class="decision">決定</button>
+                    <button type="submit" class="decision">送信する</button>
                     <p class="form-status" role="status" aria-live="polite"></p>
                 </div>
             </form>
