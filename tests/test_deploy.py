@@ -26,6 +26,18 @@ class DeployTests(unittest.TestCase):
         ftp.storbinary.assert_not_called()
         ftp.mkd.assert_not_called()
 
+    def test_only_contact_php_is_published(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            for name in ('css', 'images', 'js', 'pages'):
+                (root / name).mkdir()
+            for name in ('index.html', 'pages/contact-send.php', 'pages/secret.php'):
+                (root / name).write_text('test')
+            self.assertEqual(public_files(root), [Path('pages/contact-send.php'), Path('index.html')])
+            ftp = Mock()
+            upload(ftp, root, [Path('pages/contact-send.php')])
+            ftp.rename.assert_called_once_with('.contact-send.deploy-tmp.php', 'contact-send.php')
+
     def test_failed_transfer_does_not_replace_original(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

@@ -2056,15 +2056,59 @@
       return true;
     }
 
-    //決定ボタン
-    form.addEventListener("submit", (event) => {
-      // 制作途中のため送信を必ず停止、入力内容はURLにも追加されない
+    // 送信先は同じサイトのPHP。通信に失敗しても入力内容は消さない。
+    let contactToken = null;
+    let contactSending = false;
+    const status = form.querySelector('.form-status');
+    const submitButton = form.querySelector('[type="submit"]');
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (!validateForm()) {
+      if (contactSending || !validateForm()) return;
+      if (!form.elements.privacy.checked) {
+        status.textContent = '個人情報の取り扱いへの同意をお願いします。';
+        form.elements.privacy.focus();
         return;
       }
-      // 入力に問題がなくても送信しない
-      alert("お問い合わせ機能は現在準備中です。");
+      contactSending = true;
+      submitButton.disabled = true;
+      submitButton.textContent = '送信中…';
+      form.setAttribute('aria-busy', 'true');
+      status.textContent = '送信しています。そのままお待ちください。';
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30000);
+      const options = { credentials: 'same-origin', cache: 'no-store', signal: controller.signal,
+        headers: { 'X-Contact-Request': '1' } };
+      try {
+        if (!contactToken) {
+          const response = await fetch(form.action, options);
+          if (!response.ok) throw new Error('現在送信できません。時間をおいてお試しください。');
+          const result = await response.json();
+          if (typeof result.token !== 'string') throw new Error('送信の準備に失敗しました。');
+          contactToken = result.token;
+        }
+        const body = new FormData(form);
+        body.set('token', contactToken);
+        const response = await fetch(form.action, { ...options, method: 'POST', body });
+        const result = await response.json();
+        if (!response.ok || result.ok !== true) {
+          if (response.status === 403) contactToken = null;
+          throw new Error(result.message || '送信できませんでした。時間をおいてお試しください。');
+        }
+        contactToken = null;
+        form.reset();
+        validationFields.forEach(field => { clearFieldError(field); delete field.dataset.hasValidated; });
+        status.textContent = 'お問い合わせを受け付けました。自動返信メールは送信していません。';
+      } catch (error) {
+        status.textContent = error.name === 'AbortError' || error instanceof TypeError || error instanceof SyntaxError
+          ? '送信結果を確認できませんでした。入力内容を控えて再度お試しいただくか、info@mizu-tokimeki.comへ直接ご連絡ください。'
+          : error.message;
+      } finally {
+        clearTimeout(timeout);
+        contactSending = false;
+        submitButton.disabled = false;
+        submitButton.textContent = '送信する';
+        form.removeAttribute('aria-busy');
+      }
     });
     //一度検証された項目は、入力のたびに再検証
     validationFields.forEach((field) => {
