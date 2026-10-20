@@ -1,0 +1,104 @@
+<?php
+declare(strict_types=1);
+require_once __DIR__ . '/site-security.php';
+
+function public_article(array $item): ?array {
+    // 公開済みのイベント・近況報告だけを返し、CMSの他フィールドは公開しない。
+    $types = $item['type'] ?? [];
+    if (!is_array($types) || !array_intersect($types, ['イベント','近況報告']) || empty($item['publishedAt'])) return null;
+    $result = [];
+    foreach (['id','title','body','date'] as $key) $result[$key] = is_string($item[$key] ?? null) ? $item[$key] : '';
+    $result['type'] = array_values(array_intersect($types, ['イベント','近況報告']));
+    $photo = $item['photo']['url'] ?? '';
+    if (is_string($photo) && str_starts_with($photo, 'https://')) $result['photo'] = ['url'=>$photo];
+    return $result;
+}
+
+function cms_feed(callable $fetch, string $cache): array {
+    $file = fopen($cache, 'c+');
+    if (!$file || !flock($file, LOCK_EX)) throw new RuntimeException('cache unavailable');
+    try {
+        $raw = stream_get_contents($file);
+        $stored = $raw === '' ? [] : json_decode($raw, true);
+        if (is_array($stored) && ($stored['time'] ?? 0) > time() - 60 && is_array($stored['items'] ?? null)) return $stored['items'];
+        // エラー時も毎回APIを叩かず短時間だけ再試行を抑える。古い記事は返さない。
+        if (is_array($stored) && ($stored['retryAfter'] ?? 0) > time()) throw new RuntimeException('upstream cooldown');
+        try {
+            $data = $fetch();
+            if (!is_array($data['contents'] ?? null)) throw new RuntimeException('invalid feed');
+            $items = [];
+            foreach ($data['contents'] as $item) if (is_array($item) && ($public = public_article($item)) !== null) $items[] = $public;
+            $next = ['time'=>time(),'items'=>$items];
+        } catch (Throwable $e) {
+            rewind($file); ftruncate($file, 0);
+            fwrite($file, json_encode(['retryAfter'=>time()+15])); fflush($file);
+            throw $e;
+        }
+        $encoded = json_encode($next, JSON_THROW_ON_ERROR);
+        rewind($file);
+        if (!ftruncate($file, 0) || fwrite($file, $encoded) !== strlen($encoded) || !fflush($file)) throw new RuntimeException('cache write');
+        return $items;
+    } finally { flock($file, LOCK_UN); fclose($file); }
+}
+
+// 古い記事の直接リンクも維持。ID別のファイルを作らず、1ファイルに最大100件だけ保持。
+function cms_article(string $id, callable $fetch, string $cache): ?array {
+    $file = fopen($cache, 'c+');
+    if (!$file || !flock($file, LOCK_EX)) throw new RuntimeException('cache unavailable');
+    try {
+        $raw = stream_get_contents($file);
+        $stored = $raw === '' ? [] : json_decode($raw, true);
+        if (!is_array($stored)) $stored = [];
+        foreach ($stored as $key=>$entry) if (($entry['time'] ?? 0) <= time() - 60) unset($stored[$key]);
+        if (isset($stored[$id])) {
+            if ($stored[$id]['error'] ?? false) throw new RuntimeException('upstream cooldown');
+            return $stored[$id]['item'];
+        }
+        if (count($stored) >= 100) throw new RuntimeException('detail request limit');
+        $error = null;
+        try { $item = $fetch(); }
+        catch (Throwable $e) { $item = null; $error = $e; }
+        $stored[$id] = ['time'=>time(), 'item'=>$item, 'error'=>$error !== null];
+        $encoded = json_encode($stored, JSON_THROW_ON_ERROR);
+        rewind($file);
+        if (!ftruncate($file, 0) || fwrite($file, $encoded) !== strlen($encoded) || !fflush($file)) throw new RuntimeException('cache write');
+        if ($error) throw $error;
+        return $item;
+    } finally { flock($file, LOCK_UN); fclose($file); }
+}
+
+if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') === __FILE__) {
+    ini_set('display_errors', '0');
+    header('Content-Type: application/json; charset=UTF-8');
+    header('X-Content-Type-Options: nosniff');
+    header('Cache-Control: no-store');
+    set_error_handler(function() { throw new RuntimeException('cms runtime error'); });
+    try {
+        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') { header('Allow: GET'); http_response_code(405); echo '{}'; exit; }
+        if (array_diff(array_keys($_GET), ['id']) || (isset($_GET['id']) && (!is_string($_GET['id']) || !preg_match('/\A[a-zA-Z0-9_-]{1,100}\z/', $_GET['id'])))) {
+            http_response_code(400); echo '{}'; exit;
+        }
+        $config = site_config();
+        $dir = sys_get_temp_dir() . '/tokimeki-feed-' . hash('sha256', __DIR__);
+        if (!is_dir($dir) && !mkdir($dir, 0700, true) && !is_dir($dir)) throw new RuntimeException('cache directory');
+        $items = cms_feed(fn()=>site_json_request('https://tokimeki-jinja.microcms.io/api/v1/posts?limit=100&orders=-date',
+            ['X-MICROCMS-API-KEY: ' . $config['cms_key']]), $dir . '/feed.json');
+        if (isset($_GET['id'])) {
+            foreach ($items as $item) if ($item['id'] === $_GET['id']) { echo json_encode($item, JSON_UNESCAPED_UNICODE); exit; }
+            $id = $_GET['id'];
+            $item = cms_article($id, function() use ($id, $config) {
+                try {
+                    return public_article(site_json_request('https://tokimeki-jinja.microcms.io/api/v1/posts/' . rawurlencode($id),
+                        ['X-MICROCMS-API-KEY: ' . $config['cms_key']]));
+                } catch (RuntimeException $e) { if ($e->getCode() === 404) return null; throw $e; }
+            }, $dir . '/details.json');
+            if ($item !== null) { echo json_encode($item, JSON_UNESCAPED_UNICODE); exit; }
+            http_response_code(404); echo '{}'; exit;
+        }
+        echo json_encode(['contents'=>$items], JSON_UNESCAPED_UNICODE);
+    } catch (Throwable $e) {
+        http_response_code(503);
+        echo '{"message":"現在記事を取得できません。時間をおいてお試しください。"}';
+        error_log('CMS feed unavailable: ' . get_class($e));
+    }
+}

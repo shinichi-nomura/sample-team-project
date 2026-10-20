@@ -1,8 +1,5 @@
 'use strict';
 // microCMS 設定
-const SERVICE_ID = "tokimeki-jinja";
-const API_KEY = "oDjBTh4RaD6rT7ZXi2W717XBHx2Xrj3yQWfe";
-const ENDPOINT = "posts";
 // 詳細記事の表示場所
 const detailContent = document.getElementById("detail-content");
 // URLから投稿IDを取得
@@ -27,14 +24,7 @@ async function loadEventDetail() {
     }
     try {
         // microCMSから指定IDの記事を1件取得
-        const response = await fetch(
-            `https://${SERVICE_ID}.microcms.io/api/v1/${ENDPOINT}/${contentId}`,
-            {
-                headers: {
-                    "X-MICROCMS-API-KEY": API_KEY
-                }
-            }
-        );
+        const response = await fetch(`cms-feed.php?id=${encodeURIComponent(contentId)}`);
         // API通信失敗
         if (!response.ok) {
 
@@ -97,7 +87,7 @@ function renderEventDetail(item) {
         photo.className =
             "detail-photo";
         photo.src =
-            item.photo.url;
+            window.safeArticleImage(item.photo.url);
         photo.alt =
             item.title ?? "";
         photo.loading =
@@ -120,8 +110,7 @@ function renderEventDetail(item) {
     body.className =
         "detail-body";
     // 詳細ページでは全文表示
-    body.innerHTML =
-        item.body ?? "";
+    body.replaceChildren(window.safeArticle(item.body));
     detailContent.appendChild(body);
 }
 // ========================================

@@ -2079,22 +2079,21 @@
       const options = { credentials: 'same-origin', cache: 'no-store', signal: controller.signal,
         headers: { 'X-Contact-Request': '1' } };
       try {
-        if (!contactToken) {
-          const response = await fetch(form.action, options);
-          if (!response.ok) throw new Error('現在送信できません。時間をおいてお試しください。');
-          const result = await response.json();
-          if (typeof result.token !== 'string') throw new Error('送信の準備に失敗しました。');
-          contactToken = result.token;
-        }
+        if (!window.contactSecurity) throw new Error('確認機能を読み込めません。ページを再読み込みしてください。');
+        const security = await window.contactSecurity.prepare();
+        if (!contactToken) contactToken = security.token;
+        if (!security.challenge) throw new Error('自動投稿防止の確認を完了してください。');
         const body = new FormData(form);
         body.set('token', contactToken);
+        body.set('cf-turnstile-response', security.challenge);
         const response = await fetch(form.action, { ...options, method: 'POST', body });
         const result = await response.json();
         if (!response.ok || result.ok !== true) {
-          if (response.status === 403) contactToken = null;
+          if (response.status === 403) { contactToken = null; window.contactSecurity.refresh(); }
           throw new Error(result.message || '送信できませんでした。時間をおいてお試しください。');
         }
         contactToken = null;
+        window.contactSecurity.refresh();
         form.reset();
         validationFields.forEach(field => { clearFieldError(field); delete field.dataset.hasValidated; });
         status.textContent = 'お問い合わせを受け付けました。自動返信メールは送信していません。';
@@ -2103,6 +2102,7 @@
           ? '送信結果を確認できませんでした。入力内容を控えて再度お試しいただくか、info@mizu-tokimeki.comへ直接ご連絡ください。'
           : error.message;
       } finally {
+        window.contactSecurity?.resetChallenge();
         clearTimeout(timeout);
         contactSending = false;
         submitButton.disabled = false;

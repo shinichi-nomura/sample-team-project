@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Check out the selected main commit
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
       - name: Test deployment safeguards
@@ -26,9 +26,15 @@ jobs:
         run: |
           php -l pages/contact-send.php
           php tests/contact_test.php
+          php -l pages/site-security.php
+          php -l pages/cms-feed.php
+          php tests/security_test.php
       - name: Upload public files using FTPS
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          CMS_API_KEY: ${{ secrets.CMS_API_KEY }}
+          TURNSTILE_SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}
+          TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY }}
         run: python3 scripts/deploy.py
