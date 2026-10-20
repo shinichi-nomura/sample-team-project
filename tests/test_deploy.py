@@ -12,11 +12,11 @@ class DeployTests(unittest.TestCase):
             root = Path(folder)
             for name in ('css', 'images', 'js', 'pages'):
                 (root / name).mkdir()
-            for name in ('index.html', 'README.md', 'css/site.css', 'js/main.js',
+            for name in ('index.html', 'robots.txt', 'sitemap.xml', 'README.md', 'css/site.css', 'js/main.js',
                          'pages/.env', 'pages/secret.py', 'pages/about.html'):
                 (root / name).write_text('test')
             self.assertEqual([p.as_posix() for p in public_files(root)],
-                             ['css/site.css', 'js/main.js', 'pages/about.html', 'index.html'])
+                             ['css/site.css', 'js/main.js', 'robots.txt', 'sitemap.xml', 'pages/about.html', 'index.html'])
 
     def test_wrong_root_stops_before_upload(self):
         ftp = Mock()
@@ -31,9 +31,9 @@ class DeployTests(unittest.TestCase):
             root = Path(folder)
             for name in ('css', 'images', 'js', 'pages'):
                 (root / name).mkdir()
-            for name in ('index.html', 'pages/contact-send.php', 'pages/secret.php'):
+            for name in ('index.html', 'robots.txt', 'sitemap.xml', 'pages/contact-send.php', 'pages/secret.php'):
                 (root / name).write_text('test')
-            self.assertEqual(public_files(root), [Path('pages/contact-send.php'), Path('index.html')])
+            self.assertEqual(public_files(root), [Path('pages/contact-send.php'), Path('robots.txt'), Path('sitemap.xml'), Path('index.html')])
             ftp = Mock()
             upload(ftp, root, [Path('pages/contact-send.php')])
             ftp.rename.assert_called_once_with('.contact-send.deploy-tmp.php', 'contact-send.php')
@@ -43,7 +43,7 @@ class DeployTests(unittest.TestCase):
             root = Path(folder)
             for name in ('css', 'images', 'js', 'pages'):
                 (root / name).mkdir()
-            for name in ('index.html', 'pages/site-config.php', 'pages/site-security.php', 'pages/cms-feed.php'):
+            for name in ('index.html', 'robots.txt', 'sitemap.xml', 'pages/site-config.php', 'pages/site-security.php', 'pages/cms-feed.php'):
                 (root / name).write_text('test')
             files = public_files(root)
             self.assertNotIn(Path('pages/site-config.php'), files)
