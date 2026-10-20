@@ -10,6 +10,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_PHP = {Path('pages/contact-send.php'), Path('pages/cms-feed.php'), Path('pages/site-security.php')}
+ROOT_FILES = (Path('index.html'), Path('robots.txt'), Path('sitemap.xml'))
 
 PUBLIC_DIRS = ('css', 'images', 'js', 'pages')
 EXTENSIONS = {'.html', '.css', '.js', '.json', '.webp', '.png', '.jpg', '.jpeg',
@@ -18,7 +19,7 @@ EXTENSIONS = {'.html', '.css', '.js', '.json', '.webp', '.png', '.jpg', '.jpeg',
 
 
 def public_files(root):
-    paths = [root / 'index.html']
+    paths = [root / name for name in ROOT_FILES]
     for name in PUBLIC_DIRS:
         directory = root / name
         if not directory.is_dir() or directory.is_symlink():
@@ -31,12 +32,12 @@ def public_files(root):
             raise ValueError('Symbolic links cannot be published')
         if any(part.startswith('.') for part in relative.parts):
             continue
-        if path.is_file() and (path.suffix.lower() in EXTENSIONS or relative in PUBLIC_PHP):
+        if path.is_file() and (path.suffix.lower() in EXTENSIONS or relative in PUBLIC_PHP or relative in ROOT_FILES):
             if any(c in relative.as_posix() for c in '\r\n'):
                 raise ValueError('Unsafe filename')
             result.append(relative)
-    if Path('index.html') not in result:
-        raise ValueError('Missing index.html')
+    if any(name not in result for name in ROOT_FILES):
+        raise ValueError('Missing required public root file')
     # Assets first, HTML last, homepage last of all.
     return sorted(result, key=lambda p: (p == Path('index.html'), p.suffix == '.html', p.as_posix()))
 
