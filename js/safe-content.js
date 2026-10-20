@@ -26,6 +26,38 @@ window.safeArticle = (html) => {
       } catch { element.removeAttribute(attr); }
     }
   });
+  // テキスト欄に直接書かれたURLだけをリンクにする。既存リンクやコードには触れない。
+  const textNodes = [];
+  const walker = document.createTreeWalker(fragment, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+  for (const node of textNodes) {
+    if (node.parentElement?.closest('a,code,pre')) continue;
+    const text = node.textContent;
+    const urls = /https?:\/\/[^\s<>"']+/g;
+    let match;
+    let start = 0;
+    const replacement = document.createDocumentFragment();
+    while ((match = urls.exec(text)) !== null) {
+      const urlText = match[0].replace(/[.,!?;:。！？，、）)\]]+$/u, '');
+      if (!urlText) continue;
+      try {
+        const url = new URL(urlText);
+        if (!['http:', 'https:'].includes(url.protocol)) continue;
+        replacement.appendChild(document.createTextNode(text.slice(start, match.index)));
+        const link = document.createElement('a');
+        link.href = url.href;
+        link.textContent = urlText;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        replacement.appendChild(link);
+        start = match.index + urlText.length;
+      } catch { /* 不正なURLは文字のまま残す。 */ }
+    }
+    if (start > 0) {
+      replacement.appendChild(document.createTextNode(text.slice(start)));
+      node.replaceWith(replacement);
+    }
+  }
   return fragment;
 };
 

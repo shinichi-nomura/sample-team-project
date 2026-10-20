@@ -2180,6 +2180,12 @@ small {
   line-height: inherit;
 }
 
+.detail-body a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .detail-body img {
   display: block;
   max-width: 100%;
