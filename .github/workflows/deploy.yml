@@ -29,6 +29,8 @@ jobs:
           php -l pages/site-security.php
           php -l pages/cms-feed.php
           php tests/security_test.php
+      - name: Test social link previews
+        run: node tests/article_link_preview.test.js
       - name: Upload public files using FTPS
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
