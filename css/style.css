@@ -2095,6 +2095,449 @@ small {
   text-underline-offset: 3px;
 }
 
+/*== HAPPY ICHIROUDOU: 01, 03, 05, 07, 08 ==*/
+.ichirodo-page {
+  --ichirodo-accent: #c8d8cf;
+  --ichirodo-gold: #e0c891;
+  --ichirodo-line: rgba(200, 216, 207, 0.35);
+  --ichirodo-surface: rgba(24, 35, 34, 0.88);
+  gap: 0;
+  color: #f7f2e8;
+}
+
+.mizu.ichirodo-page {
+  --ichirodo-accent: #a9dce1;
+  --ichirodo-line: rgba(169, 220, 225, 0.38);
+  --ichirodo-surface: rgba(19, 43, 50, 0.9);
+  background: radial-gradient(ellipse at 30% 8%, rgba(36, 116, 130, 0.25), transparent 55%);
+}
+
+.ryuujin.ichirodo-page {
+  --ichirodo-accent: #b9d7bf;
+  --ichirodo-line: rgba(185, 215, 191, 0.36);
+  --ichirodo-surface: rgba(24, 42, 35, 0.9);
+  background: radial-gradient(ellipse at 70% 8%, rgba(45, 97, 65, 0.27), transparent 55%);
+}
+
+.ryuukon.ichirodo-page {
+  --ichirodo-accent: #e7b9a7;
+  --ichirodo-line: rgba(231, 185, 167, 0.36);
+  --ichirodo-surface: rgba(50, 29, 29, 0.9);
+  background: radial-gradient(ellipse at 30% 8%, rgba(115, 50, 45, 0.28), transparent 55%);
+}
+
+.flower-page.ichirodo-page {
+  --ichirodo-accent: #d4c5ec;
+  --ichirodo-line: rgba(212, 197, 236, 0.38);
+  --ichirodo-surface: rgba(39, 32, 55, 0.9);
+  background: radial-gradient(ellipse at 70% 8%, rgba(108, 69, 136, 0.27), transparent 55%);
+}
+
+.wellness-page.ichirodo-page {
+  --ichirodo-accent: #a9d9cf;
+  --ichirodo-line: rgba(169, 217, 207, 0.38);
+  --ichirodo-surface: rgba(22, 42, 43, 0.9);
+  background: radial-gradient(ellipse at 35% 8%, rgba(44, 117, 112, 0.26), transparent 55%);
+}
+
+.ichirodo-heading {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto clamp(36px, 6vw, 72px);
+  text-align: center;
+}
+
+.ichirodo-page .ichirodo-eyebrow {
+  margin: 0 0 16px;
+  color: var(--ichirodo-accent);
+  font-family: Georgia, serif;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+}
+
+.ichirodo-page .ichirodo-heading h2 {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.45;
+}
+
+.ichirodo-page .ichirodo-heading h2 span {
+  display: block;
+  margin-top: 8px;
+  color: var(--ichirodo-gold);
+  font-size: 0.58em;
+  letter-spacing: 0.12em;
+}
+
+.ichirodo-page .ichirodo-kicker {
+  margin: 0 0 14px;
+  color: var(--ichirodo-accent);
+  font-family: Georgia, serif;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+}
+
+.ichirodo-page .ichirodo-link,
+.ichirodo-page .mizu-related-link a {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  color: var(--ichirodo-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+
+.ichirodo-page .ichirodo-link:focus-visible,
+.ichirodo-page .mizu-related-link a:focus-visible {
+  outline: 2px solid var(--ichirodo-gold);
+  outline-offset: 4px;
+}
+
+.ichirodo-panels {
+  display: grid;
+  gap: clamp(24px, 4vw, 48px);
+  width: 100%;
+  max-width: 1100px;
+}
+
+.ichirodo-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--ichirodo-line);
+  background: var(--ichirodo-surface);
+  text-align: left;
+}
+
+.ichirodo-panel > img,
+.ichirodo-panel-media {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  object-fit: cover;
+}
+
+.ryuujin.ichirodo-page .ichirodo-panel > .hinto3-ashina-photo {
+  max-width: none;
+  margin: 0;
+}
+
+.ichirodo-panel-media.hinto3-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  max-width: none;
+  margin: 0;
+}
+
+.ichirodo-panel-media.hinto3-photos img {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  object-fit: cover;
+}
+
+.ichirodo-panel-copy {
+  min-width: 0;
+  padding: clamp(26px, 4vw, 52px);
+}
+
+.ichirodo-page .ichirodo-panel-copy h3 {
+  margin: 0 0 24px;
+  color: var(--ichirodo-gold);
+  font-size: clamp(21px, 2.3vw, 28px);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.ichirodo-page .ichirodo-panel-copy p:not(.ichirodo-kicker) {
+  margin: 0 0 12px;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.9;
+}
+
+.ichirodo-page .ichirodo-panel-copy .mizu-related-link {
+  margin-top: 28px;
+}
+
+.ichirodo-panel-copy .ichirodo-link {
+  margin: 12px 18px 0 0;
+}
+
+.ichirodo-panel-reverse > img,
+.ichirodo-panel-reverse > .ichirodo-panel-media {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.ichirodo-panel-reverse > .ichirodo-panel-copy {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.ryuukon.ichirodo-page .ryuukon-item {
+  width: 100%;
+  max-width: 1100px;
+  align-items: start;
+  gap: 0;
+  margin-bottom: clamp(24px, 4vw, 48px);
+  overflow: hidden;
+  border: 1px solid var(--ichirodo-line);
+  background: var(--ichirodo-surface);
+}
+
+.ryuukon.ichirodo-page .ryuukon-item > img {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  padding: clamp(10px, 1.5vw, 16px);
+  object-fit: contain;
+}
+
+.ryuukon.ichirodo-page .ryuukon-item-reverse > img {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.ryuukon.ichirodo-page .ryuukon-item-reverse > .ryuukon-text {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.ryuukon.ichirodo-page .ryuukon-text {
+  padding: clamp(26px, 4vw, 52px);
+}
+
+.ryuukon.ichirodo-page .ryuukon-text p {
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.9;
+}
+
+.ryuukon.ichirodo-page .ryuukon-text .ichirodo-kicker {
+  margin-bottom: 18px;
+  color: var(--ichirodo-accent);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.ryuukon.ichirodo-page .ryuukon-images {
+  gap: clamp(16px, 3vw, 32px);
+  max-width: 900px;
+  margin-bottom: 0;
+}
+
+.ryuukon.ichirodo-page .ryuukon-images img {
+  height: 100%;
+  padding: clamp(10px, 1.5vw, 16px);
+  border: 1px solid var(--ichirodo-line);
+  background: var(--ichirodo-surface);
+  object-fit: contain;
+}
+
+.flower-intro,
+.flower-message {
+  width: 100%;
+  max-width: 900px;
+  padding: clamp(28px, 5vw, 56px);
+  border: 1px solid var(--ichirodo-line);
+  background: var(--ichirodo-surface);
+  text-align: left;
+}
+
+.flower-page .flower-intro-label {
+  margin-bottom: 26px;
+  color: var(--ichirodo-gold);
+  font-size: clamp(21px, 2.5vw, 30px);
+  letter-spacing: 0.06em;
+}
+
+.flower-page .flower-intro p:not(.flower-intro-label),
+.flower-page .flower-card p,
+.flower-page .flower-message p:not(.ichirodo-kicker) {
+  margin: 0 0 18px;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.95;
+}
+
+.flower-page .flower-card .ichirodo-kicker,
+.flower-page .flower-message .ichirodo-kicker,
+.wellness-page .hint8-service .ichirodo-kicker {
+  margin-bottom: 14px;
+  color: var(--ichirodo-accent);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.flower-page .flower-intro .ichirodo-link {
+  margin-top: 12px;
+}
+
+.flower-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 28px);
+  width: 100%;
+  max-width: 900px;
+  margin: clamp(28px, 4vw, 48px) auto;
+}
+
+.flower-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(24px, 4vw, 40px);
+  border: 1px solid var(--ichirodo-line);
+  background: linear-gradient(145deg, rgba(67, 49, 82, 0.78), var(--ichirodo-surface));
+  text-align: left;
+}
+
+.flower-card h3,
+.flower-message h3 {
+  margin: 0 0 24px;
+  color: var(--ichirodo-gold);
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 400;
+}
+
+.flower-page .flower-card .flower-price {
+  margin-top: auto;
+  color: var(--ichirodo-gold);
+  font-size: clamp(22px, 2.5vw, 29px);
+}
+
+.flower-price small {
+  display: block;
+  color: #f7f2e8;
+  font-size: 13px;
+}
+
+.flower-card .ichirodo-link {
+  margin-top: auto;
+}
+
+.flower-message {
+  border-top: 1px solid var(--ichirodo-gold);
+  border-bottom: 1px solid var(--ichirodo-gold);
+  background: linear-gradient(140deg, rgba(52, 40, 74, 0.88), rgba(25, 25, 43, 0.9));
+}
+
+.flower-page .flower-message p:last-child {
+  margin-bottom: 0;
+}
+
+.wellness-page .hint8-service-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 28px);
+  max-width: 1100px;
+  margin: 0;
+}
+
+.wellness-page .hint8-service {
+  padding: clamp(26px, 4vw, 46px);
+  border: 1px solid var(--ichirodo-line);
+  border-radius: 0;
+  background: var(--ichirodo-surface);
+}
+
+.wellness-page .hint8-service + .hint8-service {
+  margin-top: 0;
+}
+
+.wellness-page .hint8-service:last-child {
+  grid-column: 1 / -1;
+}
+
+.wellness-page .hint8-service h3 {
+  padding-left: 14px;
+  border-left-color: var(--ichirodo-gold);
+  color: var(--ichirodo-gold);
+  font-weight: 400;
+}
+
+.wellness-page .hint8-service p {
+  font-size: clamp(15px, 1.5vw, 17px);
+}
+
+.wellness-page .hint8-service .hint8-service-url {
+  margin: 24px 0 0;
+}
+
+@media (max-width: 760px) {
+  .ichirodo-panel,
+  .ryuukon.ichirodo-page .ryuukon-item,
+  .flower-cards,
+  .wellness-page .hint8-service-links {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ichirodo-panel > img,
+  .ichirodo-panel > .ichirodo-panel-media,
+  .ichirodo-panel-reverse > img,
+  .ichirodo-panel-reverse > .ichirodo-panel-media,
+  .ryuukon.ichirodo-page .ryuukon-item > img,
+  .ryuukon.ichirodo-page .ryuukon-item-reverse > img {
+    grid-column: 1;
+    grid-row: 1;
+    height: auto;
+    min-height: 0;
+  }
+
+  .ichirodo-panel > img {
+    max-height: 460px;
+  }
+
+  .ichirodo-panel > .ichirodo-panel-copy,
+  .ichirodo-panel-reverse > .ichirodo-panel-copy,
+  .ryuukon.ichirodo-page .ryuukon-item > .ryuukon-text,
+  .ryuukon.ichirodo-page .ryuukon-item-reverse > .ryuukon-text {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .ichirodo-panel-media.hinto3-photos img {
+    min-height: 0;
+    height: auto;
+  }
+
+  .wellness-page .hint8-service:last-child {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .ichirodo-page .ichirodo-heading h2 {
+    font-size: clamp(28px, 7vw, 36px);
+  }
+
+  .ichirodo-page .ichirodo-eyebrow,
+  .ichirodo-page .ichirodo-kicker {
+    font-size: 11px;
+  }
+
+  .ichirodo-page .ichirodo-link,
+  .ichirodo-page .mizu-related-link a {
+    padding: 9px 13px;
+    border: 1px solid var(--ichirodo-line);
+    border-radius: 0;
+    background: var(--ichirodo-surface);
+    color: var(--ichirodo-accent);
+  }
+
+  .ryuukon.ichirodo-page .ryuukon-images {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+  }
+}
+
 /*== first.html ==*/
 .first-greet {
   position: relative;
