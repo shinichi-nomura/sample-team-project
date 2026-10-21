@@ -1795,83 +1795,223 @@ small {
 }
 
 /*== hinto6 ==*/
-.hint6-art-gallery {
-  display: grid;
-  grid-template-columns: minmax(0px, 393fr) minmax(0px, 443fr);
-  align-items: start;
-  gap: clamp(12px, 3vw, 32px);
+.ako-universe {
+  --ako-gold: #e0c891;
+  --ako-blue: #b7d5e9;
+  gap: 0;
+  color: #f7f2e8;
+  background: radial-gradient(ellipse at 50% 12%, rgba(48, 67, 119, 0.27), transparent 55%);
+}
+
+.ako-intro {
   width: 100%;
-  max-width: 800px;
+  margin-bottom: clamp(36px, 5vw, 64px);
 }
 
-.hint6-art-gallery>.hint6-art-caption {
-  grid-column: 1;
-  margin: 0px;
-  font-size: clamp(12px, 2.4vw, 18px);
+.ako-universe .ako-eyebrow {
+  margin: 0 0 16px;
+  color: var(--ako-blue);
+  font-family: Georgia, serif;
+  font-size: 12px;
+  letter-spacing: 0.24em;
 }
 
-.hint6-art-gallery>.hint6-art-caption-right {
-  grid-column: 2;
+.ako-universe h2 {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
 }
 
-.hint-detail>.hint6-art-message {
-  max-width: 800px;
-  margin: 28px 0px 0px;
+.ako-universe h2 span {
+  display: block;
+  margin-top: 8px;
+  color: var(--ako-gold);
+  font-size: 0.58em;
+  letter-spacing: 0.2em;
+}
+
+.ako-story {
+  width: 100%;
+  max-width: 790px;
   text-align: left;
 }
 
-.hint-detail>.hint6-message-image {
-  max-width: 646px;
+.ako-universe .ako-story p {
+  margin: 0 0 1.5em;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 2;
 }
 
-.hint6-poem {
+.ako-verse {
   width: 100%;
-  max-width: 646px;
-  margin-top: clamp(24px, 3vw, 36px);
+  max-width: 790px;
+  margin: clamp(32px, 5vw, 60px) auto;
+  padding: clamp(32px, 5vw, 56px) clamp(16px, 4vw, 48px);
+  border-top: 1px solid rgba(224, 200, 145, 0.7);
+  border-bottom: 1px solid rgba(224, 200, 145, 0.7);
+  background: linear-gradient(150deg, rgba(25, 39, 76, 0.75), rgba(10, 19, 39, 0.8));
+}
+
+.ako-universe .ako-verse-label {
+  margin: 0 0 clamp(24px, 4vw, 40px);
+  color: var(--ako-gold);
+  font-size: clamp(18px, 2vw, 22px);
+  letter-spacing: 0.12em;
+}
+
+.ako-verse p:last-child {
+  margin: 0;
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 2.25;
+  letter-spacing: 0.045em;
+}
+
+.ako-story-after {
+  margin-bottom: clamp(16px, 3vw, 36px);
+}
+
+.ako-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 32px);
+  width: 100%;
+  max-width: 790px;
+  margin: clamp(32px, 5vw, 56px) auto;
+}
+
+.ako-gallery-notes {
+  max-width: 900px;
+  margin-top: 0;
+  margin-bottom: clamp(48px, 7vw, 80px);
+}
+
+.ako-gallery figure {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(10px, 1.5vw, 16px);
+  border: 1px solid rgba(183, 213, 233, 0.35);
+  background: #111b2a;
+}
+
+.ako-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ako-gallery figcaption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 4px 2px;
+  color: #e7e4df;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-align: left;
+}
+
+.ako-gallery figcaption span {
+  color: var(--ako-blue);
+  font-family: Georgia, serif;
+  font-size: 13px;
+}
+
+.ako-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: 790px;
+  margin: 0 auto clamp(40px, 6vw, 68px);
+  padding: 24px 0;
+  border-top: 1px solid rgba(183, 213, 233, 0.45);
+  border-bottom: 1px solid rgba(183, 213, 233, 0.45);
+  text-align: left;
+}
+
+.ako-details>div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ako-details span,
+.ako-flow h3 span {
+  color: var(--ako-blue);
+  font-size: 14px;
+  letter-spacing: 0.14em;
+}
+
+.ako-details strong {
+  font-size: clamp(19px, 2.5vw, 28px);
+  font-weight: 400;
+}
+
+.ako-details small {
+  font-size: 15px;
+}
+
+.ako-flow {
+  width: 100%;
+  max-width: 790px;
+  text-align: left;
+}
+
+.ako-flow h3 {
+  margin: 0 0 26px;
+  font-size: clamp(21px, 2.6vw, 28px);
+  font-weight: 400;
   text-align: center;
 }
 
-.hint6-poem>p {
-  margin: 0px 0px 20px;
-  font-size: clamp(16px, 2.4vw, 18px);
-}
-
-.hint6-poem>p:last-child {
-  margin: 32px 0px 0px;
-}
-
-.hint-detail>.hint6-blue-artwork {
-  max-width: clamp(28px, 4vw, 48px);
-  margin-top: 48px;
-}
-
-.hint6-poem-naruko>p {
-  line-height: 2.4;
-}
-
-.hint6-art-image {
-  position: relative;
-  aspect-ratio: 393 / 1086;
-  overflow: hidden;
-}
-
-.hint6-art-image:nth-child(2) {
-  aspect-ratio: 443 / 1086;
-}
-
-.hint6-art-image>img {
-  position: absolute;
-  inset: 0px;
+.ako-flow h3 span {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  margin-top: 6px;
+  font-size: 0.55em;
+  letter-spacing: 0.25em;
 }
 
-.hint6-art-image:nth-child(2)>img {
-  top: calc(-0.460405%);
-  bottom: auto;
-  height: calc(100.46%);
+.ako-flow ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: ako-step;
+}
+
+.ako-flow li {
+  display: grid;
+  grid-template-columns: 2.5em 1fr;
+  align-items: baseline;
+  gap: 14px;
+  padding: 17px 0;
+  border-bottom: 1px solid rgba(183, 213, 233, 0.24);
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.8;
+  counter-increment: ako-step;
+}
+
+.ako-flow li::before {
+  content: counter(ako-step, decimal-leading-zero);
+  color: var(--ako-gold);
+  font-family: Georgia, serif;
+  font-size: 18px;
+}
+
+@media (max-width: 700px) {
+  .ako-gallery,
+  .ako-details {
+    grid-template-columns: 1fr;
+  }
+
+  .ako-gallery {
+    max-width: 490px;
+  }
+
+  .ako-details {
+    gap: 20px;
+  }
 }
 
 /*== hinto7 ==*/
