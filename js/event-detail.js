@@ -81,18 +81,47 @@ function renderEventDetail(item) {
         item.title ?? "";
     detailContent.appendChild(title);
     // 画像
-    if (item.photo?.url) {
-        const photo =
-            document.createElement("img");
-        photo.className =
-            "detail-photo";
-        photo.src =
-            window.safeArticleImage(item.photo.url);
-        photo.alt =
-            item.title ?? "";
-        photo.loading =
-            "lazy";
-        detailContent.appendChild(photo);
+    // リンク先URLを確認
+    let linkUrl = "";
+    try {
+        if (typeof item.linkUrl === "string") {
+            const url = new URL(item.linkUrl);
+            if (url.protocol === "https:" && !url.username && !url.password) {
+                linkUrl = url.href;
+            }
+        }
+    } catch {
+        // 不正なURLならリンクを表示しない
+    }
+    // OGP画像を優先し、なければCMSの画像を使う
+    const ogpImage = window.safeArticleImage(item.linkPreview?.image);
+    const cmsImage = window.safeArticleImage(item.photo?.url);
+    const imageUrl = ogpImage || cmsImage;
+
+    if (linkUrl) {
+        const link = document.createElement("a");
+        link.href = linkUrl;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        if (imageUrl) {
+            const image = document.createElement("img");
+            image.className = "detail-photo";
+            image.src = imageUrl;
+            image.alt = item.title ?? "リンク先の画像";
+            image.loading = "lazy";
+            link.appendChild(image);
+        } else {
+            link.textContent = "リンク先を見る";
+        }
+        detailContent.appendChild(link);
+    } else if (cmsImage) {
+        // linkUrlがない記事は従来どおり単独の画像を表示
+        const image = document.createElement("img");
+        image.className = "detail-photo";
+        image.src = cmsImage;
+        image.alt = item.title ?? "";
+        image.loading = "lazy";
+        detailContent.appendChild(image);
     }
     // 日付
     const date = document.createElement("time");

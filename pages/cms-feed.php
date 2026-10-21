@@ -11,7 +11,79 @@ function public_article(array $item): ?array {
     $result['type'] = array_values(array_intersect($types, ['イベント','近況報告']));
     $photo = $item['photo']['url'] ?? '';
     if (is_string($photo) && str_starts_with($photo, 'https://')) $result['photo'] = ['url'=>$photo];
+    $linkUrl = $item['linkUrl'] ?? '';
+    if (is_string($linkUrl) && filter_var($linkUrl, FILTER_VALIDATE_URL) && parse_url($linkUrl, PHP_URL_SCHEME) === 'https') {
+    $result['linkUrl'] = $linkUrl;}
     return $result;
+}
+
+function fetch_ogp_image(string $url): ?string {
+    $host = parse_url($url, PHP_URL_HOST);
+    // CMSで使用を許可するリンク先ドメインを指定
+    $allowedHosts = ['example.com'];
+    if ( !is_string($host) || !in_array(strtolower($host), $allowedHosts, true) || parse_url($url, PHP_URL_PORT) !== null
+        || parse_url($url, PHP_URL_USER) !== null || parse_url($url, PHP_URL_PASS) !== null ) {
+    return null;
+    }
+    // 接続先を公開IPv4アドレスに限定し、そのアドレスへ接続する
+    $ip = null;
+    foreach (gethostbynamel($host) ?: [] as $candidate) {
+        if (filter_var( $candidate, FILTER_VALIDATE_IP,
+            FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE )) {
+        $ip = $candidate;
+        break;
+        }
+    }
+    if ($ip === null) return null;
+    $html = '';
+    $curl = curl_init($url);
+    if ($curl === false) return null;
+    curl_setopt_array($curl, [ CURLOPT_RESOLVE => ["{$host}:443:{$ip}"], CURLOPT_PROXY => '', CURLOPT_PROTOCOLS => CURLPROTO_HTTPS,
+        CURLOPT_FOLLOWLOCATION => false, CURLOPT_CONNECTTIMEOUT => 3, CURLOPT_TIMEOUT => 8, CURLOPT_SSL_VERIFYPEER => true,
+        CURLOPT_SSL_VERIFYHOST => 2, CURLOPT_WRITEFUNCTION => function ($handle, $chunk) use (&$html) {
+         if (strlen($html) + strlen($chunk) > 1024 * 1024) return 0;
+        $html .= $chunk;
+        return strlen($chunk);
+        },
+    ]);
+    $ok = curl_exec($curl);
+    $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+    $contentType = strtolower((string) curl_getinfo($curl, CURLINFO_CONTENT_TYPE));
+    curl_close($curl);
+    if ($ok === false || $status !== 200 || !str_starts_with($contentType, 'text/html')) {
+        return null;
+    }
+    $document = new DOMDocument();
+    $previous = libxml_use_internal_errors(true);
+    try {
+        if (!$document->loadHTML($html, LIBXML_NONET)) return null;
+    } finally {
+        libxml_clear_errors();
+        libxml_use_internal_errors($previous);
+    }
+    $xpath = new DOMXPath($document);
+    $nodes = $xpath->query('//meta[@property="og:image"]/@content');
+    $image = $nodes ? trim($nodes->item(0)?->nodeValue ?? '') : '';
+    // この例では絶対URLのHTTPS画像だけを採用。相対URLなら「画像なし」とする。
+    if (
+        !filter_var($image, FILTER_VALIDATE_URL)
+        || parse_url($image, PHP_URL_SCHEME) !== 'https'
+    ) {
+        return null;
+    }
+    return $image;
+}
+
+function add_link_preview(array $item): array {
+    if (empty($item['linkUrl'])) return $item;
+    // OGPが取得できなくても記事本文は表示する
+    try {
+        $image = fetch_ogp_image($item['linkUrl']);
+        $item['linkPreview'] = $image === null ? [] : ['image' => $image];
+    } catch (Throwable $e) {
+        $item['linkPreview'] = [];
+    }
+    return $item;
 }
 
 function cms_feed(callable $fetch, string $cache): array {
@@ -84,7 +156,7 @@ if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') === __FILE__) {
         $items = cms_feed(fn()=>site_json_request('https://tokimeki-jinja.microcms.io/api/v1/posts?limit=100&orders=-date',
             ['X-MICROCMS-API-KEY: ' . $config['cms_key']]), $dir . '/feed.json');
         if (isset($_GET['id'])) {
-            foreach ($items as $item) if ($item['id'] === $_GET['id']) { echo json_encode($item, JSON_UNESCAPED_UNICODE); exit; }
+            foreach ($items as $item) if ($item['id'] === $_GET['id']) { echo json_encode(add_link_preview($item), JSON_UNESCAPED_UNICODE); exit; }
             $id = $_GET['id'];
             $item = cms_article($id, function() use ($id, $config) {
                 try {
@@ -92,7 +164,7 @@ if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') === __FILE__) {
                         ['X-MICROCMS-API-KEY: ' . $config['cms_key']]));
                 } catch (RuntimeException $e) { if ($e->getCode() === 404) return null; throw $e; }
             }, $dir . '/details.json');
-            if ($item !== null) { echo json_encode($item, JSON_UNESCAPED_UNICODE); exit; }
+            if ($item !== null) { echo json_encode(add_link_preview($item), JSON_UNESCAPED_UNICODE); exit; }
             http_response_code(404); echo '{}'; exit;
         }
         echo json_encode(['contents'=>$items], JSON_UNESCAPED_UNICODE);
