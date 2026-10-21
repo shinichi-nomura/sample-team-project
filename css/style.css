@@ -2179,7 +2179,7 @@ small {
   text-underline-offset: 3px;
 }
 
-/*== HAPPY ICHIROUDOU: 01, 03, 05, 07, 08 ==*/
+/*== HAPPY ICHIROUDOU: 01, 02, 03, 05, 07, 08 ==*/
 .ichirodo-page {
   --ichirodo-accent: #c8d8cf;
   --ichirodo-gold: #e0c891;
@@ -2194,6 +2194,42 @@ small {
   --ichirodo-line: rgba(169, 220, 225, 0.38);
   --ichirodo-surface: rgba(19, 43, 50, 0.9);
   background: radial-gradient(ellipse at 30% 8%, rgba(36, 116, 130, 0.25), transparent 55%);
+}
+
+.oem.ichirodo-page {
+  --ichirodo-accent: #a9dce1;
+  --ichirodo-line: rgba(169, 220, 225, 0.38);
+  --ichirodo-surface: rgba(19, 43, 50, 0.9);
+  background: radial-gradient(ellipse at 70% 8%, rgba(36, 116, 130, 0.25), transparent 55%);
+}
+
+.oem.ichirodo-page .oem-intro,
+.oem.ichirodo-page .oem-details {
+  padding: clamp(22px, 3vw, 40px);
+  border: 1px solid var(--ichirodo-line);
+  background: var(--ichirodo-surface);
+}
+
+.oem.ichirodo-page .oem-copy h3 {
+  color: var(--ichirodo-gold);
+  font-weight: 400;
+}
+
+.oem.ichirodo-page .oem-related-link p {
+  color: var(--ichirodo-accent);
+}
+
+.oem.ichirodo-page .oem-related-link a {
+  border: 1px solid var(--ichirodo-line);
+  border-radius: 0;
+  background: rgba(169, 220, 225, 0.12);
+  color: var(--ichirodo-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.oem.ichirodo-page .oem-related-link a:hover {
+  background: rgba(169, 220, 225, 0.22);
 }
 
 .ryuujin.ichirodo-page {
@@ -2614,6 +2650,11 @@ small {
     border-radius: 0;
     background: var(--ichirodo-surface);
     color: var(--ichirodo-accent);
+  }
+
+  .oem.ichirodo-page .oem-intro,
+  .oem.ichirodo-page .oem-details {
+    padding: 18px;
   }
 
   .ryuukon.ichirodo-page .ryuukon-images {
