@@ -1307,7 +1307,8 @@ small {
 .hint-detail p,
 .mizu p {
   width: 100%;
-  margin: 0 0 clamp(4px, 0.8vw, 6px);;
+  margin: 0 0 clamp(4px, 0.8vw, 6px);
+  ;
   font-size: clamp(16px, 1.8vw, 18px);
 }
 
@@ -1348,6 +1349,15 @@ small {
 }
 
 /*== hinto2 ==*/
+.oem .oem-text-pc {
+  display: block;
+}
+
+/* スマホ用の文章は非表示 */
+.oem .oem-text-sp {
+  display: none;
+}
+
 .oem {
   position: relative;
   box-sizing: border-box;
@@ -1375,6 +1385,12 @@ small {
   line-height: 1.8;
 }
 
+.oem .oem-first h3,
+.oem .oem-fifth h3 {
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.5;
+}
+
 .oem-intro {
   display: grid;
   grid-template-columns: minmax(0px, 1fr) minmax(0px, 1fr);
@@ -1390,15 +1406,18 @@ small {
 }
 
 .oem-copy h3 {
-  margin: 0px 0px 32px;
+  margin-bottom: 24px;
+  letter-spacing: 0.04em;
   font-size: clamp(32px, 3.6vw, 48px);
   line-height: 1.5;
-  letter-spacing: 0.04em;
 }
 
 .oem .oem-copy p {
-  margin-bottom: 20px;
-  line-height: 2;
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.9;
+  letter-spacing: 0.03em;
+  margin-bottom: 24px;
+  overflow-wrap: anywhere;
 }
 
 .oem-copy p:last-child {
@@ -1406,9 +1425,75 @@ small {
 }
 
 .oem-main-image {
-  display: block;
-  width: 100%;
+  width: 90%;
+  max-width: 450px;
   height: auto;
+  margin: 0 auto;
+}
+
+.oem .oem-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(24px, 4vw, 48px);
+}
+
+.oem .oem-details-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding-top: clamp(40px, 6vw, 80px);
+}
+
+.oem .oem-details-right {
+  display: flex;
+  justify-content: center;
+}
+
+.oem .oem-details img {
+  display: block;
+  width: 90%;
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.oem .oem-related-link {
+  width: 90%;
+  text-align: right;
+}
+
+.oem .oem-related-link p {
+  font-size: clamp(16px, 1.8vw, 20px);
+  margin: 0 0 16px;
+  line-height: 1.5;
+  color: white;
+}
+
+.oem .oem-related-link a {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #b63d82;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.oem .oem-related-link a:hover {
+  background: #e054a4;
+}
+
+.oem .oem-related-link a:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
+
+.oem .oem-secondary .oem-copy .oem-related-link {
+  width: 100%;
+  margin: 30px 0 0;
+  text-align: left;
 }
 
 .oem-secondary {
@@ -1421,23 +1506,21 @@ small {
 }
 
 .oem-details {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
-  gap: clamp(32px, 5vw, 64px);
+  gap: clamp(24px, 4vw, 48px);
   width: 100%;
+  max-width: 1100px;
   margin-top: clamp(48px, 6.5vw, 80px);
 }
 
 .oem-details img {
   display: block;
   width: 100%;
-  max-width: 800px;
+  max-width: 100%;
   height: auto;
-}
-
-.oem-details img:last-child {
-  max-width: 703px;
+  object-fit: contain;
 }
 
 /*== hinto3 ==*/
@@ -1713,6 +1796,7 @@ small {
 }
 
 @media (max-width: 700px) {
+
   .naruko-gallery,
   .naruko-details {
     grid-template-columns: 1fr;
@@ -3451,8 +3535,31 @@ textarea {
     margin-bottom: 24px;
   }
 
-  .oem-details {
-    gap: 40px;
-    margin-top: 48px;
+  .oem .oem-details {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .oem .oem-copy h3,
+  .oem .oem-first h3,
+  .oem .oem-fifth h3 {
+    font-size: clamp(20px, 5vw, 26px);
+    line-height: 1.5;
+  }
+
+  .oem .oem-copy p {
+    font-size: clamp(14px, 3.5vw, 16px);
+    line-height: 1.9;
+    margin-bottom: 20px;
+  }
+
+  .oem .oem-main-image,
+  .oem .oem-details img {
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
   }
 }
