@@ -19,12 +19,11 @@ function public_article(array $item): ?array {
 
 function fetch_ogp_image(string $url): ?string {
     $host = parse_url($url, PHP_URL_HOST);
-    // CMSで使用を許可するリンク先ドメインを指定
-    $allowedHosts = ['example.com'];
-    if ( !is_string($host) || !in_array(strtolower($host), $allowedHosts, true) || parse_url($url, PHP_URL_PORT) !== null
-        || parse_url($url, PHP_URL_USER) !== null || parse_url($url, PHP_URL_PASS) !== null ) {
+    if ( parse_url($url, PHP_URL_SCHEME) !== 'https' || !is_string($host) || $host === ''
+        || parse_url($url, PHP_URL_PORT) !== null || parse_url($url, PHP_URL_USER) !== null || parse_url($url, PHP_URL_PASS) !== null
+    ) {
     return null;
-    }
+}
     // 接続先を公開IPv4アドレスに限定し、そのアドレスへ接続する
     $ip = null;
     foreach (gethostbynamel($host) ?: [] as $candidate) {
@@ -39,7 +38,7 @@ function fetch_ogp_image(string $url): ?string {
     $curl = curl_init($url);
     if ($curl === false) return null;
     curl_setopt_array($curl, [ CURLOPT_RESOLVE => ["{$host}:443:{$ip}"], CURLOPT_PROXY => '', CURLOPT_PROTOCOLS => CURLPROTO_HTTPS,
-        CURLOPT_FOLLOWLOCATION => false, CURLOPT_CONNECTTIMEOUT => 3, CURLOPT_TIMEOUT => 8, CURLOPT_SSL_VERIFYPEER => true,
+        CURLOPT_FOLLOWLOCATION => false, CURLOPT_CONNECTTIMEOUT => 3, CURLOPT_TIMEOUT => 3, CURLOPT_SSL_VERIFYPEER => true,
         CURLOPT_SSL_VERIFYHOST => 2, CURLOPT_WRITEFUNCTION => function ($handle, $chunk) use (&$html) {
          if (strlen($html) + strlen($chunk) > 1024 * 1024) return 0;
         $html .= $chunk;
@@ -74,11 +73,52 @@ function fetch_ogp_image(string $url): ?string {
     return $image;
 }
 
+function cached_ogp_image(string $url): ?string {
+    $dir = sys_get_temp_dir() . '/tokimeki-ogp-' . hash('sha256', __DIR__);
+    if (!is_dir($dir) && !mkdir($dir, 0700, true) && !is_dir($dir)) {
+        throw new RuntimeException('OGP cache directory unavailable');
+    }
+    $file = fopen($dir . '/' . hash('sha256', $url) . '.json', 'c+');
+    if ($file === false) {
+        throw new RuntimeException('OGP cache unavailable');
+    }
+    if (!flock($file, LOCK_EX)) {
+        fclose($file);
+        throw new RuntimeException('OGP cache lock unavailable');
+    }
+    try {
+        $raw = stream_get_contents($file);
+        $cached = is_string($raw) ? json_decode($raw, true) : null;
+        if (
+            is_array($cached)
+            && ($cached['expiresAt'] ?? 0) > time()
+            && array_key_exists('image', $cached)
+        ) {
+            return is_string($cached['image']) ? $cached['image'] : null;
+        }
+        $image = fetch_ogp_image($url);
+        $ttl = $image === null ? 600 : 86400;
+        $encoded = json_encode( ['expiresAt' => time() + $ttl, 'image' => $image], JSON_THROW_ON_ERROR);
+        rewind($file);
+        if (
+            !ftruncate($file, 0)
+            || fwrite($file, $encoded) !== strlen($encoded)
+            || !fflush($file)
+        ) {
+            throw new RuntimeException('OGP cache write failed');
+        }
+        return $image;
+    } finally {
+        flock($file, LOCK_UN);
+        fclose($file);
+    }
+}
+
 function add_link_preview(array $item): array {
     if (empty($item['linkUrl'])) return $item;
     // OGPが取得できなくても記事本文は表示する
     try {
-        $image = fetch_ogp_image($item['linkUrl']);
+        $image = cached_ogp_image($item['linkUrl']);
         $item['linkPreview'] = $image === null ? [] : ['image' => $image];
     } catch (Throwable $e) {
         $item['linkPreview'] = [];
