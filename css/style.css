@@ -1512,45 +1512,219 @@ small {
 
 /*== hinto4 ==*/
 .syugoryuu {
-  position: relative;
-  box-sizing: border-box;
+  --naruko-gold: #d9bb7c;
+  --naruko-mint: #a5d3bc;
+  gap: 0;
+  color: #f5f1e8;
+  background: radial-gradient(ellipse at 50% 0%, rgba(37, 77, 65, 0.26), transparent 52%);
+}
+
+.naruko-intro {
   width: 100%;
-  max-width: 1240px;
-  margin: 0px auto;
-  padding: calc(var(--page-header-height, 96px) + 40px) 24px 60px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-bottom: clamp(32px, 5vw, 64px);
   text-align: center;
+}
+
+.syugoryuu .naruko-eyebrow {
+  margin: 0 0 16px;
+  color: var(--naruko-mint);
+  font-family: Georgia, serif;
+  font-size: 12px;
+  letter-spacing: 0.24em;
 }
 
 .syugoryuu h2 {
-  width: 100%;
-  margin-bottom: clamp(20px, 3vw, 32px);
-  font-size: 28px;
-  line-height: 1.5;
+  margin: 0;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
 }
 
-.syugoryuu>p {
+.syugoryuu h2 span {
+  display: block;
+  margin-top: 8px;
+  color: var(--naruko-gold);
+  font-size: 0.58em;
+  letter-spacing: 0.2em;
+}
+
+.syugoryuu .naruko-intro-title {
+  margin: clamp(28px, 4vw, 44px) 0 0;
+  font-size: clamp(21px, 2.8vw, 32px);
+  letter-spacing: 0.12em;
+}
+
+.naruko-story,
+.naruko-invitation {
   width: 100%;
-  max-width: 800px;
-  margin: 0px auto 16px;
-  font-size: 18px;
-  line-height: 1.8;
-  text-align: center;
+  max-width: 790px;
+  text-align: left;
+}
+
+.syugoryuu .naruko-story p,
+.syugoryuu .naruko-invitation p {
+  margin: 0 0 1.5em;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 2;
   overflow-wrap: anywhere;
 }
 
-.syugoryuu>img {
-  display: block;
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-  margin: 28px auto 0px;
+.syugoryuu .naruko-mantra {
+  margin: clamp(36px, 5vw, 60px) 0;
+  padding: 20px 0;
+  border-top: 1px solid rgba(217, 187, 124, 0.5);
+  border-bottom: 1px solid rgba(217, 187, 124, 0.5);
+  color: var(--naruko-gold);
+  font-size: clamp(26px, 4vw, 42px);
+  letter-spacing: 0.22em;
+  text-align: center;
 }
 
-.syugoryuu>img+p {
-  margin-top: 16px;
+.naruko-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 32px);
+  width: 100%;
+  max-width: 1020px;
+  margin: clamp(32px, 5vw, 64px) auto clamp(48px, 7vw, 80px);
+}
+
+.naruko-gallery figure {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(10px, 1.5vw, 16px);
+  border: 1px solid rgba(165, 211, 188, 0.35);
+  background: #111a18;
+}
+
+.naruko-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.naruko-gallery figcaption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 4px 2px;
+  color: #e7e4d9;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+}
+
+.naruko-gallery figcaption span {
+  color: var(--naruko-mint);
+  font-family: Georgia, serif;
+  font-size: 13px;
+}
+
+.naruko-invitation {
+  padding: clamp(24px, 4vw, 40px);
+  border: 1px solid rgba(217, 187, 124, 0.55);
+  background: linear-gradient(135deg, rgba(55, 69, 49, 0.52), rgba(17, 25, 23, 0.8));
+}
+
+.syugoryuu .naruko-invitation p:last-child {
+  margin-bottom: 0;
+  color: #f4dfad;
+}
+
+.naruko-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: 790px;
+  margin: clamp(40px, 6vw, 68px) auto;
+  padding: 24px 0;
+  border-top: 1px solid rgba(165, 211, 188, 0.45);
+  border-bottom: 1px solid rgba(165, 211, 188, 0.45);
+  text-align: left;
+}
+
+.naruko-details>div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.naruko-details span {
+  color: var(--naruko-mint);
+  font-size: 14px;
+  letter-spacing: 0.14em;
+}
+
+.naruko-details strong {
+  font-size: clamp(21px, 2.5vw, 28px);
+  font-weight: 400;
+}
+
+.naruko-details small {
+  font-size: 15px;
+}
+
+.naruko-flow {
+  width: 100%;
+  max-width: 790px;
+  text-align: left;
+}
+
+.naruko-flow h3 {
+  margin: 0 0 26px;
+  font-size: clamp(21px, 2.6vw, 28px);
+  font-weight: 400;
+  text-align: center;
+}
+
+.naruko-flow h3 span {
+  display: block;
+  margin-top: 6px;
+  color: var(--naruko-mint);
+  font-size: 0.55em;
+  letter-spacing: 0.25em;
+}
+
+.naruko-flow ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: naruko-step;
+}
+
+.naruko-flow li {
+  display: grid;
+  grid-template-columns: 2.5em 1fr;
+  align-items: baseline;
+  gap: 14px;
+  padding: 17px 0;
+  border-bottom: 1px solid rgba(165, 211, 188, 0.24);
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.8;
+  counter-increment: naruko-step;
+}
+
+.naruko-flow li::before {
+  content: counter(naruko-step, decimal-leading-zero);
+  color: var(--naruko-gold);
+  font-family: Georgia, serif;
+  font-size: 18px;
+}
+
+@media (max-width: 700px) {
+  .naruko-gallery,
+  .naruko-details {
+    grid-template-columns: 1fr;
+  }
+
+  .naruko-gallery {
+    max-width: 490px;
+  }
+
+  .naruko-details {
+    gap: 20px;
+  }
 }
 
 /*== hinto5 ==*/
