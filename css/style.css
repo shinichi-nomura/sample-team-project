@@ -2538,6 +2538,18 @@ small {
   }
 }
 
+@media (max-width: 360px) {
+  .ryuujin.ichirodo-page .ichirodo-heading h2 span {
+    font-size: 0.5em;
+    letter-spacing: 0.02em;
+  }
+
+  .flower-page.ichirodo-page .ichirodo-heading h2 {
+    font-size: 24px;
+    letter-spacing: 0.02em;
+  }
+}
+
 /*== first.html ==*/
 .first-greet {
   position: relative;
