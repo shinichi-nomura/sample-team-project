@@ -114,8 +114,22 @@ function cached_ogp_image(string $url): ?string {
     }
 }
 
+function is_embeddable_social_post(string $url): bool {
+    $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+    $path = (string) parse_url($url, PHP_URL_PATH);
+    if (in_array($host, ['instagram.com', 'www.instagram.com'], true)) {
+        return (bool) preg_match('~^/(?:p|reel|tv)/[A-Za-z0-9_-]+/?$~', $path);
+    }
+    if (in_array($host, ['x.com', 'www.x.com', 'twitter.com', 'www.twitter.com'], true)) {
+        return (bool) preg_match('~^/[A-Za-z0-9_]{1,15}/status/[0-9]+/?$~', $path);
+    }
+    return false;
+}
+
 function add_link_preview(array $item): array {
     if (empty($item['linkUrl'])) return $item;
+    // SNSの投稿はブラウザー側の公式埋め込みで表示し、サーバーからは取得しない。
+    if (is_embeddable_social_post($item['linkUrl'])) return $item;
     // OGPが取得できなくても記事本文は表示する
     try {
         $image = cached_ogp_image($item['linkUrl']);

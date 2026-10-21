@@ -2332,6 +2332,18 @@ small {
   object-fit: contain;
 }
 
+.article-social-embed {
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  margin: 0 auto clamp(20px, 3vw, 32px);
+  overflow-x: auto;
+}
+
+.article-social-embed blockquote {
+  max-width: 100%;
+}
+
 .detail-date {
   display: block;
   margin: 0px 0px clamp(16px, 2vw, 24px);

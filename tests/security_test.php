@@ -12,6 +12,11 @@ $item = ['id'=>'post1','title'=>'記事','body'=>'<p>本文</p>','date'=>'2026-1
 security_check(!array_key_exists('internalSecret', public_article($item)), 'field projection');
 security_check(public_article(array_replace($item, ['publishedAt'=>''])) === null, 'draft rejection');
 security_check(public_article(array_replace($item, ['type'=>['非公開']])) === null, 'type rejection');
+security_check(is_embeddable_social_post('https://www.instagram.com/p/DenRgk-E_X5/?srtk=test'), 'Instagram post');
+security_check(is_embeddable_social_post('https://x.com/example/status/123456789'), 'X post');
+security_check(is_embeddable_social_post('https://twitter.com/example/status/123456789'), 'Twitter post');
+security_check(!is_embeddable_social_post('https://instagram.com.evil.example/p/DenRgk-E_X5/'), 'lookalike host');
+security_check(!is_embeddable_social_post('https://www.instagram.com/accounts/login/'), 'non-post URL');
 $path = tempnam(sys_get_temp_dir(), 'cms-test-');
 try {
     $calls = 0;
