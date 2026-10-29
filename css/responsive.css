@@ -1672,8 +1672,13 @@
     width: 38%;
   }
 
-  .footer-left img {
-    width: clamp(60px, 16vw, 130px);
+  .footer-left img,
+  .institute-credit {
+    width: clamp(75px, 20vw, 99px);
+  }
+
+  .institute-credit {
+    font-size: 8px;
   }
 
   .footer-right {
