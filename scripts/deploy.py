@@ -16,6 +16,12 @@ PUBLIC_DIRS = ('css', 'images', 'js', 'pages')
 EXTENSIONS = {'.html', '.css', '.js', '.json', '.webp', '.png', '.jpg', '.jpeg',
               '.gif', '.svg', '.ico', '.avif', '.woff', '.woff2', '.ttf', '.otf',
               '.mp4', '.webm', '.pdf'}
+EMERGENCY_RULE = (
+    b'# BEGIN TOKIMEKI EMERGENCY LOCKDOWN 2026-10-21\n'
+    b'RewriteEngine On\n'
+    b'RewriteRule ^ - [F,L]\n'
+    b'# END TOKIMEKI EMERGENCY LOCKDOWN 2026-10-21\n'
+)
 
 
 def public_files(root):
@@ -69,6 +75,24 @@ def upload(ftp, root, paths, config=None):
     # No remote deletes: preserve error/, .htaccess, and server-only configuration.
 
 
+def restore_public_access(ftp):
+    """Remove only our identifiable emergency rule after all files upload."""
+    ftp.cwd('/')
+    chunks = []
+    ftp.retrbinary('RETR .htaccess', chunks.append)
+    current = b''.join(chunks)
+    if not current.startswith(b'# BEGIN TOKIMEKI EMERGENCY LOCKDOWN 2026-10-21\n'):
+        print('Emergency lockdown marker absent; .htaccess left unchanged.')
+        return False
+    if not current.startswith(EMERGENCY_RULE):
+        raise ValueError('Unexpected emergency lockdown rules; access remains restricted')
+    restored = current[len(EMERGENCY_RULE):]
+    ftp.storbinary('STOR .htaccess.deploy-tmp', io.BytesIO(restored))
+    ftp.rename('.htaccess.deploy-tmp', '.htaccess')
+    print('Emergency lockdown removed; previous .htaccess rules preserved.')
+    return True
+
+
 def private_config(environ):
     fields = {'cms_key': 'CMS_API_KEY', 'turnstile_site': 'TURNSTILE_SITE_KEY',
               'turnstile_secret': 'TURNSTILE_SECRET_KEY'}
@@ -101,6 +125,7 @@ def main():
         ftp.prot_p()  # Encrypt file data as well as credentials.
         ftp.set_pasv(True)
         upload(ftp, ROOT, paths, config)
+        restore_public_access(ftp)
     print(f'Upload completed: {len(paths)} files.')
     summary = os.environ.get('GITHUB_STEP_SUMMARY')
     if summary:

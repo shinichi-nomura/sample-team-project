@@ -3,7 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import Mock
-from scripts.deploy import public_files, upload, private_config
+from scripts.deploy import EMERGENCY_RULE, public_files, upload, private_config, restore_public_access
 
 
 class DeployTests(unittest.TestCase):
@@ -83,6 +83,23 @@ class DeployTests(unittest.TestCase):
             upload(ftp, root, [Path('index.html')])
             ftp.rename.assert_called_once_with('.index.html.deploy-tmp', 'index.html')
             ftp.delete.assert_not_called()
+
+    def test_restore_public_access_preserves_previous_rules(self):
+        ftp = Mock()
+        previous = b'DirectoryIndex index.html\n'
+        ftp.retrbinary.side_effect = lambda _name, callback: callback(EMERGENCY_RULE + previous)
+        self.assertTrue(restore_public_access(ftp))
+        self.assertEqual(ftp.storbinary.call_args.args[1].read(), previous)
+        ftp.rename.assert_called_once_with('.htaccess.deploy-tmp', '.htaccess')
+
+    def test_unexpected_access_rules_are_not_changed(self):
+        ftp = Mock()
+        ftp.retrbinary.side_effect = lambda _name, callback: callback(
+            b'# BEGIN TOKIMEKI EMERGENCY LOCKDOWN 2026-10-21\nUnexpected\n')
+        with self.assertRaises(ValueError):
+            restore_public_access(ftp)
+        ftp.storbinary.assert_not_called()
+        ftp.rename.assert_not_called()
 
 
 if __name__ == '__main__':
