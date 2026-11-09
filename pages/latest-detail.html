@@ -3,6 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
+    <script>
+        (() => {
+            const id = new URLSearchParams(window.location.search).get("id");
+            if (!id) return;
+
+            const url = new URL(window.location.pathname, "https://mizu-tokimeki.com");
+            url.searchParams.set("id", id);
+            const canonical = document.createElement("link");
+            canonical.rel = "canonical";
+            canonical.href = url.href;
+            document.head.appendChild(canonical);
+        })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/webp" href="../images/top-images/favicon.webp">
     <link rel="preconnect" href="https://use.typekit.net">
