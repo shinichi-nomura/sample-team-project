@@ -2096,6 +2096,7 @@ small {
 }
 
 @media (max-width: 700px) {
+
   .ako-gallery,
   .ako-details {
     grid-template-columns: 1fr;
@@ -2347,7 +2348,7 @@ small {
   text-align: left;
 }
 
-.ichirodo-panel > img,
+.ichirodo-panel>img,
 .ichirodo-panel-media {
   display: block;
   width: 100%;
@@ -2357,7 +2358,7 @@ small {
   object-fit: cover;
 }
 
-.ryuujin.ichirodo-page .ichirodo-panel > .hinto3-ashina-photo {
+.ryuujin.ichirodo-page .ichirodo-panel>.hinto3-ashina-photo {
   max-width: none;
   margin: 0;
 }
@@ -2404,13 +2405,13 @@ small {
   margin: 12px 18px 0 0;
 }
 
-.ichirodo-panel-reverse > img,
-.ichirodo-panel-reverse > .ichirodo-panel-media {
+.ichirodo-panel-reverse>img,
+.ichirodo-panel-reverse>.ichirodo-panel-media {
   grid-column: 2;
   grid-row: 1;
 }
 
-.ichirodo-panel-reverse > .ichirodo-panel-copy {
+.ichirodo-panel-reverse>.ichirodo-panel-copy {
   grid-column: 1;
   grid-row: 1;
 }
@@ -2426,7 +2427,7 @@ small {
   background: var(--ichirodo-surface);
 }
 
-.ryuukon.ichirodo-page .ryuukon-item > img {
+.ryuukon.ichirodo-page .ryuukon-item>img {
   width: 100%;
   height: auto;
   min-height: 0;
@@ -2434,12 +2435,12 @@ small {
   object-fit: contain;
 }
 
-.ryuukon.ichirodo-page .ryuukon-item-reverse > img {
+.ryuukon.ichirodo-page .ryuukon-item-reverse>img {
   grid-column: 2;
   grid-row: 1;
 }
 
-.ryuukon.ichirodo-page .ryuukon-item-reverse > .ryuukon-text {
+.ryuukon.ichirodo-page .ryuukon-item-reverse>.ryuukon-text {
   grid-column: 1;
   grid-row: 1;
 }
@@ -2580,7 +2581,7 @@ small {
   background: var(--ichirodo-surface);
 }
 
-.wellness-page .hint8-service + .hint8-service {
+.wellness-page .hint8-service+.hint8-service {
   margin-top: 0;
 }
 
@@ -2604,6 +2605,7 @@ small {
 }
 
 @media (max-width: 760px) {
+
   .ichirodo-panel,
   .ryuukon.ichirodo-page .ryuukon-item,
   .flower-cards,
@@ -2611,26 +2613,26 @@ small {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .ichirodo-panel > img,
-  .ichirodo-panel > .ichirodo-panel-media,
-  .ichirodo-panel-reverse > img,
-  .ichirodo-panel-reverse > .ichirodo-panel-media,
-  .ryuukon.ichirodo-page .ryuukon-item > img,
-  .ryuukon.ichirodo-page .ryuukon-item-reverse > img {
+  .ichirodo-panel>img,
+  .ichirodo-panel>.ichirodo-panel-media,
+  .ichirodo-panel-reverse>img,
+  .ichirodo-panel-reverse>.ichirodo-panel-media,
+  .ryuukon.ichirodo-page .ryuukon-item>img,
+  .ryuukon.ichirodo-page .ryuukon-item-reverse>img {
     grid-column: 1;
     grid-row: 1;
     height: auto;
     min-height: 0;
   }
 
-  .ichirodo-panel > img {
+  .ichirodo-panel>img {
     max-height: 460px;
   }
 
-  .ichirodo-panel > .ichirodo-panel-copy,
-  .ichirodo-panel-reverse > .ichirodo-panel-copy,
-  .ryuukon.ichirodo-page .ryuukon-item > .ryuukon-text,
-  .ryuukon.ichirodo-page .ryuukon-item-reverse > .ryuukon-text {
+  .ichirodo-panel>.ichirodo-panel-copy,
+  .ichirodo-panel-reverse>.ichirodo-panel-copy,
+  .ryuukon.ichirodo-page .ryuukon-item>.ryuukon-text,
+  .ryuukon.ichirodo-page .ryuukon-item-reverse>.ryuukon-text {
     grid-column: 1;
     grid-row: 2;
   }
@@ -3561,6 +3563,205 @@ textarea {
 .privacy-content a {
   color: inherit;
   text-decoration: underline;
+}
+
+.manegement {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 1240px;
+  margin: var(--page-header-height, 96px) auto 0;
+  padding:
+    clamp(32px, 4vw, 58px) clamp(20px, 3vw, 40px) clamp(40px, 5vw, 72px);
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+}
+
+.manegement>.management-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  filter: brightness(0.9);
+  pointer-events: none;
+}
+
+.manegement>div {
+  position: relative;
+  z-index: 1;
+}
+
+body:has(.manegement)>.particles {
+  display: none;
+}
+
+.mg-titles {
+  margin: 12px 0;
+  font-size: 34px;
+  letter-spacing: 6px;
+}
+
+.company-information .mg-p {
+  font-size: 26px;
+  letter-spacing: 6px;
+  text-shadow: black 1px 1px 1px, black -1px -1px 1px, black -1px 1px 1px, black 1px -1px 1px, black 1px 0px 1px, black -1px 0px 1px, black 0px 1px 1px, black 0px -1px 1px;
+}
+
+.company-information .mg-p2 {
+  font-size: 20px;
+}
+
+.manegement .consult-button {
+  color: black;
+  text-decoration: none;
+  background-color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  letter-spacing: 2px;
+}
+
+.manegement .mg-details-1 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  align-items: stretch;
+}
+
+.mg-details-1 .mg-titles {
+  grid-column: 1 / -1;
+  margin: 40px 0 8px;
+  text-align: center;
+}
+
+.manegement .mg-details-1>.mg-detail {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 24px;
+  padding: clamp(16px, 2vw, 24px);
+  border: 2px solid #fff;
+  border-radius: 0;
+  background: rgb(0 0 0 / 35%);
+  text-align: center;
+}
+
+.manegement .mg-details-1>.mg-detail>.mg-d-title {
+  font-size: 20px;
+  margin: 0;
+}
+
+.manegement .mg-details-1>.mg-detail>.mg-p {
+  font-size: 18px;
+  width: 100%;
+  margin: 0;
+  line-height: 1.8;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.mg-details-2 .mg-titles {
+  margin: 40px 0 8px;
+  text-align: center;
+}
+
+.manegement .mg-details-2>.mg-p {
+  font-size: 24px;
+}
+
+.manegement .mg-faq {
+  width: 100%;
+  min-width: 0;
+  text-align: left;
+}
+
+.manegement .mg-faq + .mg-faq {
+  margin-top: 24px;
+}
+
+.manegement .mg-faq-question {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 16px 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-family: inherit;
+  font-size: clamp(18px, 2.2vw, 28px);
+  font-weight: normal;
+  line-height: 1.6;
+  text-align: center;
+  cursor: pointer;
+}
+
+.manegement .mg-faq-question > span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.manegement .mg-faq-question:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.manegement .mg-faq-arrow {
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.manegement .mg-faq-question[aria-expanded="true"] .mg-faq-arrow {
+  transform: rotate(90deg);
+}
+
+.manegement .mg-faq-answer {
+  margin-top: 8px;
+  padding: clamp(16px, 2vw, 24px);
+  border-radius: 12px;
+  background: rgb(40 40 40 / 45%);
+  color: #fff;
+}
+
+.manegement .mg-faq-answer[hidden] {
+  display: none;
+}
+
+.manegement .mg-faq-answer > p {
+  margin: 0;
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.manegement .consult-page {
+  width: 100%;
+  max-width: 800px;
+  margin: clamp(32px, 4vw, 56px) auto 0;
+  padding: 20px;
+  border-radius: 24px;
+  background: rgb(40 40 40 / 45%);
+  text-align: center;
+}
+
+.manegement .consult-page>.mg-titles {
+  margin: 12px;
+  font-size: 24px;
+  letter-spacing: 4px;
+}
+
+.manegement .consult-page>.consult-button {
+  display: inline-block;
+  margin: 4px;
+  font-size: 18px;
+  letter-spacing: 2px;
 }
 
 @media (min-width: 768px) {
