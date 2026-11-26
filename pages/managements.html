@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <script>
+        (() => {
+            const id = new URLSearchParams(window.location.search).get("id");
+            if (!id) return;
+
+            const url = new URL(window.location.pathname, "https://mizu-tokimeki.com");
+            url.searchParams.set("id", id);
+            const canonical = document.createElement("link");
+            canonical.rel = "canonical";
+            canonical.href = url.href;
+            document.head.appendChild(canonical);
+        })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/webp" href="../images/top-images/favicon.webp">
+    <link rel="preconnect" href="https://use.typekit.net">
+    <link rel="preconnect" href="https://p.typekit.net" crossorigin>
+    <title>>企画・運営｜ときめき神社♡ラブ</title>
+    <link rel="stylesheet" href="../css/style.css?v=20261027-2">
+    <link rel="stylesheet" href="../css/responsive.css?v=20261027-2">
+    <script>
+        (function (d) {
+            var config = {
+                kitId: 'wgy8pla',
+                scriptTimeout: 3000,
+                async: true
+            },
+                h = d.documentElement, t = setTimeout(function () { h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive"; }, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a; h.className += " wf-loading"; tk.src = 'https://use.typekit.net/' + config.kitId + '.js'; tk.async = true; tk.onload = tk.onreadystatechange = function () { a = this.readyState; if (f || a && a != "complete" && a != "loaded") return; f = true; clearTimeout(t); try { Typekit.load(config) } catch (e) { } }; s.parentNode.insertBefore(tk, s)
+        })(document);
+    </script>
+</head>
+
+<body>
+    <div class="particles"></div>
+    <div class="wrapper">
+        <div id="top"></div>
+
+        <header>
+            <div class="header-inner">
+                <div class="header-logo">
+                    <a href="../">
+                        <h1><img src="../images/top-images/Toki-Logo-Name.webp" alt="ロゴ画像" class="logo-image"
+                                width="1366" height="298" /></h1>
+                    </a>
+                </div>
+                <div class="menu-wrapper">
+                    <button class="hamburger-menu" aria-label="メニューを開く">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                    <nav class="nav-menu">
+                        <ul class="nav-list">
+                            <li class="nav-1">
+                                <a href="../pages/first.html"><span>初めての方へ</span></a>
+                            </li>
+                            <li class="nav-2">
+                                <a href="https://www.noa-group.co.jp/"><span>個性心理學研究所湘南支所</span></a>
+                            </li>
+                            <li class="nav-3">
+                                <a href="../index.html#book"><span>著書</span></a>
+                            </li>
+                            <li class="nav-4">
+                                <a href="../pages/managements.html"><span>企画・運営</span></a>
+                            </li>
+                            <li class="nav-5">
+                                <a href="../pages/contact.html">
+                                    <span class="main-text">お問い合わせ</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="manegement">
+                <img src="../images/more-images/unei-image.webp" class="management-background" alt=""
+                    aria-hidden="true">
+                <div class="company-information">
+                    <p class="mg-titles">運営会社</p>
+                    <p class="mg-p">鈴麗合同会社<br>
+                        湘南支所<br>
+                        〒259-1321<br>
+                        神奈川県秦野市曲松1-13-18<br>
+                        0463-87-8075
+                    </p>
+                    <p class="mg-titles">
+                        水素商品を知るきっかけを、<br>
+                        企画から実践まで。
+                    </p>
+                    <p class="mg-p2">
+                        店舗での体験会から、代理店向けの説明まで。<br>
+                        目的や開催規模に合わせて、企画・準備・当日の運営をお手伝いします。
+                    </p>
+                    <a href="../pages/contact.html" class="consult-button">
+                        企画について相談する →
+                    </a>
+                </div>
+                <div class="mg-details-1">
+                    <p class="mg-titles">このような企画をご相談いただけます</p>
+                    <div class="mg-detail">
+                        <p class="mg-d-title">店舗・施設での商品体験会</p>
+                        <p class="mg-p">
+                            商品の使い方を紹介し、実際に操作していただく機会をつくります。会場や参加人数に応じて内容を検討します。
+                        </p>
+                    </div>
+                    <div class="mg-detail">
+                        <p class="mg-d-title">代理店向けの商品説明会</p>
+                        <p class="mg-p">商品の仕様、取り扱い方法、よくある質問などを共有する説明会を企画します。
+                        </p>
+                    </div>
+                    <div class="mg-detail">
+                        <p class="mg-d-title">展示会・販売促進の企画</p>
+                        <p class="mg-p">商品の紹介方法や展示内容、説明資料などを、出展の目的に合わせてご提案します。</p>
+                    </div>
+                </div>
+
+                <div class="mg-details-2">
+                    <p class="mg-titles">よくあるご質問</p>
+                    <div class="mg-faq">
+                        <button type="button" class="mg-faq-question" id="mg-question-1" aria-expanded="false"
+                            aria-controls="mg-answer-1">
+                            <span class="mg-faq-arrow" aria-hidden="true">▶</span>
+                            <span>内容が決まっていなくても相談できますか？</span>
+                        </button>
+
+                        <div class="mg-faq-answer" id="mg-answer-1" role="region" aria-labelledby="mg-question-1"
+                            hidden>
+                            <p>
+                                はい。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mg-faq">
+                        <button type="button" class="mg-faq-question" id="mg-question-2" aria-expanded="false"
+                            aria-controls="mg-answer-2">
+                            <span class="mg-faq-arrow" aria-hidden="true">▶</span>
+                            <span>企画の一部分だけでも相談できますか？</span>
+                        </button>
+                        <div class="mg-faq-answer" id="mg-answer-2" role="region" aria-labelledby="mg-question-2"
+                            hidden>
+                            <p>
+                                はい。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="consult-page">
+                        <p class="mg-titles">
+                            まずは、実現したいことをお聞かせください。
+                        </p>
+                        <a href="../pages/contact.html" class="consult-button">
+                            企画・運営の相談をする →
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer-animation-pending">
+            <div class="footer-top">
+                <div class="footer-left">
+                    <img src="../images/top-images/logo1.webp?v=20261027" class="footer-top-image" width="99"
+                        height="99" />
+                    <small class="institute-credit">©個性心理學研究所</small>
+                </div>
+                <div class="footer-right">
+                    <img src="../images/top-images/logo2.webp" class="footer-top-image" width="1596" height="192" />
+                    <p>弦裕会湘南支所</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <img src="../images/top-images/footer-image.webp" class="footer-bottom-image" width="1440"
+                    height="780" />
+            </div>
+            <p class="copyright-content">本イラストは個性心理學研究所が作成したものではありません。</p>
+            <div class="icon-image">
+                <div class="sns-box">
+                    <img src="../images/top-images/LINE_Brand_icon.webp" class="sns-icon line-icon" alt="LINEアイコン"
+                        width="308" height="308" />
+                </div>
+                <div class="sns-box">
+                    <img src="../images/top-images/Instagram_Glyph_Gradient.webp" class="sns-icon instagram-icon"
+                        alt="Instagramアイコン" width="308" height="308" />
+                </div>
+                <div class="sns-box">
+                    <img src="../images/top-images/logo-white.webp" class="sns-icon x-icon" alt="Xアイコン" width="308"
+                        height="308" />
+                </div>
+                <div class="sns-box">
+                    <img src="../images/top-images/TIKTOK_SOCIAL_ICON_SOLO_WHITE.webp" class="sns-icon tiktok-icon"
+                        alt="TikTokアイコン" width="308" height="308" />
+                </div>
+                <div class="sns-box">
+                    <img src="../images/top-images/yt_icon_red_digital.webp" class="sns-icon youtube-icon"
+                        alt="Youtubeアイコン" width="308" height="308" />
+                </div>
+                <div class="sns-box">
+                    <img src="../images/top-images/Facebook_Logo_Primary.webp" class="sns-icon facebook-icon"
+                        alt="facebookアイコン" width="308" height="308" />
+                </div>
+            </div>
+            <div class="privacy-policy">
+                <a href="privacy.html">プライバシーポリシー</a>
+                <small>Copyright (C) Tokimeki All Rights Reserved.</small>
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+        <script src="../js/vendor/purify.min.js"></script>
+        <script src="../js/safe-content.js"></script>
+        <script src="../js/article-link-preview.js"></script>
+        <script src="../js/event-detail.js"></script>
+        <script src="../js/main.js"></script>
+    </div>
+</body>
+
+</html>

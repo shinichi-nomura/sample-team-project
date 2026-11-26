@@ -2203,4 +2203,40 @@
       }
     });
   }
+
+  // 企画・運営ページ：よくあるご質問
+(() => {
+  function initManagementFaq() {
+    document.querySelectorAll(".manegement .mg-faq").forEach((faq) => {
+      const button = faq.querySelector(".mg-faq-question");
+      const answer = faq.querySelector(".mg-faq-answer");
+
+      if (!button || !answer || faq.dataset.faqReady === "true") return;
+
+      faq.dataset.faqReady = "true";
+
+      button.addEventListener("click", () => {
+        const isOpen = button.getAttribute("aria-expanded") === "true";
+
+        button.setAttribute("aria-expanded", String(!isOpen));
+        answer.hidden = isOpen;
+
+      
+        requestAnimationFrame(() => {
+          if (typeof ScrollTrigger !== "undefined") {
+            ScrollTrigger.refresh();
+          }
+        });
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initManagementFaq, {
+      once: true,
+    });
+  } else {
+    initManagementFaq();
+  }
+})();
 }

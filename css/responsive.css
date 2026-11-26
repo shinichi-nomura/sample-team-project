@@ -1193,11 +1193,6 @@
     transition: transform 0.5s, opacity 0.5s;
   }
 
-  .nav-2 .span-1,
-  .nav-5 .span-2 {
-    margin-left: 0px;
-  }
-
 }
 
 @media (max-width: 800px) {
